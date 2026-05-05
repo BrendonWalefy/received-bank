@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Receber Bank | Documentacao</title>
-  <meta name="description" content="Documentacao tecnica do projeto Receber Bank.">
+  <title>Receber Bank | Documentação</title>
+  <meta name="description" content="Documentação técnica do projeto Receber Bank — microsserviços bancários com Java 21, Spring Boot, EKS, MSK, DDD, CQRS e Transactional Outbox.">
   <style>
     :root {
       color-scheme: light;
@@ -20,9 +20,7 @@
       --code-bg: #eef2f7;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -32,14 +30,8 @@
       line-height: 1.6;
     }
 
-    a {
-      color: var(--brand-2);
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
+    a { color: var(--brand-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
     .shell {
       display: grid;
@@ -57,20 +49,9 @@
       overflow: auto;
     }
 
-    .brand {
-      margin-bottom: 28px;
-    }
-
-    .brand strong {
-      display: block;
-      font-size: 1.1rem;
-      color: var(--ink);
-    }
-
-    .brand span {
-      color: var(--muted);
-      font-size: .92rem;
-    }
+    .brand { margin-bottom: 28px; }
+    .brand strong { display: block; font-size: 1.1rem; color: var(--ink); }
+    .brand span { color: var(--muted); font-size: .92rem; }
 
     nav a {
       display: block;
@@ -79,9 +60,7 @@
       font-size: .95rem;
     }
 
-    main {
-      min-width: 0;
-    }
+    main { min-width: 0; }
 
     .hero {
       background: linear-gradient(120deg, #ffffff 0%, #edf7f6 52%, #edf2fb 100%);
@@ -95,27 +74,10 @@
       font-size: 1.08rem;
     }
 
-    h1,
-    h2,
-    h3 {
-      line-height: 1.2;
-      letter-spacing: 0;
-    }
-
-    h1 {
-      margin: 0 0 14px;
-      font-size: clamp(2.2rem, 5vw, 4.6rem);
-    }
-
-    h2 {
-      margin: 0 0 18px;
-      font-size: 1.65rem;
-    }
-
-    h3 {
-      margin: 24px 0 10px;
-      font-size: 1.05rem;
-    }
+    h1, h2, h3 { line-height: 1.2; letter-spacing: 0; }
+    h1 { margin: 0 0 14px; font-size: clamp(2.2rem, 5vw, 4.6rem); }
+    h2 { margin: 0 0 18px; font-size: 1.65rem; }
+    h3 { margin: 24px 0 10px; font-size: 1.05rem; }
 
     section {
       padding: 34px clamp(24px, 6vw, 80px);
@@ -135,14 +97,8 @@
       padding: 18px;
     }
 
-    .card strong {
-      display: block;
-      margin-bottom: 8px;
-    }
-
-    .muted {
-      color: var(--muted);
-    }
+    .card strong { display: block; margin-bottom: 8px; }
+    .muted { color: var(--muted); }
 
     table {
       width: 100%;
@@ -154,22 +110,15 @@
       display: table;
     }
 
-    th,
-    td {
+    th, td {
       padding: 12px 14px;
       border-bottom: 1px solid var(--line);
       text-align: left;
       vertical-align: top;
     }
 
-    th {
-      background: #f1f5f9;
-      font-weight: 700;
-    }
-
-    tr:last-child td {
-      border-bottom: 0;
-    }
+    th { background: #f1f5f9; font-weight: 700; }
+    tr:last-child td { border-bottom: 0; }
 
     code {
       color: var(--code);
@@ -188,17 +137,9 @@
       line-height: 1.55;
     }
 
-    pre code {
-      background: transparent;
-      color: inherit;
-      padding: 0;
-    }
+    pre code { background: transparent; color: inherit; padding: 0; }
 
-    .flow {
-      display: grid;
-      gap: 10px;
-      max-width: 860px;
-    }
+    .flow { display: grid; gap: 10px; max-width: 860px; }
 
     .step {
       background: var(--panel);
@@ -234,45 +175,36 @@
       height: auto;
     }
 
+    .adr-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .adr-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--brand-2);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+
+    .adr-card strong { display: block; margin-bottom: 4px; font-size: .95rem; }
+    .adr-card span { color: var(--muted); font-size: .9rem; }
+
     @media (max-width: 980px) {
-      .shell {
-        display: block;
-      }
-
-      aside {
-        position: static;
-        height: auto;
-        border-right: 0;
-        border-bottom: 1px solid var(--line);
-      }
-
-      nav {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 2px 16px;
-      }
-
-      .grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .shell { display: block; }
+      aside { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
+      nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 16px; }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .adr-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 640px) {
-      nav,
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      section,
-      .hero {
-        padding-left: 18px;
-        padding-right: 18px;
-      }
-
-      table {
-        display: block;
-        overflow-x: auto;
-      }
+      nav, .grid, .adr-grid { grid-template-columns: 1fr; }
+      section, .hero { padding-left: 18px; padding-right: 18px; }
+      table { display: block; overflow-x: auto; }
     }
   </style>
 </head>
@@ -281,196 +213,293 @@
     <aside>
       <div class="brand">
         <strong>Receber Bank</strong>
-        <span>Documentacao do projeto</span>
+        <span>Documentação do projeto</span>
       </div>
-      <nav aria-label="Navegacao principal">
-        <a href="#visao-geral">Visao geral</a>
-        <a href="#arquitetura">Arquitetura</a>
-        <a href="#servicos">Servicos</a>
-        <a href="#fluxos">Fluxos</a>
+      <nav aria-label="Navegação principal">
+        <a href="#visao-geral">Visão geral</a>
+        <a href="#padroes">Padrões aplicados</a>
+        <a href="#arquitetura">Arquitetura AWS</a>
+        <a href="#adr">Decisões arquiteturais</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#fluxos">Fluxos das jornadas</a>
         <a href="#apis">APIs</a>
         <a href="#demo">Demo Postman</a>
         <a href="#local">Ambiente local</a>
         <a href="#aws">AWS e Kubernetes</a>
-        <a href="#github">GitHub</a>
       </nav>
     </aside>
 
     <main>
       <header class="hero">
         <h1>Receber Bank</h1>
-        <p>Plataforma de recebimentos bancarios baseada em microservicos, eventos de dominio e separacao entre escrita e leitura para emissao, consulta, pagamento e notificacao de boletos.</p>
+        <p>Plataforma de recebimentos bancários baseada em microsserviços, eventos de domínio e separação entre escrita e leitura para emissão, consulta, pagamento e notificação de boletos.</p>
         <span class="tag">Java 21</span>
         <span class="tag">Spring Boot 3.2</span>
         <span class="tag">PostgreSQL</span>
         <span class="tag">Redis</span>
-        <span class="tag">Kafka/Redpanda</span>
-        <span class="tag">EKS</span>
+        <span class="tag">Kafka / Redpanda</span>
+        <span class="tag">Amazon EKS</span>
+        <span class="tag">Amazon MSK</span>
+        <span class="tag">DDD · CQRS · Outbox</span>
       </header>
 
+      <!-- ── VISÃO GERAL ── -->
       <section id="visao-geral">
-        <h2>Visao Geral</h2>
-        <p>O projeto moderniza uma area de recebimentos sem dependencia de mainframe. A arquitetura usa servicos independentes, eventos Kafka, transactional outbox e um read model dedicado para consultas.</p>
+        <h2>Visão Geral</h2>
+        <p>O projeto moderniza uma área de recebimentos bancários sem dependência de mainframe. A arquitetura usa serviços independentes por bounded context, eventos Kafka como bus de integração, o padrão Transactional Outbox para consistência banco/evento e um read model dedicado para consultas (CQRS).</p>
         <div class="grid">
           <div class="card">
             <strong>Escrita transacional</strong>
-            <span class="muted">`boleto-service` persiste boletos e grava eventos na mesma transacao.</span>
+            <span class="muted"><code>boleto-service</code> persiste o boleto e grava o evento <code>boleto.gerado</code> na mesma transação ACID.</span>
           </div>
           <div class="card">
             <strong>Eventos desacoplados</strong>
-            <span class="muted">Topicos `boleto.gerado`, `pagamento.efetivado` e `notificacao.enviada` integram os servicos.</span>
+            <span class="muted">Tópicos <code>boleto.gerado</code>, <code>pagamento.efetivado</code> e <code>notificacao.enviada</code> integram os serviços sem chamadas síncronas.</span>
           </div>
           <div class="card">
             <strong>Consulta otimizada</strong>
-            <span class="muted">`query-service` mantem uma projecao de leitura separada.</span>
+            <span class="muted"><code>query-service</code> mantém um read model próprio atualizado por eventos — nenhum serviço lê o banco do outro.</span>
           </div>
           <div class="card">
             <strong>Pronto para cloud</strong>
-            <span class="muted">Inclui manifests Kubernetes e Terraform AWS.</span>
+            <span class="muted">Infraestrutura AWS via Terraform e manifests Kubernetes prontos para EKS.</span>
           </div>
         </div>
       </section>
 
-      <section id="arquitetura">
-        <h2>Arquitetura AWS De Referencia</h2>
-        <p>Diagrama enxuto para apresentacao: destaca os recursos AWS, a jornada principal e as metodologias arquiteturais usadas no case.</p>
-        <div class="diagram-frame">
-          <img src="assets/aws-reference-architecture.svg?v=20260505-1705" alt="Diagrama enxuto da arquitetura AWS do Receber Bank, com borda segura, SQS, EKS, RDS, MSK, observabilidade e metodologias.">
-        </div>
+      <!-- ── PADRÕES ── -->
+      <section id="padroes">
+        <h2>Padrões e Metodologias Aplicados</h2>
         <table>
           <thead>
             <tr>
-              <th>Camada</th>
-              <th>Local</th>
-              <th>AWS</th>
+              <th>Padrão</th>
+              <th>Onde se aplica no projeto</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Entrada</td>
-              <td>REST local em containers</td>
-              <td>API Gateway, ALB Ingress e SQS</td>
+              <td><strong>DDD — Bounded Contexts</strong></td>
+              <td>Cada microsserviço corresponde a um contexto delimitado: <code>boleto</code>, <code>payment</code>, <code>query</code>, <code>notification</code>. Entidades e regras vivem na camada <code>domain</code>, isoladas do framework.</td>
             </tr>
             <tr>
-              <td>Compute</td>
-              <td>Docker Compose</td>
-              <td>EKS</td>
+              <td><strong>Arquitetura Hexagonal</strong></td>
+              <td>Estrutura <code>domain → application → adapter</code>. Use cases dependem apenas de interfaces de porta; adapters (HTTP, Kafka, JPA) são plugáveis e substituíveis. Use cases testáveis sem Spring.</td>
             </tr>
             <tr>
-              <td>Dados</td>
-              <td>PostgreSQL e Redis</td>
-              <td>RDS PostgreSQL e ElastiCache Redis</td>
+              <td><strong>CQRS</strong></td>
+              <td><code>boleto-service</code> é o modelo de escrita; <code>query-service</code> mantém seu read model próprio, atualizado por eventos Kafka. Nenhum serviço lê o banco de outro.</td>
             </tr>
             <tr>
-              <td>Eventos</td>
-              <td>Redpanda</td>
-              <td>Amazon MSK</td>
+              <td><strong>Transactional Outbox</strong></td>
+              <td>O boleto e o evento <code>boleto.gerado</code> são gravados na mesma transação PostgreSQL. O <code>outbox-worker</code> publica no MSK de forma independente — sem dual write, sem risco de inconsistência.</td>
             </tr>
             <tr>
-              <td>Observabilidade</td>
-              <td>Actuator</td>
-              <td>CloudWatch, Prometheus e tracing</td>
+              <td><strong>Event-Driven Architecture</strong></td>
+              <td>Amazon MSK (Kafka) desacopla todos os domínios. Serviços publicam e consomem eventos sem chamadas síncronas entre si.</td>
+            </tr>
+            <tr>
+              <td><strong>Resiliência AWS</strong></td>
+              <td>SQS absorve picos na entrada (API Gateway → SQS → <code>boleto-service</code>). DLQ isola mensagens com falha. Kafka DLT por consumer com retry e backoff configurável via Spring Kafka.</td>
+            </tr>
+            <tr>
+              <td><strong>Idempotência</strong></td>
+              <td><code>Idempotency-Key</code> validada no ElastiCache Redis antes de processar cada mensagem — impede duplicatas em reprocessamentos do SQS ou Kafka.</td>
+            </tr>
+            <tr>
+              <td><strong>Segurança em camadas</strong></td>
+              <td>CloudFront → AWS WAF → API Gateway (auth + throttling) → IAM/IRSA por service account no EKS → Secrets Manager para credenciais.</td>
             </tr>
           </tbody>
         </table>
       </section>
 
-      <section id="servicos">
-        <h2>Servicos</h2>
+      <!-- ── ARQUITETURA AWS ── -->
+      <section id="arquitetura">
+        <h2>Arquitetura AWS de Referência</h2>
+        <p>Diagrama com ícones AWS oficiais, organizado em zonas (VPC, EKS Cluster, serviços gerenciados). Mostra a borda segura, a entrada assíncrona via SQS, o fluxo principal de criação e o bus de eventos MSK.</p>
+        <div class="diagram-frame">
+          <img src="assets/aws-reference-architecture.svg?v=20260505-3" alt="Diagrama de arquitetura AWS do Receber Bank: Route 53, CloudFront, WAF, API Gateway, SQS, EKS com boleto/payment/query/notification services, RDS, ElastiCache, MSK, CloudWatch e Secrets Manager.">
+        </div>
         <table>
           <thead>
             <tr>
-              <th>Servico</th>
+              <th>Camada</th>
+              <th>Local (Docker Compose)</th>
+              <th>AWS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Borda e segurança</td>
+              <td>REST local direto</td>
+              <td>Route 53, CloudFront, AWS WAF, API Gateway</td>
+            </tr>
+            <tr>
+              <td>Entrada assíncrona</td>
+              <td>—</td>
+              <td>SQS <code>boleto-generation</code> + DLQ</td>
+            </tr>
+            <tr>
+              <td>Compute</td>
+              <td>Docker Compose</td>
+              <td>Amazon EKS (4 microsserviços + outbox worker)</td>
+            </tr>
+            <tr>
+              <td>Banco de dados</td>
+              <td>PostgreSQL container</td>
+              <td>RDS PostgreSQL (write model + read model)</td>
+            </tr>
+            <tr>
+              <td>Cache / idempotência</td>
+              <td>Redis container</td>
+              <td>ElastiCache Redis</td>
+            </tr>
+            <tr>
+              <td>Eventos</td>
+              <td>Redpanda (compatível Kafka)</td>
+              <td>Amazon MSK</td>
+            </tr>
+            <tr>
+              <td>Objetos / PDFs</td>
+              <td>—</td>
+              <td>Amazon S3</td>
+            </tr>
+            <tr>
+              <td>Observabilidade</td>
+              <td>Actuator / Prometheus local</td>
+              <td>CloudWatch, AWS X-Ray / OpenTelemetry, SNS alertas</td>
+            </tr>
+            <tr>
+              <td>Segredos</td>
+              <td>Variáveis de ambiente</td>
+              <td>Secrets Manager + IAM/IRSA por service account</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ── ADR ── -->
+      <section id="adr">
+        <h2>Decisões Arquiteturais (ADR)</h2>
+        <p>As decisões mais relevantes estão documentadas com contexto, alternativas comparadas e consequências — úteis para explicar o <em>porquê</em> de cada escolha em revisões de código ou entrevistas técnicas.</p>
+        <div class="adr-grid">
+          <div class="adr-card">
+            <strong>ADR-001 · Transactional Outbox vs Saga</strong>
+            <span>Por que o Outbox venceu: uma única transação ACID cobre banco e evento, sem necessidade de coordenação distribuída ou framework de Saga para o escopo atual.</span>
+          </div>
+          <div class="adr-card">
+            <strong>ADR-002 · CQRS — banco compartilhado vs separado</strong>
+            <span>Isolamento lógico em desenvolvimento, sem custo de dois clusters RDS. Em produção de alto volume, separar fisicamente é o próximo passo natural.</span>
+          </div>
+          <div class="adr-card">
+            <strong>ADR-003 · Entrada assíncrona — API Gateway → SQS direto</strong>
+            <span>SQS absorve picos sem Lambda intermediário. A API retorna <code>202 Accepted</code> e o serviço processa no seu ritmo, com DLQ isolando falhas.</span>
+          </div>
+          <div class="adr-card">
+            <strong>ADR-004 · Arquitetura Hexagonal</strong>
+            <span>Use cases testáveis sem Spring, sem banco, sem Kafka. A troca de adapter (JPA, Kafka, in-memory) não afeta a regra de negócio.</span>
+          </div>
+        </div>
+        <p style="margin-top:16px" class="muted">Arquivo completo: <code>receber-bank-services/docs/ARCHITECTURE_DECISION_RECORD.md</code></p>
+      </section>
+
+      <!-- ── SERVIÇOS ── -->
+      <section id="servicos">
+        <h2>Serviços</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Serviço</th>
               <th>Porta</th>
               <th>Responsabilidade</th>
-              <th>Topicos</th>
+              <th>Tópicos</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><code>boleto-service</code></td>
               <td><code>8081</code></td>
-              <td>Cria boletos, consulta modelo de escrita, usa Redis para apoio a idempotencia e publica eventos pela outbox.</td>
+              <td>Cria boletos, persiste no modelo de escrita e publica eventos via Transactional Outbox. Valida idempotência no Redis.</td>
               <td>Produz <code>boleto.gerado</code></td>
             </tr>
             <tr>
               <td><code>query-service</code></td>
               <td><code>8082</code></td>
-              <td>Mantem o read model e expoe consultas por boleto ou status.</td>
-              <td>Consome os eventos do dominio</td>
+              <td>Mantém o read model (CQRS) e expõe consultas por boleto ou status.</td>
+              <td>Consome todos os eventos de domínio</td>
             </tr>
             <tr>
               <td><code>payment-service</code></td>
               <td><code>8083</code></td>
-              <td>Consome boleto gerado e processa a efetivacao de pagamento.</td>
-              <td>Consome <code>boleto.gerado</code>, produz <code>pagamento.efetivado</code></td>
+              <td>Consome <code>boleto.gerado</code>, aguarda estímulo externo de pagamento e valida valor e vencimento.</td>
+              <td>Consome <code>boleto.gerado</code>, produz <code>pagamento.efetivado</code> / <code>pagamento.rejeitado</code></td>
             </tr>
             <tr>
               <td><code>notification-service</code></td>
               <td><code>8084</code></td>
-              <td>Gera notificacoes a partir de eventos de boleto e pagamento.</td>
-              <td>Consome <code>boleto.gerado</code> e <code>pagamento.efetivado</code>, produz <code>notificacao.enviada</code></td>
+              <td>Gera notificações a partir de eventos de boleto e pagamento.</td>
+              <td>Consome <code>boleto.gerado</code> e <code>pagamento.*</code>, produz <code>notificacao.enviada</code></td>
             </tr>
           </tbody>
         </table>
       </section>
 
+      <!-- ── FLUXOS ── -->
       <section id="fluxos">
-        <h2>Fluxos Das Jornadas</h2>
-        <p>Fluxos separados para explicar cada parte do case sem embolar a arquitetura geral.</p>
+        <h2>Fluxos das Jornadas</h2>
+        <p>Fluxos separados para explicar cada parte do case sem misturar com a arquitetura geral.</p>
         <div class="diagram-frame">
-          <img src="assets/journey-flows.svg?v=20260505-1705" alt="Fluxos das jornadas de emissao de boleto, registro externo, pagamento aprovado, pagamento rejeitado, consulta e notificacao.">
+          <img src="assets/journey-flows.svg?v=20260505-3" alt="Fluxos das jornadas de emissão de boleto, registro externo, pagamento aprovado, pagamento rejeitado, consulta e notificação.">
         </div>
         <div class="flow">
-          <div class="step"><strong>1. Criacao</strong><br>Cliente envia `POST /boletos`; o `boleto-service` valida a requisicao e cria o agregado de boleto.</div>
-          <div class="step"><strong>2. Persistencia e outbox</strong><br>O boleto e salvo em PostgreSQL e o evento `boleto.gerado` e gravado em `outbox_events` na mesma transacao.</div>
-          <div class="step"><strong>3. Registro externo</strong><br>A registradora bancaria e representada por uma API simulada em `POST /simulacoes/registradora/boletos`, deixando claro o limite com sistemas externos.</div>
-          <div class="step"><strong>4. Aguardando pagamento</strong><br>`payment-service` consome `boleto.gerado` apenas para saber quais boletos existem; ele nao efetiva pagamento automaticamente.</div>
-          <div class="step"><strong>5. Estimulo externo</strong><br>O pagamento chega por `POST /simulacoes/pagamentos`, simulando retorno bancario, webhook, arquivo CNAB ou parceiro externo.</div>
-          <div class="step"><strong>6. Validacao</strong><br>O pagamento e aprovado se valor pago for igual ao valor do boleto e se a data recebida estiver dentro do vencimento. Caso contrario, gera `pagamento.rejeitado`.</div>
-          <div class="step"><strong>7. Consulta e notificacao</strong><br>`query-service` atualiza o read model e `notification-service` notifica o resultado para o cliente PJ.</div>
+          <div class="step"><strong>1. Criação</strong><br>Cliente envia <code>POST /boletos</code>; o <code>boleto-service</code> valida a requisição e cria o agregado de boleto.</div>
+          <div class="step"><strong>2. Persistência e Outbox</strong><br>O boleto é salvo no PostgreSQL e o evento <code>boleto.gerado</code> é gravado em <code>outbox_events</code> na mesma transação — garantia de consistência sem dual write.</div>
+          <div class="step"><strong>3. Registro externo</strong><br>A registradora bancária (CIP/Nuclea) é representada por uma API simulada em <code>POST /simulacoes/registradora/boletos</code>, deixando claro o limite com sistemas externos.</div>
+          <div class="step"><strong>4. Aguardando pagamento</strong><br><code>payment-service</code> consome <code>boleto.gerado</code> apenas para saber quais boletos existem; ele não efetiva pagamento automaticamente.</div>
+          <div class="step"><strong>5. Estímulo externo</strong><br>O pagamento chega por <code>POST /simulacoes/pagamentos</code>, simulando retorno bancário, webhook, arquivo CNAB ou parceiro externo.</div>
+          <div class="step"><strong>6. Validação</strong><br>O pagamento é aprovado se o valor pago for igual ao valor do boleto e a data estiver dentro do vencimento. Caso contrário, publica <code>pagamento.rejeitado</code>.</div>
+          <div class="step"><strong>7. Consulta e notificação</strong><br><code>query-service</code> atualiza o read model e <code>notification-service</code> notifica o resultado para o cliente PJ via <code>notificacao.enviada</code>.</div>
         </div>
       </section>
 
+      <!-- ── APIs ── -->
       <section id="apis">
         <h2>APIs</h2>
-        <h3>Boleto service</h3>
+        <h3>boleto-service</h3>
         <table>
           <thead>
-            <tr>
-              <th>Metodo</th>
-              <th>Endpoint</th>
-              <th>Descricao</th>
-            </tr>
+            <tr><th>Método</th><th>Endpoint</th><th>Descrição</th></tr>
           </thead>
           <tbody>
             <tr>
               <td><code>POST</code></td>
               <td><code>/boletos</code></td>
-              <td>Cria um boleto e retorna `201 Created` com `Location` apontando para o recurso.</td>
+              <td>Cria um boleto e retorna <code>201 Created</code> com <code>Location</code> apontando para o recurso.</td>
             </tr>
             <tr>
               <td><code>GET</code></td>
               <td><code>/boletos/{id}</code></td>
               <td>Consulta um boleto pelo identificador no modelo de escrita.</td>
             </tr>
+            <tr>
+              <td><code>POST</code></td>
+              <td><code>/simulacoes/registradora/boletos</code></td>
+              <td>Representa a API externa de registradora bancária / CIP / Nuclea para fins de demonstração.</td>
+            </tr>
           </tbody>
         </table>
 
-        <h3>Query service</h3>
+        <h3>query-service</h3>
         <table>
           <thead>
-            <tr>
-              <th>Metodo</th>
-              <th>Endpoint</th>
-              <th>Descricao</th>
-            </tr>
+            <tr><th>Método</th><th>Endpoint</th><th>Descrição</th></tr>
           </thead>
           <tbody>
             <tr>
               <td><code>GET</code></td>
               <td><code>/consultas/boletos</code></td>
-              <td>Lista boletos do read model. Aceita filtro opcional `status`.</td>
+              <td>Lista boletos do read model. Aceita filtro opcional <code>status</code>.</td>
             </tr>
             <tr>
               <td><code>GET</code></td>
@@ -480,87 +509,82 @@
           </tbody>
         </table>
 
-        <h3>Simuladores do case</h3>
+        <h3>payment-service — simulador</h3>
         <table>
           <thead>
-            <tr>
-              <th>Servico</th>
-              <th>Endpoint</th>
-              <th>Descricao</th>
-            </tr>
+            <tr><th>Método</th><th>Endpoint</th><th>Descrição</th></tr>
           </thead>
           <tbody>
             <tr>
-              <td><code>boleto-service</code></td>
-              <td><code>POST /simulacoes/registradora/boletos</code></td>
-              <td>Representa a API externa de registradora bancaria/CIP/Nuclea para fins de apresentacao.</td>
-            </tr>
-            <tr>
-              <td><code>payment-service</code></td>
-              <td><code>POST /simulacoes/pagamentos</code></td>
-              <td>Simula chegada de pagamento externo e publica <code>pagamento.efetivado</code> ou <code>pagamento.rejeitado</code>.</td>
+              <td><code>POST</code></td>
+              <td><code>/simulacoes/pagamentos</code></td>
+              <td>Simula chegada de pagamento externo e publica <code>pagamento.efetivado</code> ou <code>pagamento.rejeitado</code> com base em valor e vencimento.</td>
             </tr>
           </tbody>
         </table>
       </section>
 
+      <!-- ── DEMO ── -->
       <section id="demo">
-        <h2>Demo Postman/Insomnia</h2>
-        <p>As colecoes versionadas no repositorio guiam a apresentacao ponta a ponta: health checks, criacao do boleto, registro externo simulado, pagamento aprovado, consulta CQRS e cenario de rejeicao por regra de negocio.</p>
+        <h2>Demo Postman / Insomnia</h2>
+        <p>As coleções versionadas no repositório guiam a apresentação ponta a ponta: health checks, criação do boleto, registro externo simulado, pagamento aprovado, consulta CQRS e cenário de rejeição por regra de negócio.</p>
         <pre><code>docs/api/receber-bank.postman_collection.json
 docs/api/receber-bank.insomnia.json</code></pre>
-        <p class="muted">No Postman, as variaveis da jornada sao capturadas automaticamente. No Insomnia, copie os campos da resposta de criacao do boleto para o ambiente antes de seguir.</p>
+        <p class="muted">No Postman, as variáveis da jornada são capturadas automaticamente (<code>boleto_id</code>, <code>codigo_barras</code>, <code>linha_digitavel</code>). No Insomnia, copie os campos da resposta de criação do boleto para o ambiente antes de prosseguir.</p>
       </section>
 
+      <!-- ── AMBIENTE LOCAL ── -->
       <section id="local">
         <h2>Ambiente Local</h2>
-        <p>Use Maven Wrapper para build/testes e Docker Compose para subir a stack completa.</p>
+        <p>Use o Maven Wrapper para build e testes, e o Docker Compose para subir a stack completa.</p>
         <pre><code>cd receber-bank-services
 ./mvnw clean test
 docker compose up --build</code></pre>
-        <p>Dependencias locais expostas:</p>
+        <p>Dependências locais expostas:</p>
         <span class="tag">PostgreSQL: 5432</span>
         <span class="tag">Redis: 6379</span>
-        <span class="tag">Kafka/Redpanda: 9092</span>
+        <span class="tag">Kafka / Redpanda: 9092</span>
+        <p style="margin-top:16px">Endpoints de health check:</p>
+        <pre><code>http://localhost:8081/actuator/health   # boleto-service
+http://localhost:8082/actuator/health   # query-service
+http://localhost:8083/actuator/health   # payment-service
+http://localhost:8084/actuator/health   # notification-service</code></pre>
       </section>
 
+      <!-- ── AWS ── -->
       <section id="aws">
         <h2>AWS e Kubernetes</h2>
-        <p>O repositorio contem base de infraestrutura em `receber-bank-services/infra/aws/terraform` e manifests Kubernetes em `receber-bank-services/k8s/aws`.</p>
+        <p>O repositório contém base de infraestrutura em <code>receber-bank-services/infra/aws/terraform</code> e manifests Kubernetes em <code>receber-bank-services/k8s/aws</code>.</p>
         <table>
           <thead>
-            <tr>
-              <th>Area</th>
-              <th>Recursos</th>
-            </tr>
+            <tr><th>Área</th><th>Recursos provisionados</th></tr>
           </thead>
           <tbody>
             <tr>
               <td>Rede e compute</td>
-              <td>VPC, subnets, NAT, EKS, node group e ALB ingress.</td>
+              <td>VPC, subnets públicas e privadas, NAT Gateway, EKS Cluster, node group, ALB Ingress Controller.</td>
             </tr>
             <tr>
               <td>Dados e mensagens</td>
-              <td>RDS PostgreSQL, ElastiCache Redis, SQS, MSK e S3.</td>
+              <td>RDS PostgreSQL, ElastiCache Redis, SQS + DLQ, Amazon MSK, S3 para documentos e backups.</td>
             </tr>
             <tr>
-              <td>Seguranca</td>
-              <td>Security Groups, IAM/IRSA, Secrets Manager e Kubernetes Secrets de exemplo.</td>
+              <td>Segurança</td>
+              <td>Security Groups, IAM roles com IRSA por service account, Secrets Manager e Kubernetes Secrets de exemplo.</td>
             </tr>
             <tr>
-              <td>Operacao</td>
-              <td>CloudWatch, logs, metricas e endpoints Actuator.</td>
+              <td>Observabilidade</td>
+              <td>CloudWatch Log Groups, métricas via Actuator / Prometheus, alertas SNS.</td>
             </tr>
           </tbody>
         </table>
-      </section>
-
-      <section id="github">
-        <h2>GitHub</h2>
-        <p>Esta documentacao e publicada a partir da pasta `docs` usando GitHub Actions. Para ativar, envie o projeto para um repositorio GitHub e selecione GitHub Actions como origem do Pages.</p>
-        <pre><code>git remote add origin https://github.com/SEU_USUARIO/receber-bank.git
-git push -u origin main</code></pre>
-        <p class="muted">O workflow tambem pode ser executado manualmente pela aba Actions.</p>
+        <p style="margin-top:16px">Para provisionar:</p>
+        <pre><code>cd receber-bank-services/infra/aws/terraform
+cp terraform.tfvars.example terraform.tfvars
+# edite terraform.tfvars (obrigatório: db_password)
+terraform init
+terraform plan
+terraform apply</code></pre>
       </section>
     </main>
   </div>
