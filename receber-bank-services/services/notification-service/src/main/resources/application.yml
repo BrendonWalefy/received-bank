@@ -36,4 +36,5 @@ app:
     topics:
       boleto-gerado: boleto.gerado
       pagamento-efetivado: pagamento.efetivado
+      pagamento-rejeitado: pagamento.rejeitado
       notificacao-enviada: notificacao.enviada

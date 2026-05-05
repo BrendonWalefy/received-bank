@@ -52,8 +52,20 @@ Endpoints principais:
 
 - `POST http://localhost:8081/boletos`
 - `GET http://localhost:8081/boletos/{id}`
+- `POST http://localhost:8081/simulacoes/registradora/boletos`
+- `POST http://localhost:8083/simulacoes/pagamentos`
 - `GET http://localhost:8082/consultas/boletos`
 - `GET http://localhost:8082/consultas/boletos/{boletoId}`
+
+Jornada simulada:
+
+1. O Cliente PJ solicita a criacao do boleto no `boleto-service`.
+2. O boleto e persistido e publicado como evento `boleto.gerado`.
+3. A registradora externa pode ser representada pela API fake `/simulacoes/registradora/boletos`.
+4. O `payment-service` passa a aguardar um estimulo externo de pagamento em `/simulacoes/pagamentos`.
+5. O pagamento e validado por valor e vencimento.
+6. Pagamentos validos publicam `pagamento.efetivado`; pagamentos invalidos publicam `pagamento.rejeitado`.
+7. `query-service` atualiza o read model e `notification-service` emite notificacoes do resultado.
 
 Health checks:
 
@@ -78,4 +90,3 @@ git checkout main
 git merge appmod/java-upgrade-20260505103714
 git push -u origin main
 ```
-

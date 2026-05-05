@@ -3,6 +3,7 @@ package com.bank.recebimentos.query.application;
 import com.bank.recebimentos.domain.event.BoletoGeradoIntegrationEvent;
 import com.bank.recebimentos.domain.event.NotificacaoEnviadaIntegrationEvent;
 import com.bank.recebimentos.domain.event.PagamentoEfetivadoIntegrationEvent;
+import com.bank.recebimentos.domain.event.PagamentoRejeitadoIntegrationEvent;
 import com.bank.recebimentos.query.adapter.persistence.BoletoReadModel;
 import com.bank.recebimentos.query.adapter.persistence.BoletoReadModelRepository;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,15 @@ public class AtualizarBoletoReadModelUseCase {
         repository.findById(UUID.fromString(evento.boletoId())).ifPresent(readModel -> {
             readModel.setStatus("PAGO");
             readModel.setPagoEm(evento.pagoEm());
+            readModel.setUpdatedAt(Instant.now());
+            repository.save(readModel);
+        });
+    }
+
+    @Transactional
+    public void registrarPagamentoRejeitado(PagamentoRejeitadoIntegrationEvent evento) {
+        repository.findById(UUID.fromString(evento.boletoId())).ifPresent(readModel -> {
+            readModel.setStatus("PAGAMENTO_REJEITADO:" + evento.motivo());
             readModel.setUpdatedAt(Instant.now());
             repository.save(readModel);
         });

@@ -426,10 +426,12 @@
         <h2>Fluxos</h2>
         <div class="flow">
           <div class="step"><strong>1. Criacao</strong><br>Cliente envia `POST /boletos`; o `boleto-service` valida a requisicao e cria o agregado de boleto.</div>
-          <div class="step"><strong>2. Persistencia</strong><br>O boleto e salvo em PostgreSQL e o evento `boleto.gerado` e gravado em `outbox_events` na mesma transacao.</div>
-          <div class="step"><strong>3. Publicacao</strong><br>O publisher da outbox envia eventos pendentes para Kafka/Redpanda.</div>
-          <div class="step"><strong>4. Reacao</strong><br>`payment-service`, `notification-service` e `query-service` consomem os eventos e atualizam seus proprios fluxos.</div>
-          <div class="step"><strong>5. Consulta</strong><br>O consumidor consulta `query-service`, que responde a partir do read model.</div>
+          <div class="step"><strong>2. Persistencia e outbox</strong><br>O boleto e salvo em PostgreSQL e o evento `boleto.gerado` e gravado em `outbox_events` na mesma transacao.</div>
+          <div class="step"><strong>3. Registro externo</strong><br>A registradora bancaria e representada por uma API simulada em `POST /simulacoes/registradora/boletos`, deixando claro o limite com sistemas externos.</div>
+          <div class="step"><strong>4. Aguardando pagamento</strong><br>`payment-service` consome `boleto.gerado` apenas para saber quais boletos existem; ele nao efetiva pagamento automaticamente.</div>
+          <div class="step"><strong>5. Estimulo externo</strong><br>O pagamento chega por `POST /simulacoes/pagamentos`, simulando retorno bancario, webhook, arquivo CNAB ou parceiro externo.</div>
+          <div class="step"><strong>6. Validacao</strong><br>O pagamento e aprovado se valor pago for igual ao valor do boleto e se a data recebida estiver dentro do vencimento. Caso contrario, gera `pagamento.rejeitado`.</div>
+          <div class="step"><strong>7. Consulta e notificacao</strong><br>`query-service` atualiza o read model e `notification-service` notifica o resultado para o cliente PJ.</div>
         </div>
       </section>
 
@@ -477,6 +479,29 @@
               <td><code>GET</code></td>
               <td><code>/consultas/boletos/{boletoId}</code></td>
               <td>Consulta um boleto no read model pelo identificador.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Simuladores do case</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Servico</th>
+              <th>Endpoint</th>
+              <th>Descricao</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>boleto-service</code></td>
+              <td><code>POST /simulacoes/registradora/boletos</code></td>
+              <td>Representa a API externa de registradora bancaria/CIP/Nuclea para fins de apresentacao.</td>
+            </tr>
+            <tr>
+              <td><code>payment-service</code></td>
+              <td><code>POST /simulacoes/pagamentos</code></td>
+              <td>Simula chegada de pagamento externo e publica <code>pagamento.efetivado</code> ou <code>pagamento.rejeitado</code>.</td>
             </tr>
           </tbody>
         </table>
