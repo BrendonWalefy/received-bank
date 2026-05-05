@@ -1,0 +1,303 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1120" viewBox="0 0 1800 1120" role="img" aria-labelledby="title desc">
+  <title id="title">Whiteboard AWS - Receber Bank</title>
+  <desc id="desc">Arquitetura AWS do case Receber Bank com icones no estilo AWS para explicar entrada segura, SQS, EKS, RDS, Redis, MSK, S3, Secrets Manager, CloudWatch e observabilidade.</desc>
+  <defs>
+    <style>
+      .canvas { fill: #fbfbfd; }
+      .aws-orange { fill: #ff9900; }
+      .aws-dark { fill: #232f3e; }
+      .aws-blue { fill: #147eba; }
+      .aws-green { fill: #1f9d55; }
+      .aws-purple { fill: #8c4fff; }
+      .aws-red { fill: #d13212; }
+      .aws-gray { fill: #eef2f7; stroke: #c9d2df; stroke-width: 2; }
+      .zone { fill: #ffffff; stroke: #d6dbe6; stroke-width: 2; rx: 22; }
+      .zone-alt { fill: #f7fbff; stroke: #b8cde8; stroke-width: 2; rx: 22; }
+      .zone-data { fill: #f8fff9; stroke: #b8dec3; stroke-width: 2; rx: 22; }
+      .zone-ops { fill: #fffaf1; stroke: #e2c783; stroke-width: 2; rx: 22; }
+      .icon-card { fill: #ffffff; stroke: #cfd8e6; stroke-width: 2; rx: 14; }
+      .svc-title { fill: #172033; font: 700 18px Inter, Arial, sans-serif; }
+      .svc-sub { fill: #5d6b82; font: 500 13px Inter, Arial, sans-serif; }
+      .heading { fill: #172033; font: 800 30px Inter, Arial, sans-serif; }
+      .subheading { fill: #526173; font: 500 17px Inter, Arial, sans-serif; }
+      .zone-title { fill: #172033; font: 800 20px Inter, Arial, sans-serif; }
+      .note-title { fill: #172033; font: 800 17px Inter, Arial, sans-serif; }
+      .note { fill: #526173; font: 500 13px Inter, Arial, sans-serif; }
+      .path { fill: none; stroke: #26364c; stroke-width: 4; marker-end: url(#arrow); }
+      .event { fill: none; stroke: #b7791f; stroke-width: 4; stroke-dasharray: 10 8; marker-end: url(#arrow-event); }
+      .ops { fill: none; stroke: #64748b; stroke-width: 3; stroke-dasharray: 6 7; marker-end: url(#arrow-ops); }
+      .thin { fill: none; stroke: #94a3b8; stroke-width: 2; }
+      .badge { fill: #232f3e; rx: 9; }
+      .badge-text { fill: #ffffff; font: 700 12px Inter, Arial, sans-serif; }
+    </style>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto">
+      <path d="M 0 0 L 14 7 L 0 14 z" fill="#26364c"/>
+    </marker>
+    <marker id="arrow-event" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto">
+      <path d="M 0 0 L 14 7 L 0 14 z" fill="#b7791f"/>
+    </marker>
+    <marker id="arrow-ops" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto">
+      <path d="M 0 0 L 14 7 L 0 14 z" fill="#64748b"/>
+    </marker>
+
+    <g id="aws-logo">
+      <rect width="74" height="48" rx="9" class="aws-dark"/>
+      <text x="14" y="30" fill="#ffffff" font-family="Arial, sans-serif" font-weight="700" font-size="18">AWS</text>
+      <path d="M18 37 C31 45, 48 45, 62 36" fill="none" stroke="#ff9900" stroke-width="4" stroke-linecap="round"/>
+    </g>
+
+    <g id="globe">
+      <circle cx="37" cy="37" r="31" fill="#eef6ff" stroke="#147eba" stroke-width="4"/>
+      <path d="M10 37 H64 M37 7 C25 21, 25 53, 37 67 M37 7 C49 21, 49 53, 37 67" class="thin"/>
+      <path d="M17 22 C31 29, 43 29, 57 22 M17 52 C31 45, 43 45, 57 52" class="thin"/>
+    </g>
+
+    <g id="shield">
+      <path d="M37 6 L65 17 V36 C65 55 52 68 37 74 C22 68 9 55 9 36 V17 Z" fill="#fff1f2" stroke="#d13212" stroke-width="4"/>
+      <path d="M24 38 L33 47 L52 27" fill="none" stroke="#d13212" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <g id="queue">
+      <rect x="7" y="12" width="60" height="50" rx="9" fill="#fff8ea" stroke="#ff9900" stroke-width="4"/>
+      <path d="M20 25 H54 M20 37 H54 M20 49 H43" stroke="#b7791f" stroke-width="5" stroke-linecap="round"/>
+    </g>
+
+    <g id="container">
+      <rect x="5" y="12" width="64" height="50" rx="8" fill="#effaf7" stroke="#1f9d55" stroke-width="4"/>
+      <path d="M16 25 H58 M16 37 H58 M16 49 H58" stroke="#1f9d55" stroke-width="4" stroke-linecap="round"/>
+      <path d="M26 14 V62 M48 14 V62" stroke="#1f9d55" stroke-width="3" opacity=".65"/>
+    </g>
+
+    <g id="database">
+      <ellipse cx="37" cy="16" rx="30" ry="10" fill="#eef5ff" stroke="#147eba" stroke-width="4"/>
+      <path d="M7 16 V58 C7 64 20 70 37 70 C54 70 67 64 67 58 V16" fill="#eef5ff" stroke="#147eba" stroke-width="4"/>
+      <path d="M7 37 C7 43 20 49 37 49 C54 49 67 43 67 37" fill="none" stroke="#147eba" stroke-width="3"/>
+    </g>
+
+    <g id="cache">
+      <rect x="8" y="10" width="58" height="58" rx="12" fill="#f8fff9" stroke="#1f9d55" stroke-width="4"/>
+      <rect x="19" y="21" width="36" height="36" rx="7" fill="#dff7e6" stroke="#1f9d55" stroke-width="3"/>
+      <path d="M25 30 H49 M25 39 H49 M25 48 H42" stroke="#1f9d55" stroke-width="4" stroke-linecap="round"/>
+    </g>
+
+    <g id="stream">
+      <rect x="7" y="13" width="60" height="50" rx="12" fill="#fff8ea" stroke="#ff9900" stroke-width="4"/>
+      <path d="M18 49 C30 24, 44 24, 56 49" fill="none" stroke="#b7791f" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="18" cy="49" r="5" fill="#b7791f"/>
+      <circle cx="37" cy="31" r="5" fill="#b7791f"/>
+      <circle cx="56" cy="49" r="5" fill="#b7791f"/>
+    </g>
+
+    <g id="bucket">
+      <path d="M15 17 H59 L54 66 H20 Z" fill="#eef5ff" stroke="#147eba" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M15 17 C22 9, 52 9, 59 17" fill="#dceeff" stroke="#147eba" stroke-width="4"/>
+    </g>
+
+    <g id="lock">
+      <rect x="12" y="31" width="50" height="37" rx="8" fill="#fff1f2" stroke="#d13212" stroke-width="4"/>
+      <path d="M24 31 V23 C24 13, 31 7, 37 7 C43 7, 50 13, 50 23 V31" fill="none" stroke="#d13212" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="37" cy="49" r="5" fill="#d13212"/>
+    </g>
+
+    <g id="monitor">
+      <rect x="8" y="13" width="58" height="42" rx="8" fill="#f8fafc" stroke="#64748b" stroke-width="4"/>
+      <path d="M18 42 L29 31 L38 37 L53 22" fill="none" stroke="#64748b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M28 66 H46 M37 55 V66" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+    </g>
+
+    <g id="api">
+      <rect x="8" y="12" width="58" height="52" rx="10" fill="#eef5ff" stroke="#147eba" stroke-width="4"/>
+      <path d="M22 28 L14 38 L22 48 M52 28 L60 38 L52 48" fill="none" stroke="#147eba" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M33 51 L43 25" stroke="#147eba" stroke-width="4" stroke-linecap="round"/>
+    </g>
+
+    <g id="alb">
+      <rect x="8" y="15" width="58" height="46" rx="9" fill="#eef5ff" stroke="#147eba" stroke-width="4"/>
+      <path d="M19 38 H55 M37 25 V51" stroke="#147eba" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="19" cy="38" r="5" fill="#147eba"/>
+      <circle cx="37" cy="25" r="5" fill="#147eba"/>
+      <circle cx="55" cy="38" r="5" fill="#147eba"/>
+      <circle cx="37" cy="51" r="5" fill="#147eba"/>
+    </g>
+  </defs>
+
+  <rect width="1800" height="1120" class="canvas"/>
+  <use href="#aws-logo" x="60" y="42"/>
+  <text x="155" y="70" class="heading">Receber Bank - Whiteboard AWS</text>
+  <text x="155" y="100" class="subheading">Case para apresentar escolhas de arquitetura: resiliencia, desacoplamento, consistencia, consulta rapida, seguranca e operacao.</text>
+
+  <rect x="60" y="145" width="330" height="780" class="zone"/>
+  <text x="88" y="184" class="zone-title">1. Borda segura</text>
+  <text x="88" y="211" class="note">Protege e controla entrada publica.</text>
+
+  <rect x="430" y="145" width="330" height="780" class="zone-alt"/>
+  <text x="458" y="184" class="zone-title">2. Entrada resiliente</text>
+  <text x="458" y="211" class="note">Absorve pico e desacopla criacao.</text>
+
+  <rect x="800" y="145" width="430" height="780" class="zone"/>
+  <text x="828" y="184" class="zone-title">3. EKS - servicos</text>
+  <text x="828" y="211" class="note">Escala independente por dominio.</text>
+
+  <rect x="1270" y="145" width="220" height="780" class="zone-data"/>
+  <text x="1298" y="184" class="zone-title">4. Dados</text>
+  <text x="1298" y="211" class="note">Persistencia, cache e objetos.</text>
+
+  <rect x="1530" y="145" width="210" height="780" class="zone-ops"/>
+  <text x="1558" y="184" class="zone-title">5. Eventos e operacao</text>
+  <text x="1558" y="211" class="note">Event bus, logs e segredos.</text>
+
+  <rect x="97" y="270" width="230" height="96" class="icon-card"/>
+  <use href="#globe" x="112" y="282"/>
+  <text x="200" y="312" class="svc-title">Route 53</text>
+  <text x="200" y="338" class="svc-sub">DNS gerenciado</text>
+
+  <rect x="97" y="400" width="230" height="96" class="icon-card"/>
+  <use href="#globe" x="112" y="412"/>
+  <text x="200" y="442" class="svc-title">CloudFront</text>
+  <text x="200" y="468" class="svc-sub">TLS e cache global</text>
+
+  <rect x="97" y="530" width="230" height="96" class="icon-card"/>
+  <use href="#shield" x="112" y="540"/>
+  <text x="200" y="572" class="svc-title">AWS WAF</text>
+  <text x="200" y="598" class="svc-sub">bloqueio e rate limit</text>
+
+  <rect x="97" y="660" width="230" height="96" class="icon-card"/>
+  <use href="#api" x="112" y="672"/>
+  <text x="200" y="702" class="svc-title">API Gateway</text>
+  <text x="200" y="728" class="svc-sub">auth, throttling, POST</text>
+
+  <rect x="467" y="300" width="230" height="96" class="icon-card"/>
+  <use href="#queue" x="482" y="312"/>
+  <text x="570" y="342" class="svc-title">Amazon SQS</text>
+  <text x="570" y="368" class="svc-sub">fila boleto-generation</text>
+
+  <rect x="467" y="450" width="230" height="96" class="icon-card"/>
+  <use href="#queue" x="482" y="462"/>
+  <text x="570" y="492" class="svc-title">SQS DLQ</text>
+  <text x="570" y="518" class="svc-sub">isolamento de falhas</text>
+
+  <rect x="467" y="650" width="230" height="96" class="icon-card"/>
+  <use href="#alb" x="482" y="662"/>
+  <text x="570" y="692" class="svc-title">ALB Ingress</text>
+  <text x="570" y="718" class="svc-sub">consulta publica segura</text>
+
+  <rect x="842" y="275" width="270" height="96" class="icon-card"/>
+  <use href="#container" x="858" y="287"/>
+  <text x="948" y="317" class="svc-title">boleto-service</text>
+  <text x="948" y="343" class="svc-sub">dominio + outbox transacional</text>
+
+  <rect x="842" y="430" width="270" height="96" class="icon-card"/>
+  <use href="#container" x="858" y="442"/>
+  <text x="948" y="472" class="svc-title">payment-service</text>
+  <text x="948" y="498" class="svc-sub">consome boleto.gerado</text>
+
+  <rect x="842" y="585" width="270" height="96" class="icon-card"/>
+  <use href="#container" x="858" y="597"/>
+  <text x="948" y="627" class="svc-title">notification-service</text>
+  <text x="948" y="653" class="svc-sub">notifica cliente/parceiro</text>
+
+  <rect x="842" y="740" width="270" height="96" class="icon-card"/>
+  <use href="#container" x="858" y="752"/>
+  <text x="948" y="782" class="svc-title">query-service</text>
+  <text x="948" y="808" class="svc-sub">API de leitura / CQRS</text>
+
+  <rect x="1142" y="275" width="60" height="561" fill="#effaf7" stroke="#1f9d55" stroke-width="3" rx="18"/>
+  <text x="1164" y="526" class="svc-title" transform="rotate(90 1164 526)">EKS</text>
+
+  <rect x="1300" y="275" width="160" height="96" class="icon-card"/>
+  <use href="#database" x="1312" y="287"/>
+  <text x="1392" y="317" class="svc-title">RDS</text>
+  <text x="1392" y="343" class="svc-sub">write store</text>
+
+  <rect x="1300" y="430" width="160" height="96" class="icon-card"/>
+  <use href="#cache" x="1312" y="442"/>
+  <text x="1392" y="472" class="svc-title">Redis</text>
+  <text x="1392" y="498" class="svc-sub">idempotencia</text>
+
+  <rect x="1300" y="585" width="160" height="96" class="icon-card"/>
+  <use href="#database" x="1312" y="597"/>
+  <text x="1392" y="627" class="svc-title">RDS</text>
+  <text x="1392" y="653" class="svc-sub">read model</text>
+
+  <rect x="1300" y="740" width="160" height="96" class="icon-card"/>
+  <use href="#bucket" x="1312" y="752"/>
+  <text x="1392" y="782" class="svc-title">S3</text>
+  <text x="1392" y="808" class="svc-sub">PDFs/backups</text>
+
+  <rect x="1558" y="275" width="154" height="96" class="icon-card"/>
+  <use href="#stream" x="1568" y="287"/>
+  <text x="1646" y="317" class="svc-title">MSK</text>
+  <text x="1646" y="343" class="svc-sub">Kafka gerenciado</text>
+
+  <rect x="1558" y="430" width="154" height="96" class="icon-card"/>
+  <use href="#monitor" x="1568" y="442"/>
+  <text x="1646" y="472" class="svc-title">CloudWatch</text>
+  <text x="1646" y="498" class="svc-sub">logs/metricas</text>
+
+  <rect x="1558" y="585" width="154" height="96" class="icon-card"/>
+  <use href="#monitor" x="1568" y="597"/>
+  <text x="1646" y="627" class="svc-title">X-Ray</text>
+  <text x="1646" y="653" class="svc-sub">tracing</text>
+
+  <rect x="1558" y="740" width="154" height="96" class="icon-card"/>
+  <use href="#lock" x="1568" y="752"/>
+  <text x="1646" y="782" class="svc-title">Secrets</text>
+  <text x="1646" y="808" class="svc-sub">credenciais</text>
+
+  <path d="M327 318 C390 318 405 348 467 348" class="path"/>
+  <path d="M327 448 C365 448 385 415 410 376 C435 335 450 348 467 348" class="path"/>
+  <path d="M327 578 C385 578 412 430 467 348" class="path"/>
+  <path d="M327 708 C385 708 407 361 467 348" class="path"/>
+  <path d="M697 348 C760 348 775 323 842 323" class="path"/>
+  <path d="M582 396 C582 420 582 430 582 450" class="path"/>
+  <path d="M697 698 C760 698 775 788 842 788" class="path"/>
+
+  <path d="M1112 323 C1180 323 1230 323 1300 323" class="path"/>
+  <path d="M1112 323 C1190 365 1225 430 1300 478" class="path"/>
+  <path d="M1112 788 C1190 788 1225 645 1300 633" class="path"/>
+  <path d="M1112 323 C1190 485 1220 730 1300 788" class="ops"/>
+
+  <path d="M1112 323 C1245 210 1435 210 1558 323" class="event"/>
+  <path d="M1558 323 C1415 410 1260 455 1112 478" class="event"/>
+  <path d="M1558 323 C1420 512 1260 612 1112 633" class="event"/>
+  <path d="M1558 323 C1430 650 1260 780 1112 788" class="event"/>
+
+  <path d="M1112 323 C1300 395 1425 448 1558 478" class="ops"/>
+  <path d="M1112 478 C1310 525 1425 605 1558 633" class="ops"/>
+  <path d="M1558 788 C1370 900 1100 860 912 836" class="ops"/>
+
+  <rect x="80" y="960" width="380" height="112" class="aws-gray" rx="18"/>
+  <text x="108" y="994" class="note-title">Por que API Gateway + SQS?</text>
+  <text x="108" y="1022" class="note">A criacao de boleto vira entrada assincrona:</text>
+  <text x="108" y="1045" class="note">picos sao absorvidos, retries ficam controlados e</text>
+  <text x="108" y="1068" class="note">falhas vao para DLQ sem derrubar o dominio.</text>
+
+  <rect x="500" y="960" width="380" height="112" class="aws-gray" rx="18"/>
+  <text x="528" y="994" class="note-title">Por que EKS?</text>
+  <text x="528" y="1022" class="note">Cada servico escala e evolui separadamente.</text>
+  <text x="528" y="1045" class="note">O case mostra deploy padronizado, health checks,</text>
+  <text x="528" y="1068" class="note">config maps, secrets e ingress no mesmo cluster.</text>
+
+  <rect x="920" y="960" width="380" height="112" class="aws-gray" rx="18"/>
+  <text x="948" y="994" class="note-title">Por que Outbox + MSK?</text>
+  <text x="948" y="1022" class="note">O boleto e o evento nascem na mesma transacao.</text>
+  <text x="948" y="1045" class="note">Depois o MSK distribui eventos para pagamento,</text>
+  <text x="948" y="1068" class="note">notificacao e consulta com baixo acoplamento.</text>
+
+  <rect x="1340" y="960" width="380" height="112" class="aws-gray" rx="18"/>
+  <text x="1368" y="994" class="note-title">Por que CQRS e observabilidade?</text>
+  <text x="1368" y="1022" class="note">RDS separado para leitura reduz impacto no write.</text>
+  <text x="1368" y="1045" class="note">CloudWatch, tracing e Secrets Manager deixam o</text>
+  <text x="1368" y="1068" class="note">ambiente apresentavel como operacao real.</text>
+
+  <rect x="72" y="118" width="64" height="20" class="badge"/>
+  <text x="88" y="132" class="badge-text">Public</text>
+  <rect x="443" y="118" width="76" height="20" class="badge"/>
+  <text x="457" y="132" class="badge-text">Async</text>
+  <rect x="813" y="118" width="102" height="20" class="badge"/>
+  <text x="827" y="132" class="badge-text">Compute</text>
+  <rect x="1283" y="118" width="72" height="20" class="badge"/>
+  <text x="1297" y="132" class="badge-text">State</text>
+  <rect x="1543" y="118" width="82" height="20" class="badge"/>
+  <text x="1557" y="132" class="badge-text">Control</text>
+</svg>
