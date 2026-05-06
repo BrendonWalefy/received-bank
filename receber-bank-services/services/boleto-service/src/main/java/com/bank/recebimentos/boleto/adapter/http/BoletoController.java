@@ -59,7 +59,7 @@ public class BoletoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CriarBoletoResponse> obter(@PathVariable UUID id) {
+    public ResponseEntity<CriarBoletoResponse> obter(@PathVariable("id") UUID id) {
         var boleto = boletoRepository.buscarPorId(new BoletoId(id))
             .orElseThrow(() -> new BoletoNaoEncontradoException(id.toString()));
         return ResponseEntity.status(HttpStatus.OK).body(boletoMapper.toBoletoResponse(boleto));

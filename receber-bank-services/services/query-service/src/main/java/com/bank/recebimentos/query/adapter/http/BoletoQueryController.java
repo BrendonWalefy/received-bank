@@ -22,7 +22,7 @@ public class BoletoQueryController {
     }
 
     @GetMapping
-    public List<BoletoReadModel> listar(@RequestParam(required = false) String status) {
+    public List<BoletoReadModel> listar(@RequestParam(value = "status", required = false) String status) {
         if (status == null || status.isBlank()) {
             return repository.findAll();
         }
@@ -30,7 +30,7 @@ public class BoletoQueryController {
     }
 
     @GetMapping("/{boletoId}")
-    public ResponseEntity<BoletoReadModel> obter(@PathVariable UUID boletoId) {
+    public ResponseEntity<BoletoReadModel> obter(@PathVariable("boletoId") UUID boletoId) {
         return repository.findById(boletoId)
             .map(ResponseEntity::ok)
             .orElseGet(() -> ResponseEntity.notFound().build());
