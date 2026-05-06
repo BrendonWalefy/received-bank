@@ -78,7 +78,7 @@
       "url": "{{ _.boleto_service_url }}/boletos",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"beneficiarioCpfCnpj\": \"12345678000199\",\n  \"beneficiarioNome\": \"Received Bank PJ\",\n  \"beneficiarioBanco\": \"341\",\n  \"pagadorCpfCnpj\": \"98765432000188\",\n  \"pagadorNome\": \"Cliente PJ XPTO\",\n  \"pagadorEndereco\": \"Avenida Paulista, 1000 - Sao Paulo/SP\",\n  \"pagadorCep\": \"01310000\",\n  \"valor\": {{ _.valor_boleto }},\n  \"vencimento\": \"{{ _.vencimento }}\",\n  \"descricao\": \"Boleto de recebimento PJ - case arquitetura AWS\"\n}"
+        "text": "{\n  \"beneficiarioCpfCnpj\": \"12345678000199\",\n  \"beneficiarioNome\": \"Received Bank PJ\",\n  \"beneficiarioBanco\": \"341\",\n  \"pagadorCpfCnpj\": \"98765432000188\",\n  \"pagadorNome\": \"Cliente PJ XPTO\",\n  \"pagadorEndereco\": \"Avenida Paulista, 1000 - Sao Paulo/SP\",\n  \"pagadorCep\": \"01310000\",\n  \"valor\": {{ _.valor_boleto }},\n  \"vencimento\": \"{{ _.vencimento }}\",\n  \"descricao\": \"Boleto de recebimento PJ - arquitetura AWS\"\n}"
       },
       "headers": [
         {

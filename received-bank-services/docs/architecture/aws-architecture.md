@@ -21,7 +21,7 @@ Este projeto agora possui uma base AWS alinhada aos diagramas em `arquitetura-fi
 
 ## Desenho executivo
 
-Visao horizontal, da esquerda para a direita, para apresentacao do case:
+Visao horizontal, da esquerda para a direita, para documentacao da arquitetura:
 
 ```mermaid
 flowchart LR

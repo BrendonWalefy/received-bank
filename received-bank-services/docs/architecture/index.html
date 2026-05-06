@@ -3,122 +3,60 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Received Bank | Documentação</title>
-  <meta name="description" content="Documentação técnica do projeto Received Bank — microsserviços bancários com Java 21, Spring Boot, EKS, MSK, DDD, CQRS e Transactional Outbox.">
+  <title>Received Bank | Documentacao Tecnica</title>
+  <meta name="description" content="Documentacao tecnica do Received Bank: sistema distribuido de recebimentos bancarios com Java 21, Spring Boot, DDD, CQRS, Transactional Outbox, Kafka, PostgreSQL, Redis e AWS.">
   <style>
     :root {
       color-scheme: light;
-      --bg: #f7f8fb;
-      --panel: #ffffff;
-      --ink: #18202f;
-      --muted: #5e6b80;
-      --line: #d9deea;
-      --brand: #0b6e69;
-      --brand-2: #2867b2;
-      --accent: #b7791f;
+      --page: #f5f7fb;
+      --surface: #ffffff;
+      --surface-soft: #eef4f8;
+      --ink: #172033;
+      --muted: #59677d;
+      --subtle: #7a879a;
+      --line: #d8e0ea;
+      --navy: #12324a;
+      --teal: #0f766e;
+      --blue: #2563a8;
+      --gold: #b7791f;
+      --green: #2f855a;
       --code: #111827;
-      --code-bg: #eef2f7;
+      --code-bg: #edf2f7;
+      --shadow: 0 18px 45px rgba(18, 50, 74, .08);
     }
 
     * { box-sizing: border-box; }
 
+    html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
-      background: var(--bg);
+      background: var(--page);
       color: var(--ink);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.6;
     }
 
-    a { color: var(--brand-2); text-decoration: none; }
+    a { color: var(--blue); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    .shell {
-      display: grid;
-      grid-template-columns: 280px minmax(0, 1fr);
-      min-height: 100vh;
+    h1, h2, h3 {
+      margin: 0;
+      line-height: 1.12;
+      letter-spacing: 0;
+      color: var(--ink);
     }
 
-    aside {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      padding: 28px 22px;
-      border-right: 1px solid var(--line);
-      background: #ffffff;
-      overflow: auto;
+    h1 {
+      max-width: 980px;
+      font-size: clamp(2.45rem, 6vw, 5.1rem);
+      font-weight: 800;
     }
 
-    .brand { margin-bottom: 28px; }
-    .brand strong { display: block; font-size: 1.1rem; color: var(--ink); }
-    .brand span { color: var(--muted); font-size: .92rem; }
+    h2 { font-size: clamp(1.65rem, 2vw, 2.15rem); }
+    h3 { font-size: 1.05rem; }
 
-    nav a {
-      display: block;
-      padding: 8px 0;
-      color: var(--muted);
-      font-size: .95rem;
-    }
-
-    main { min-width: 0; }
-
-    .hero {
-      background: linear-gradient(120deg, #ffffff 0%, #edf7f6 52%, #edf2fb 100%);
-      border-bottom: 1px solid var(--line);
-      padding: 58px clamp(24px, 6vw, 80px) 44px;
-    }
-
-    .hero p {
-      max-width: 820px;
-      color: var(--muted);
-      font-size: 1.08rem;
-    }
-
-    h1, h2, h3 { line-height: 1.2; letter-spacing: 0; }
-    h1 { margin: 0 0 14px; font-size: clamp(2.2rem, 5vw, 4.6rem); }
-    h2 { margin: 0 0 18px; font-size: 1.65rem; }
-    h3 { margin: 24px 0 10px; font-size: 1.05rem; }
-
-    section {
-      padding: 34px clamp(24px, 6vw, 80px);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .card {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 18px;
-    }
-
-    .card strong { display: block; margin-bottom: 8px; }
-    .muted { color: var(--muted); }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      overflow: hidden;
-      display: table;
-    }
-
-    th, td {
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--line);
-      text-align: left;
-      vertical-align: top;
-    }
-
-    th { background: #f1f5f9; font-weight: 700; }
-    tr:last-child td { border-bottom: 0; }
+    p { margin: 0; }
 
     code {
       color: var(--code);
@@ -129,82 +67,404 @@
     }
 
     pre {
+      margin: 0;
       overflow: auto;
       background: #111827;
       color: #edf2f7;
       border-radius: 8px;
       padding: 18px;
       line-height: 1.55;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06);
     }
 
     pre code { background: transparent; color: inherit; padding: 0; }
 
-    .flow { display: grid; gap: 10px; max-width: 860px; }
-
-    .step {
-      background: var(--panel);
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface);
       border: 1px solid var(--line);
-      border-left: 5px solid var(--brand);
       border-radius: 8px;
-      padding: 14px 16px;
+      overflow: hidden;
+      display: table;
+      box-shadow: var(--shadow);
+    }
+
+    th, td {
+      padding: 13px 15px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #edf3f8;
+      color: #243348;
+      font-weight: 750;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 292px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 28px 22px;
+      border-right: 1px solid var(--line);
+      background: rgba(255, 255, 255, .94);
+      overflow: auto;
+    }
+
+    .brand {
+      padding-bottom: 24px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 1.12rem;
+      color: var(--ink);
+    }
+
+    .brand span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 36px;
+      padding: 6px 0;
+      color: #516073;
+      font-size: .94rem;
+    }
+
+    nav a::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #a8b5c4;
+      flex: 0 0 auto;
+    }
+
+    nav a:hover { color: var(--teal); text-decoration: none; }
+    nav a:hover::before { background: var(--teal); }
+
+    main { min-width: 0; }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 92vh;
+      display: grid;
+      align-content: center;
+      padding: 72px clamp(24px, 6vw, 88px) 48px;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(18, 50, 74, .95), rgba(15, 118, 110, .88)),
+        url("../assets/aws-reference-architecture.svg");
+      background-size: cover;
+      background-position: center;
+      color: #ffffff;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 160px;
+      background: linear-gradient(180deg, rgba(18, 50, 74, 0), var(--page));
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 1080px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      color: #dbeafe;
+      font-size: .84rem;
+      font-weight: 750;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 32px;
+      height: 2px;
+      background: #f6c560;
+    }
+
+    .hero h1 { color: #ffffff; }
+
+    .hero-copy {
+      max-width: 850px;
+      margin-top: 22px;
+      color: #e6edf6;
+      font-size: 1.12rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, .32);
+      color: #ffffff;
+      background: rgba(255, 255, 255, .12);
+      font-weight: 700;
+    }
+
+    .button.primary {
+      background: #ffffff;
+      color: var(--navy);
+      border-color: #ffffff;
+    }
+
+    .button:hover { text-decoration: none; background: rgba(255, 255, 255, .2); }
+    .button.primary:hover { background: #eef4f8; }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 42px;
+      max-width: 980px;
+    }
+
+    .metric {
+      min-height: 108px;
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, .26);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .1);
+      backdrop-filter: blur(10px);
+    }
+
+    .metric strong {
+      display: block;
+      color: #ffffff;
+      font-size: 1.32rem;
+      line-height: 1.1;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 8px;
+      color: #dbeafe;
+      font-size: .9rem;
+    }
+
+    section {
+      padding: 48px clamp(24px, 6vw, 88px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      gap: 34px;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+
+    .section-head p,
+    .muted { color: var(--muted); }
+
+    .band {
+      background: var(--surface);
+    }
+
+    .soft-band {
+      background: linear-gradient(180deg, #f9fbfd, #eef4f8);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .two-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+
+    .card p,
+    .card span { color: var(--muted); }
+
+    .card.accent-teal { border-top: 4px solid var(--teal); }
+    .card.accent-blue { border-top: 4px solid var(--blue); }
+    .card.accent-gold { border-top: 4px solid var(--gold); }
+    .card.accent-green { border-top: 4px solid var(--green); }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
     }
 
     .tag {
-      display: inline-block;
-      margin: 4px 6px 4px 0;
-      padding: 4px 8px;
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 10px;
       border: 1px solid var(--line);
       border-radius: 999px;
       background: #ffffff;
-      color: var(--muted);
-      font-size: .85rem;
+      color: #4c5b6e;
+      font-size: .86rem;
+      font-weight: 650;
+    }
+
+    .hero .tag {
+      border-color: rgba(255, 255, 255, .26);
+      background: rgba(255, 255, 255, .12);
+      color: #eef6ff;
     }
 
     .diagram-frame {
-      margin: 18px 0 24px;
+      margin-top: 22px;
       background: #ffffff;
       border: 1px solid var(--line);
       border-radius: 8px;
       overflow: auto;
+      box-shadow: var(--shadow);
     }
 
     .diagram-frame img {
       display: block;
       width: 100%;
-      min-width: 920px;
+      min-width: 980px;
       height: auto;
     }
 
-    .adr-grid {
+    .flow {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 16px;
+      grid-template-columns: repeat(7, minmax(180px, 1fr));
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
     }
 
-    .adr-card {
-      background: var(--panel);
+    .step {
+      min-height: 184px;
+      background: var(--surface);
       border: 1px solid var(--line);
-      border-left: 4px solid var(--brand-2);
+      border-top: 4px solid var(--teal);
       border-radius: 8px;
-      padding: 14px 16px;
+      padding: 15px;
+      box-shadow: var(--shadow);
     }
 
-    .adr-card strong { display: block; margin-bottom: 4px; font-size: .95rem; }
-    .adr-card span { color: var(--muted); font-size: .9rem; }
+    .step strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
 
-    @media (max-width: 980px) {
+    .step span {
+      color: var(--muted);
+      font-size: .94rem;
+    }
+
+    .service-name {
+      white-space: nowrap;
+      font-weight: 750;
+      color: var(--navy);
+    }
+
+    .command-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .footer {
+      padding: 30px clamp(24px, 6vw, 88px);
+      color: var(--muted);
+      background: #111827;
+    }
+
+    .footer strong { color: #ffffff; }
+
+    @media (max-width: 1100px) {
       .shell { display: block; }
-      aside { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
-      nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 16px; }
+      aside {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      nav {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 2px 14px;
+      }
+      .hero { min-height: auto; }
+      .hero-metrics,
       .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .adr-grid { grid-template-columns: 1fr; }
+      .section-head,
+      .command-grid { grid-template-columns: 1fr; }
     }
 
-    @media (max-width: 640px) {
-      nav, .grid, .adr-grid { grid-template-columns: 1fr; }
-      section, .hero { padding-left: 18px; padding-right: 18px; }
+    @media (max-width: 700px) {
+      aside { padding: 22px 18px; }
+      nav,
+      .hero-metrics,
+      .grid,
+      .two-grid { grid-template-columns: 1fr; }
+      section,
+      .hero,
+      .footer { padding-left: 18px; padding-right: 18px; }
       table { display: block; overflow-x: auto; }
+      .hero-actions { display: grid; }
+      .button { width: 100%; }
     }
   </style>
 </head>
@@ -213,379 +473,327 @@
     <aside>
       <div class="brand">
         <strong>Received Bank</strong>
-        <span>Documentação do projeto</span>
+        <span>Sistema distribuido de recebimentos</span>
       </div>
-      <nav aria-label="Navegação principal">
-        <a href="#visao-geral">Visão geral</a>
-        <a href="#padroes">Padrões aplicados</a>
+      <nav aria-label="Navegacao principal">
+        <a href="#visao-geral">Visao geral</a>
+        <a href="#stack">Stack tecnica</a>
+        <a href="#padroes">Padroes</a>
         <a href="#arquitetura">Arquitetura AWS</a>
-        <a href="#adr">Decisões arquiteturais</a>
-        <a href="#servicos">Serviços</a>
-        <a href="#fluxos">Fluxos das jornadas</a>
+        <a href="#servicos">Servicos</a>
+        <a href="#fluxos">Fluxo operacional</a>
         <a href="#apis">APIs</a>
-        <a href="#demo">Demo Postman</a>
+        <a href="#adr">Decisoes</a>
         <a href="#local">Ambiente local</a>
-        <a href="#aws">AWS e Kubernetes</a>
+        <a href="#cloud">Cloud e IaC</a>
       </nav>
     </aside>
 
     <main>
       <header class="hero">
-        <h1>Received Bank</h1>
-        <p>Plataforma de recebimentos bancários baseada em microsserviços, eventos de domínio e separação entre escrita e leitura para emissão, consulta, pagamento e notificação de boletos.</p>
-        <span class="tag">Java 21</span>
-        <span class="tag">Spring Boot 3.2</span>
-        <span class="tag">PostgreSQL</span>
-        <span class="tag">Redis</span>
-        <span class="tag">Kafka / Redpanda</span>
-        <span class="tag">Amazon EKS</span>
-        <span class="tag">Amazon MSK</span>
-        <span class="tag">DDD · CQRS · Outbox</span>
+        <div class="hero-content">
+          <div class="eyebrow">Received Bank</div>
+          <h1>Recebimentos bancarios em microsservicos, eventos e consistencia transacional.</h1>
+          <p class="hero-copy">Sistema distribuido construido com Java 21 e Spring Boot para emissao, consulta, pagamento e notificacao de boletos. O projeto aplica DDD, Arquitetura Hexagonal, CQRS e Transactional Outbox em um dominio financeiro com infraestrutura local e desenho de referencia em AWS.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#arquitetura">Ver arquitetura</a>
+            <a class="button" href="#local">Rodar localmente</a>
+            <a class="button" href="../api/README.md">Colecoes de API</a>
+          </div>
+          <div class="tag-row">
+            <span class="tag">Java 21</span>
+            <span class="tag">Spring Boot 3.2</span>
+            <span class="tag">Kafka / Redpanda</span>
+            <span class="tag">PostgreSQL 16</span>
+            <span class="tag">Redis 7</span>
+            <span class="tag">AWS EKS</span>
+            <span class="tag">Terraform</span>
+            <span class="tag">GitHub Actions</span>
+          </div>
+          <div class="hero-metrics" aria-label="Resumo tecnico">
+            <div class="metric">
+              <strong>4</strong>
+              <span>microsservicos de dominio</span>
+            </div>
+            <div class="metric">
+              <strong>CQRS</strong>
+              <span>escrita e leitura separadas</span>
+            </div>
+            <div class="metric">
+              <strong>Outbox</strong>
+              <span>evento e banco na mesma transacao</span>
+            </div>
+            <div class="metric">
+              <strong>AWS</strong>
+              <span>EKS, MSK, SQS, RDS e Redis</span>
+            </div>
+          </div>
+        </div>
       </header>
 
-      <!-- ── VISÃO GERAL ── -->
-      <section id="visao-geral">
-        <h2>Visão Geral</h2>
-        <p>O projeto moderniza uma área de recebimentos bancários sem dependência de mainframe. A arquitetura usa serviços independentes por bounded context, eventos Kafka como bus de integração, o padrão Transactional Outbox para consistência banco/evento e um read model dedicado para consultas (CQRS).</p>
+      <section id="visao-geral" class="band">
+        <div class="section-head">
+          <h2>Visao Geral</h2>
+          <p>O Received Bank organiza o dominio de recebimentos em servicos independentes e integrados por eventos. A escrita de boletos fica isolada do read model de consulta, pagamentos sao processados como estimulos externos e notificacoes reagem aos eventos publicados.</p>
+        </div>
         <div class="grid">
-          <div class="card">
-            <strong>Escrita transacional</strong>
-            <span class="muted"><code>boleto-service</code> persiste o boleto e grava o evento <code>boleto.gerado</code> na mesma transação ACID.</span>
+          <div class="card accent-teal">
+            <strong>Dominio financeiro</strong>
+            <p>Fluxo completo de boleto: criacao, registro simulado, pagamento, consulta e notificacao.</p>
           </div>
-          <div class="card">
-            <strong>Eventos desacoplados</strong>
-            <span class="muted">Tópicos <code>boleto.gerado</code>, <code>pagamento.efetivado</code> e <code>notificacao.enviada</code> integram os serviços sem chamadas síncronas.</span>
+          <div class="card accent-blue">
+            <strong>Consistencia sem dual write</strong>
+            <p>O boleto e o evento <code>boleto.gerado</code> sao gravados na mesma transacao PostgreSQL.</p>
           </div>
-          <div class="card">
-            <strong>Consulta otimizada</strong>
-            <span class="muted"><code>query-service</code> mantém um read model próprio atualizado por eventos — nenhum serviço lê o banco do outro.</span>
+          <div class="card accent-gold">
+            <strong>Read model dedicado</strong>
+            <p>O <code>query-service</code> mantem consultas otimizadas sem ler o banco do servico de escrita.</p>
           </div>
-          <div class="card">
-            <strong>Pronto para cloud</strong>
-            <span class="muted">Infraestrutura AWS via Terraform e manifests Kubernetes prontos para EKS.</span>
+          <div class="card accent-green">
+            <strong>Operacao cloud-ready</strong>
+            <p>Arquitetura de referencia com EKS, MSK, SQS, RDS, ElastiCache, WAF e CloudFront.</p>
           </div>
         </div>
       </section>
 
-      <!-- ── PADRÕES ── -->
-      <section id="padroes">
-        <h2>Padrões e Metodologias Aplicados</h2>
+      <section id="stack" class="soft-band">
+        <div class="section-head">
+          <h2>Stack Tecnica</h2>
+          <p>A base do projeto combina runtime moderno, mensageria, persistencia relacional, cache de idempotencia, infraestrutura como codigo e pipelines de validacao.</p>
+        </div>
         <table>
           <thead>
-            <tr>
-              <th>Padrão</th>
-              <th>Onde se aplica no projeto</th>
-            </tr>
+            <tr><th>Camada</th><th>Tecnologias</th></tr>
           </thead>
           <tbody>
-            <tr>
-              <td><strong>DDD — Bounded Contexts</strong></td>
-              <td>Cada microsserviço corresponde a um contexto delimitado: <code>boleto</code>, <code>payment</code>, <code>query</code>, <code>notification</code>. Entidades e regras vivem na camada <code>domain</code>, isoladas do framework.</td>
-            </tr>
-            <tr>
-              <td><strong>Arquitetura Hexagonal</strong></td>
-              <td>Estrutura <code>domain → application → adapter</code>. Use cases dependem apenas de interfaces de porta; adapters (HTTP, Kafka, JPA) são plugáveis e substituíveis. Use cases testáveis sem Spring.</td>
-            </tr>
-            <tr>
-              <td><strong>CQRS</strong></td>
-              <td><code>boleto-service</code> é o modelo de escrita; <code>query-service</code> mantém seu read model próprio, atualizado por eventos Kafka. Nenhum serviço lê o banco de outro.</td>
-            </tr>
-            <tr>
-              <td><strong>Transactional Outbox</strong></td>
-              <td>O boleto e o evento <code>boleto.gerado</code> são gravados na mesma transação PostgreSQL. O <code>outbox-worker</code> publica no MSK de forma independente — sem dual write, sem risco de inconsistência.</td>
-            </tr>
-            <tr>
-              <td><strong>Event-Driven Architecture</strong></td>
-              <td>Amazon MSK (Kafka) desacopla todos os domínios. Serviços publicam e consomem eventos sem chamadas síncronas entre si.</td>
-            </tr>
-            <tr>
-              <td><strong>Resiliência AWS</strong></td>
-              <td>SQS absorve picos na entrada (API Gateway → SQS → <code>boleto-service</code>). DLQ isola mensagens com falha. Kafka DLT por consumer com retry e backoff configurável via Spring Kafka.</td>
-            </tr>
-            <tr>
-              <td><strong>Idempotência</strong></td>
-              <td><code>Idempotency-Key</code> validada no ElastiCache Redis antes de processar cada mensagem — impede duplicatas em reprocessamentos do SQS ou Kafka.</td>
-            </tr>
-            <tr>
-              <td><strong>Segurança em camadas</strong></td>
-              <td>CloudFront → AWS WAF → API Gateway (auth + throttling) → IAM/IRSA por service account no EKS → Secrets Manager para credenciais.</td>
-            </tr>
+            <tr><td>Linguagem e runtime</td><td>Java 21, Spring Boot 3.2, Spring Cloud</td></tr>
+            <tr><td>Mensageria</td><td>Apache Kafka via Redpanda em ambiente local e Amazon MSK no desenho cloud</td></tr>
+            <tr><td>Dados</td><td>PostgreSQL 16 para escrita, Outbox e read model; Redis 7 para idempotencia</td></tr>
+            <tr><td>Cloud</td><td>AWS EKS, API Gateway, SQS, SNS, S3, CloudFront, WAF, RDS, ElastiCache e MSK</td></tr>
+            <tr><td>Infraestrutura como codigo</td><td>Terraform para provisionamento AWS e manifests Kubernetes para EKS</td></tr>
+            <tr><td>Observabilidade e CI</td><td>Spring Actuator, health checks por servico, Maven multi-module e GitHub Actions</td></tr>
           </tbody>
         </table>
       </section>
 
-      <!-- ── ARQUITETURA AWS ── -->
-      <section id="arquitetura">
-        <h2>Arquitetura AWS de Referência</h2>
-        <p>Diagrama com ícones AWS oficiais, organizado em zonas (VPC, EKS Cluster, serviços gerenciados). Mostra a borda segura, a entrada assíncrona via SQS, o fluxo principal de criação e o bus de eventos MSK.</p>
+      <section id="padroes" class="band">
+        <div class="section-head">
+          <h2>Padroes Aplicados</h2>
+          <p>As escolhas arquiteturais foram usadas para reduzir acoplamento, preservar consistencia, facilitar testes e manter cada bounded context com responsabilidades claras.</p>
+        </div>
+        <div class="two-grid">
+          <div class="card accent-teal">
+            <strong>DDD e Arquitetura Hexagonal</strong>
+            <p>Cada microsservico representa um bounded context. As regras ficam em <code>domain</code>, os casos de uso em <code>application</code> e HTTP, Kafka e JPA entram como adapters.</p>
+          </div>
+          <div class="card accent-blue">
+            <strong>CQRS</strong>
+            <p><code>boleto-service</code> concentra o modelo de escrita. <code>query-service</code> consome eventos e mantem um read model independente para consultas.</p>
+          </div>
+          <div class="card accent-gold">
+            <strong>Transactional Outbox</strong>
+            <p>O <code>outbox-worker</code> publica eventos gravados junto com a transacao de negocio, evitando inconsistencias entre banco e Kafka.</p>
+          </div>
+          <div class="card accent-green">
+            <strong>Resiliencia e idempotencia</strong>
+            <p>SQS absorve picos na entrada, DLQ isola falhas, Kafka DLT apoia reprocessamento e Redis valida <code>Idempotency-Key</code>.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="arquitetura" class="soft-band">
+        <div class="section-head">
+          <h2>Arquitetura AWS de Referencia</h2>
+          <p>O desenho organiza borda, entrada assíncrona, compute, dados, eventos, seguranca e observabilidade em uma topologia pronta para evoluir de ambiente local para cloud.</p>
+        </div>
         <div class="diagram-frame">
-          <img src="../assets/aws-reference-architecture.svg?v=20260505-3" alt="Diagrama de arquitetura AWS do Received Bank: Route 53, CloudFront, WAF, API Gateway, SQS, EKS com boleto/payment/query/notification services, RDS, ElastiCache, MSK, CloudWatch e Secrets Manager.">
+          <img src="../assets/aws-reference-architecture.svg?v=20260505-4" alt="Diagrama de arquitetura AWS do Received Bank com Route 53, CloudFront, WAF, API Gateway, SQS, EKS, microsservicos, RDS, ElastiCache, MSK, CloudWatch e Secrets Manager.">
         </div>
-        <table>
+        <table style="margin-top:22px">
           <thead>
-            <tr>
-              <th>Camada</th>
-              <th>Local (Docker Compose)</th>
-              <th>AWS</th>
-            </tr>
+            <tr><th>Camada</th><th>Local</th><th>AWS</th></tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Borda e segurança</td>
-              <td>REST local direto</td>
-              <td>Route 53, CloudFront, AWS WAF, API Gateway</td>
-            </tr>
-            <tr>
-              <td>Entrada assíncrona</td>
-              <td>—</td>
-              <td>SQS <code>boleto-generation</code> + DLQ</td>
-            </tr>
-            <tr>
-              <td>Compute</td>
-              <td>Docker Compose</td>
-              <td>Amazon EKS (4 microsserviços + outbox worker)</td>
-            </tr>
-            <tr>
-              <td>Banco de dados</td>
-              <td>PostgreSQL container</td>
-              <td>RDS PostgreSQL (write model + read model)</td>
-            </tr>
-            <tr>
-              <td>Cache / idempotência</td>
-              <td>Redis container</td>
-              <td>ElastiCache Redis</td>
-            </tr>
-            <tr>
-              <td>Eventos</td>
-              <td>Redpanda (compatível Kafka)</td>
-              <td>Amazon MSK</td>
-            </tr>
-            <tr>
-              <td>Objetos / PDFs</td>
-              <td>—</td>
-              <td>Amazon S3</td>
-            </tr>
-            <tr>
-              <td>Observabilidade</td>
-              <td>Actuator / Prometheus local</td>
-              <td>CloudWatch, AWS X-Ray / OpenTelemetry, SNS alertas</td>
-            </tr>
-            <tr>
-              <td>Segredos</td>
-              <td>Variáveis de ambiente</td>
-              <td>Secrets Manager + IAM/IRSA por service account</td>
-            </tr>
+            <tr><td>Borda e seguranca</td><td>REST local direto</td><td>Route 53, CloudFront, AWS WAF e API Gateway</td></tr>
+            <tr><td>Entrada assíncrona</td><td>Chamadas REST para os servicos</td><td>SQS <code>boleto-generation</code> com DLQ</td></tr>
+            <tr><td>Compute</td><td>Docker Compose</td><td>Amazon EKS com quatro microsservicos e outbox worker</td></tr>
+            <tr><td>Dados</td><td>PostgreSQL e Redis em containers</td><td>RDS PostgreSQL e ElastiCache Redis</td></tr>
+            <tr><td>Eventos</td><td>Redpanda compativel com Kafka</td><td>Amazon MSK</td></tr>
+            <tr><td>Segredos e observabilidade</td><td>Variaveis de ambiente e Actuator</td><td>Secrets Manager, IAM/IRSA, CloudWatch, SNS e OpenTelemetry</td></tr>
           </tbody>
         </table>
       </section>
 
-      <!-- ── ADR ── -->
-      <section id="adr">
-        <h2>Decisões Arquiteturais (ADR)</h2>
-        <p>As decisões mais relevantes estão documentadas com contexto, alternativas comparadas e consequências — úteis para explicar o <em>porquê</em> de cada escolha em revisões de código ou entrevistas técnicas.</p>
-        <div class="adr-grid">
-          <div class="adr-card">
-            <strong>ADR-001 · Transactional Outbox vs Saga</strong>
-            <span>Por que o Outbox venceu: uma única transação ACID cobre banco e evento, sem necessidade de coordenação distribuída ou framework de Saga para o escopo atual.</span>
-          </div>
-          <div class="adr-card">
-            <strong>ADR-002 · CQRS — banco compartilhado vs separado</strong>
-            <span>Isolamento lógico em desenvolvimento, sem custo de dois clusters RDS. Em produção de alto volume, separar fisicamente é o próximo passo natural.</span>
-          </div>
-          <div class="adr-card">
-            <strong>ADR-003 · Entrada assíncrona — API Gateway → SQS direto</strong>
-            <span>SQS absorve picos sem Lambda intermediário. A API retorna <code>202 Accepted</code> e o serviço processa no seu ritmo, com DLQ isolando falhas.</span>
-          </div>
-          <div class="adr-card">
-            <strong>ADR-004 · Arquitetura Hexagonal</strong>
-            <span>Use cases testáveis sem Spring, sem banco, sem Kafka. A troca de adapter (JPA, Kafka, in-memory) não afeta a regra de negócio.</span>
-          </div>
+      <section id="servicos" class="band">
+        <div class="section-head">
+          <h2>Servicos</h2>
+          <p>O modulo <code>received-bank-services</code> agrupa os microsservicos Maven e os commons compartilhados do dominio e infraestrutura.</p>
         </div>
-        <p style="margin-top:16px" class="muted">Arquivo completo: <code>received-bank-services/docs/architecture/ARCHITECTURE_DECISION_RECORD.md</code></p>
-      </section>
-
-      <!-- ── SERVIÇOS ── -->
-      <section id="servicos">
-        <h2>Serviços</h2>
         <table>
           <thead>
-            <tr>
-              <th>Serviço</th>
-              <th>Porta</th>
-              <th>Responsabilidade</th>
-              <th>Tópicos</th>
-            </tr>
+            <tr><th>Servico</th><th>Porta</th><th>Responsabilidade</th><th>Eventos</th></tr>
           </thead>
           <tbody>
             <tr>
-              <td><code>boleto-service</code></td>
+              <td class="service-name">boleto-service</td>
               <td><code>8081</code></td>
-              <td>Cria boletos, persiste no modelo de escrita e publica eventos via Transactional Outbox. Valida idempotência no Redis.</td>
+              <td>Cria e consulta boletos no modelo de escrita, aplica regras de dominio, valida idempotencia e grava eventos no Outbox.</td>
               <td>Produz <code>boleto.gerado</code></td>
             </tr>
             <tr>
-              <td><code>query-service</code></td>
+              <td class="service-name">query-service</td>
               <td><code>8082</code></td>
-              <td>Mantém o read model (CQRS) e expõe consultas por boleto ou status.</td>
-              <td>Consome todos os eventos de domínio</td>
+              <td>Mantem o read model de boletos e expoe consultas por boleto ou status.</td>
+              <td>Consome eventos de dominio</td>
             </tr>
             <tr>
-              <td><code>payment-service</code></td>
+              <td class="service-name">payment-service</td>
               <td><code>8083</code></td>
-              <td>Consome <code>boleto.gerado</code>, aguarda estímulo externo de pagamento e valida valor e vencimento.</td>
-              <td>Consome <code>boleto.gerado</code>, produz <code>pagamento.efetivado</code> / <code>pagamento.rejeitado</code></td>
+              <td>Consome boletos gerados, recebe estimulos externos de pagamento e valida valor e vencimento.</td>
+              <td>Produz <code>pagamento.efetivado</code> ou <code>pagamento.rejeitado</code></td>
             </tr>
             <tr>
-              <td><code>notification-service</code></td>
+              <td class="service-name">notification-service</td>
               <td><code>8084</code></td>
-              <td>Gera notificações a partir de eventos de boleto e pagamento.</td>
-              <td>Consome <code>boleto.gerado</code> e <code>pagamento.*</code>, produz <code>notificacao.enviada</code></td>
+              <td>Consome eventos de boleto e pagamento para emitir notificacoes do resultado.</td>
+              <td>Produz <code>notificacao.enviada</code></td>
             </tr>
           </tbody>
         </table>
       </section>
 
-      <!-- ── FLUXOS ── -->
-      <section id="fluxos">
-        <h2>Fluxos das Jornadas</h2>
-        <p>Fluxos separados para explicar cada parte do case sem misturar com a arquitetura geral.</p>
+      <section id="fluxos" class="soft-band">
+        <div class="section-head">
+          <h2>Fluxo Operacional</h2>
+          <p>A jornada separa a criacao do boleto, o registro externo simulado, a chegada do pagamento, a validacao, a atualizacao do read model e a notificacao final.</p>
+        </div>
         <div class="diagram-frame">
-          <img src="../assets/journey-flows.svg?v=20260505-3" alt="Fluxos das jornadas de emissão de boleto, registro externo, pagamento aprovado, pagamento rejeitado, consulta e notificação.">
+          <img src="../assets/journey-flows.svg?v=20260505-4" alt="Fluxos das jornadas de emissao de boleto, registro externo, pagamento aprovado, pagamento rejeitado, consulta e notificacao.">
         </div>
-        <div class="flow">
-          <div class="step"><strong>1. Criação</strong><br>Cliente envia <code>POST /boletos</code>; o <code>boleto-service</code> valida a requisição e cria o agregado de boleto.</div>
-          <div class="step"><strong>2. Persistência e Outbox</strong><br>O boleto é salvo no PostgreSQL e o evento <code>boleto.gerado</code> é gravado em <code>outbox_events</code> na mesma transação — garantia de consistência sem dual write.</div>
-          <div class="step"><strong>3. Registro externo</strong><br>A registradora bancária (CIP/Nuclea) é representada por uma API simulada em <code>POST /simulacoes/registradora/boletos</code>, deixando claro o limite com sistemas externos.</div>
-          <div class="step"><strong>4. Aguardando pagamento</strong><br><code>payment-service</code> consome <code>boleto.gerado</code> apenas para saber quais boletos existem; ele não efetiva pagamento automaticamente.</div>
-          <div class="step"><strong>5. Estímulo externo</strong><br>O pagamento chega por <code>POST /simulacoes/pagamentos</code>, simulando retorno bancário, webhook, arquivo CNAB ou parceiro externo.</div>
-          <div class="step"><strong>6. Validação</strong><br>O pagamento é aprovado se o valor pago for igual ao valor do boleto e a data estiver dentro do vencimento. Caso contrário, publica <code>pagamento.rejeitado</code>.</div>
-          <div class="step"><strong>7. Consulta e notificação</strong><br><code>query-service</code> atualiza o read model e <code>notification-service</code> notifica o resultado para o cliente PJ via <code>notificacao.enviada</code>.</div>
+        <div class="flow" style="margin-top:22px">
+          <div class="step"><strong>1. Criacao</strong><span>Cliente PJ envia <code>POST /boletos</code> e o <code>boleto-service</code> cria o agregado.</span></div>
+          <div class="step"><strong>2. Outbox</strong><span>Boleto e evento <code>boleto.gerado</code> sao persistidos na mesma transacao.</span></div>
+          <div class="step"><strong>3. Registro</strong><span>A registradora bancaria e simulada via <code>/simulacoes/registradora/boletos</code>.</span></div>
+          <div class="step"><strong>4. Pagamento</strong><span>O pagamento chega por <code>/simulacoes/pagamentos</code>, como retorno externo.</span></div>
+          <div class="step"><strong>5. Validacao</strong><span>Valor pago e vencimento determinam aprovacao ou rejeicao.</span></div>
+          <div class="step"><strong>6. Consulta</strong><span><code>query-service</code> atualiza o read model a partir dos eventos.</span></div>
+          <div class="step"><strong>7. Notificacao</strong><span><code>notification-service</code> publica <code>notificacao.enviada</code>.</span></div>
         </div>
       </section>
 
-      <!-- ── APIs ── -->
-      <section id="apis">
-        <h2>APIs</h2>
-        <h3>boleto-service</h3>
+      <section id="apis" class="band">
+        <div class="section-head">
+          <h2>APIs Principais</h2>
+          <p>Os endpoints cobrem a jornada de boleto de ponta a ponta e podem ser exercitados pelas colecoes versionadas de Postman e Insomnia.</p>
+        </div>
         <table>
           <thead>
-            <tr><th>Método</th><th>Endpoint</th><th>Descrição</th></tr>
+            <tr><th>Metodo</th><th>Endpoint</th><th>Servico</th><th>Descricao</th></tr>
           </thead>
           <tbody>
-            <tr>
-              <td><code>POST</code></td>
-              <td><code>/boletos</code></td>
-              <td>Cria um boleto e retorna <code>201 Created</code> com <code>Location</code> apontando para o recurso.</td>
-            </tr>
-            <tr>
-              <td><code>GET</code></td>
-              <td><code>/boletos/{id}</code></td>
-              <td>Consulta um boleto pelo identificador no modelo de escrita.</td>
-            </tr>
-            <tr>
-              <td><code>POST</code></td>
-              <td><code>/simulacoes/registradora/boletos</code></td>
-              <td>Representa a API externa de registradora bancária / CIP / Nuclea para fins de demonstração.</td>
-            </tr>
+            <tr><td><code>POST</code></td><td><code>/boletos</code></td><td>boleto-service</td><td>Cria um boleto e retorna <code>201 Created</code>.</td></tr>
+            <tr><td><code>GET</code></td><td><code>/boletos/{id}</code></td><td>boleto-service</td><td>Consulta um boleto pelo identificador no modelo de escrita.</td></tr>
+            <tr><td><code>POST</code></td><td><code>/simulacoes/registradora/boletos</code></td><td>boleto-service</td><td>Simula registro externo de boleto.</td></tr>
+            <tr><td><code>POST</code></td><td><code>/simulacoes/pagamentos</code></td><td>payment-service</td><td>Simula chegada de pagamento externo.</td></tr>
+            <tr><td><code>GET</code></td><td><code>/consultas/boletos</code></td><td>query-service</td><td>Lista boletos do read model, com filtro opcional por status.</td></tr>
+            <tr><td><code>GET</code></td><td><code>/consultas/boletos/{boletoId}</code></td><td>query-service</td><td>Consulta um boleto no read model.</td></tr>
           </tbody>
         </table>
-
-        <h3>query-service</h3>
-        <table>
-          <thead>
-            <tr><th>Método</th><th>Endpoint</th><th>Descrição</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>GET</code></td>
-              <td><code>/consultas/boletos</code></td>
-              <td>Lista boletos do read model. Aceita filtro opcional <code>status</code>.</td>
-            </tr>
-            <tr>
-              <td><code>GET</code></td>
-              <td><code>/consultas/boletos/{boletoId}</code></td>
-              <td>Consulta um boleto no read model pelo identificador.</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h3>payment-service — simulador</h3>
-        <table>
-          <thead>
-            <tr><th>Método</th><th>Endpoint</th><th>Descrição</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>POST</code></td>
-              <td><code>/simulacoes/pagamentos</code></td>
-              <td>Simula chegada de pagamento externo e publica <code>pagamento.efetivado</code> ou <code>pagamento.rejeitado</code> com base em valor e vencimento.</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
-      <!-- ── DEMO ── -->
-      <section id="demo">
-        <h2>Demo Postman / Insomnia</h2>
-        <p>As coleções versionadas no repositório guiam a apresentação ponta a ponta: health checks, criação do boleto, registro externo simulado, pagamento aprovado, consulta CQRS e cenário de rejeição por regra de negócio.</p>
-        <pre><code>received-bank-services/docs/api/received-bank.postman_collection.json
+        <div class="command-grid" style="margin-top:18px">
+          <pre><code>received-bank-services/docs/api/received-bank.postman_collection.json
 received-bank-services/docs/api/received-bank.insomnia.json</code></pre>
-        <p class="muted">No Postman, as variáveis da jornada são capturadas automaticamente (<code>boleto_id</code>, <code>codigo_barras</code>, <code>linha_digitavel</code>). No Insomnia, copie os campos da resposta de criação do boleto para o ambiente antes de prosseguir.</p>
+          <div class="card accent-blue">
+            <strong>Health checks</strong>
+            <p><code>http://localhost:8081/actuator/health</code></p>
+            <p><code>http://localhost:8082/actuator/health</code></p>
+            <p><code>http://localhost:8083/actuator/health</code></p>
+            <p><code>http://localhost:8084/actuator/health</code></p>
+          </div>
+        </div>
       </section>
 
-      <!-- ── AMBIENTE LOCAL ── -->
-      <section id="local">
-        <h2>Ambiente Local</h2>
-        <p>Use o Maven Wrapper para build e testes, e o Docker Compose para subir a stack completa.</p>
-        <pre><code>cd received-bank-services
+      <section id="adr" class="soft-band">
+        <div class="section-head">
+          <h2>Decisoes Arquiteturais</h2>
+          <p>As ADRs registram contexto, alternativas consideradas e consequencias das decisoes centrais do projeto.</p>
+        </div>
+        <div class="two-grid">
+          <div class="card accent-teal">
+            <strong>ADR-001 · Transactional Outbox vs Saga</strong>
+            <p>Outbox foi escolhido para garantir uma transacao ACID cobrindo boleto e evento, sem coordenacao distribuida.</p>
+          </div>
+          <div class="card accent-blue">
+            <strong>ADR-002 · CQRS com banco compartilhado</strong>
+            <p>Separacao logica em desenvolvimento, com caminho claro para separar fisicamente em alto volume.</p>
+          </div>
+          <div class="card accent-gold">
+            <strong>ADR-003 · API Gateway para SQS</strong>
+            <p>Entrada assíncrona absorve picos e permite resposta <code>202 Accepted</code> com processamento posterior.</p>
+          </div>
+          <div class="card accent-green">
+            <strong>ADR-004 · Arquitetura Hexagonal</strong>
+            <p>Casos de uso testaveis sem Spring, banco ou Kafka, com adapters substituiveis.</p>
+          </div>
+        </div>
+        <p class="muted" style="margin-top:18px">Arquivo completo: <code>received-bank-services/docs/architecture/ARCHITECTURE_DECISION_RECORD.md</code></p>
+      </section>
+
+      <section id="local" class="band">
+        <div class="section-head">
+          <h2>Ambiente Local</h2>
+          <p>O ambiente local usa Maven Wrapper e Docker Compose para subir os servicos e dependencias de infraestrutura.</p>
+        </div>
+        <div class="command-grid">
+          <pre><code>cd received-bank-services
 ./mvnw clean test
 docker compose up --build</code></pre>
-        <p>Dependências locais expostas:</p>
-        <span class="tag">PostgreSQL: 5432</span>
-        <span class="tag">Redis: 6379</span>
-        <span class="tag">Kafka / Redpanda: 9092</span>
-        <p style="margin-top:16px">Endpoints de health check:</p>
-        <pre><code>http://localhost:8081/actuator/health   # boleto-service
-http://localhost:8082/actuator/health   # query-service
-http://localhost:8083/actuator/health   # payment-service
-http://localhost:8084/actuator/health   # notification-service</code></pre>
+          <div class="card accent-teal">
+            <strong>Dependencias locais</strong>
+            <div class="tag-row">
+              <span class="tag">PostgreSQL 5432</span>
+              <span class="tag">Redis 6379</span>
+              <span class="tag">Redpanda 9092</span>
+              <span class="tag">Docker Compose</span>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <!-- ── AWS ── -->
-      <section id="aws">
-        <h2>AWS e Kubernetes</h2>
-        <p>O repositório contém base de infraestrutura em <code>received-bank-services/infra/aws/terraform</code> e manifests Kubernetes em <code>received-bank-services/k8s/aws</code>.</p>
+      <section id="cloud" class="soft-band">
+        <div class="section-head">
+          <h2>Cloud e Infraestrutura como Codigo</h2>
+          <p>O repositorio contem Terraform para provisionamento AWS e manifests Kubernetes para execucao dos servicos no EKS.</p>
+        </div>
         <table>
           <thead>
-            <tr><th>Área</th><th>Recursos provisionados</th></tr>
+            <tr><th>Area</th><th>Recursos</th></tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Rede e compute</td>
-              <td>VPC, subnets públicas e privadas, NAT Gateway, EKS Cluster, node group, ALB Ingress Controller.</td>
-            </tr>
-            <tr>
-              <td>Dados e mensagens</td>
-              <td>RDS PostgreSQL, ElastiCache Redis, SQS + DLQ, Amazon MSK, S3 para documentos e backups.</td>
-            </tr>
-            <tr>
-              <td>Segurança</td>
-              <td>Security Groups, IAM roles com IRSA por service account, Secrets Manager e Kubernetes Secrets de exemplo.</td>
-            </tr>
-            <tr>
-              <td>Observabilidade</td>
-              <td>CloudWatch Log Groups, métricas via Actuator / Prometheus, alertas SNS.</td>
-            </tr>
+            <tr><td>Rede e compute</td><td>VPC, subnets publicas e privadas, NAT Gateway, EKS Cluster, node group e ALB Ingress Controller.</td></tr>
+            <tr><td>Dados e mensagens</td><td>RDS PostgreSQL, ElastiCache Redis, SQS com DLQ, Amazon MSK, S3 para documentos e backups.</td></tr>
+            <tr><td>Seguranca</td><td>Security Groups, IAM roles com IRSA por service account, Secrets Manager e Kubernetes Secrets de exemplo.</td></tr>
+            <tr><td>Observabilidade</td><td>CloudWatch Log Groups, metricas via Actuator e Prometheus, alertas via SNS.</td></tr>
           </tbody>
         </table>
-        <p style="margin-top:16px">Para provisionar:</p>
-        <pre><code>cd received-bank-services/infra/aws/terraform
+        <div class="command-grid" style="margin-top:18px">
+          <pre><code>cd received-bank-services/infra/aws/terraform
 cp terraform.tfvars.example terraform.tfvars
-# edite terraform.tfvars (obrigatório: db_password)
 terraform init
 terraform plan
 terraform apply</code></pre>
+          <div class="card accent-gold">
+            <strong>Arquivos principais</strong>
+            <p><code>received-bank-services/infra/aws/terraform</code></p>
+            <p><code>received-bank-services/k8s/aws</code></p>
+            <p><code>received-bank-services/docs/architecture/aws-architecture.md</code></p>
+          </div>
+        </div>
       </section>
+
+      <footer class="footer">
+        <strong>Received Bank</strong>
+        <p>Sistema distribuido de recebimentos bancarios com foco em consistencia, desacoplamento, resiliencia e clareza operacional.</p>
+      </footer>
     </main>
   </div>
 </body>

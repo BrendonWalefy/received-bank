@@ -1,6 +1,6 @@
 # Colecao de API
 
-Importe `received-bank.postman_collection.json` no Postman ou `received-bank.insomnia.json` no Insomnia para demonstrar a jornada ponta a ponta do case.
+Importe `received-bank.postman_collection.json` no Postman ou `received-bank.insomnia.json` no Insomnia para demonstrar a jornada ponta a ponta do projeto.
 
 ## Como usar
 

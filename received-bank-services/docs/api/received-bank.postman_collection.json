@@ -2,7 +2,7 @@
   "info": {
     "name": "Received Bank - Jornada de Boletos",
     "_postman_id": "6d437cb8-3d62-4d41-bf9b-215c8745d3e6",
-    "description": "Colecao para demonstrar o case Received Bank: criacao de boleto, registro externo simulado, estimulo de pagamento, validacao e consulta do read model.",
+    "description": "Colecao para demonstrar o Received Bank: criacao de boleto, registro externo simulado, estimulo de pagamento, validacao e consulta do read model.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -160,7 +160,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"beneficiarioCpfCnpj\": \"12345678000199\",\n  \"beneficiarioNome\": \"Received Bank PJ\",\n  \"beneficiarioBanco\": \"341\",\n  \"pagadorCpfCnpj\": \"98765432000188\",\n  \"pagadorNome\": \"Cliente PJ XPTO\",\n  \"pagadorEndereco\": \"Avenida Paulista, 1000 - Sao Paulo/SP\",\n  \"pagadorCep\": \"01310000\",\n  \"valor\": {{valor_boleto}},\n  \"vencimento\": \"{{vencimento}}\",\n  \"descricao\": \"Boleto de recebimento PJ - case arquitetura AWS\"\n}"
+              "raw": "{\n  \"beneficiarioCpfCnpj\": \"12345678000199\",\n  \"beneficiarioNome\": \"Received Bank PJ\",\n  \"beneficiarioBanco\": \"341\",\n  \"pagadorCpfCnpj\": \"98765432000188\",\n  \"pagadorNome\": \"Cliente PJ XPTO\",\n  \"pagadorEndereco\": \"Avenida Paulista, 1000 - Sao Paulo/SP\",\n  \"pagadorCep\": \"01310000\",\n  \"valor\": {{valor_boleto}},\n  \"vencimento\": \"{{vencimento}}\",\n  \"descricao\": \"Boleto de recebimento PJ - arquitetura AWS\"\n}"
             },
             "url": {
               "raw": "{{boleto_service_url}}/boletos",
