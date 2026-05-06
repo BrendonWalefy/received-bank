@@ -22,11 +22,6 @@
             <groupId>com.bank.recebimentos</groupId>
             <artifactId>commons-domain</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.bank.recebimentos</groupId>
-            <artifactId>commons-infra</artifactId>
-        </dependency>
-
         <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
