@@ -107,3 +107,9 @@ git checkout main
 git merge appmod/java-upgrade-20260505103714
 git push -u origin main
 ```
+
+## Workflow Git
+
+Todo ajuste deve ser desenvolvido e commitado na branch `develop`.
+
+A branch `main` deve receber apenas integracoes vindas da `develop`, depois que os testes locais passarem e o fluxo principal da API for validado.
