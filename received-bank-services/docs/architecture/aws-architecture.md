@@ -1,6 +1,6 @@
 # Arquitetura AWS - Received Bank Services
 
-Este projeto agora possui uma base AWS alinhada aos diagramas em `arquitetura-final.drawio` e `arquitetura-recebimentos.drawio`.
+Este projeto possui uma base AWS alinhada ao diagrama publicado em `received-bank-services/docs/assets/aws-reference-architecture.svg`.
 
 ## Mapeamento
 

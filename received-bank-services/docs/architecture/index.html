@@ -524,13 +524,13 @@
       </div>
       <nav aria-label="Navegação principal">
         <a href="#visao-geral">Visão geral</a>
-        <a href="#stack">Stack técnica</a>
-        <a href="#padroes">Padrões</a>
-        <a href="#arquitetura">Arquitetura AWS</a>
-        <a href="#servicos">Serviços</a>
         <a href="#fluxos">Fluxo operacional</a>
+        <a href="#arquitetura">Arquitetura AWS</a>
+        <a href="#padroes">Padrões aplicados</a>
+        <a href="#adr">Decisões arquiteturais</a>
+        <a href="#servicos">Serviços</a>
         <a href="#apis">APIs</a>
-        <a href="#adr">Decisões</a>
+        <a href="#stack">Stack técnica</a>
         <a href="#local">Ambiente local</a>
         <a href="#colecoes">Coleções de API</a>
         <a href="#cloud">Cloud e IaC</a>
@@ -542,10 +542,10 @@
         <div class="hero-content">
           <div class="eyebrow">Received Bank</div>
           <h1>Recebimentos bancários em microsserviços, eventos e consistência transacional.</h1>
-          <p class="hero-copy">Sistema distribuído construído com Java 21 e Spring Boot para emissão, consulta, pagamento e notificação de boletos. O projeto aplica DDD, Arquitetura Hexagonal, CQRS e Transactional Outbox em um domínio financeiro com infraestrutura local e desenho de referência em AWS.</p>
+          <p class="hero-copy">Sistema distribuído construído com Java 21 e Spring Boot para emissão, consulta, pagamento e notificação de boletos. O projeto aplica DDD, Arquitetura Hexagonal, CQRS e Transactional Outbox em um domínio financeiro com infraestrutura local e desenho de solução em AWS.</p>
           <div class="hero-actions">
-            <a class="button primary" href="#arquitetura">Ver arquitetura</a>
-            <a class="button" href="#local">Rodar localmente</a>
+            <a class="button primary" href="#fluxos">Ver fluxo</a>
+            <a class="button" href="#arquitetura">Ver arquitetura</a>
             <a class="button" href="#colecoes">Coleções de API</a>
           </div>
           <div class="tag-row">
@@ -599,32 +599,54 @@
           </div>
           <div class="card accent-green">
             <strong>Operação cloud-ready</strong>
-            <p>Arquitetura de referência com EKS, MSK, SQS, RDS, ElastiCache, WAF e CloudFront.</p>
+            <p>Arquitetura AWS com EKS, MSK, SQS, RDS, ElastiCache, WAF e CloudFront.</p>
           </div>
         </div>
       </section>
 
-      <section id="stack" class="soft-band">
+      <section id="fluxos" class="soft-band">
         <div class="section-head">
-          <h2>Stack Técnica</h2>
-          <p>A base do projeto combina runtime moderno, mensageria, persistência relacional, cache de idempotência, infraestrutura como código e pipelines de validação.</p>
+          <h2>Fluxo Operacional</h2>
+          <p>A jornada separa a criação do boleto, o registro externo simulado, a chegada do pagamento, a validação, a atualização do read model e a notificação final.</p>
         </div>
-        <table>
+        <div class="diagram-frame">
+          <img src="../assets/journey-flows.svg?v=20260505-5" alt="Fluxos das jornadas de emissão de boleto, registro externo, pagamento aprovado, pagamento rejeitado, consulta e notificação.">
+        </div>
+        <div class="flow" style="margin-top:22px">
+          <div class="step"><strong>1. Criação</strong><span>Cliente PJ envia <code>POST /boletos</code> e o <code>boleto-service</code> cria o agregado.</span></div>
+          <div class="step"><strong>2. Outbox</strong><span>Boleto e evento <code>boleto.gerado</code> são persistidos na mesma transação.</span></div>
+          <div class="step"><strong>3. Registro</strong><span>A registradora bancária é simulada via <code>/simulacoes/registradora/boletos</code>.</span></div>
+          <div class="step"><strong>4. Pagamento</strong><span>O pagamento chega por <code>/simulacoes/pagamentos</code>, como retorno externo.</span></div>
+          <div class="step"><strong>5. Validação</strong><span>Valor pago e vencimento determinam aprovação ou rejeição.</span></div>
+          <div class="step"><strong>6. Consulta</strong><span><code>query-service</code> atualiza o read model a partir dos eventos.</span></div>
+          <div class="step"><strong>7. Notificação</strong><span><code>notification-service</code> publica <code>notificacao.enviada</code>.</span></div>
+        </div>
+      </section>
+
+      <section id="arquitetura" class="band">
+        <div class="section-head">
+          <h2>Arquitetura AWS</h2>
+          <p>O desenho organiza borda, entrada assíncrona, compute, dados, eventos, segurança e observabilidade em uma topologia pronta para evoluir de ambiente local para cloud.</p>
+        </div>
+        <div class="diagram-frame">
+          <img src="../assets/aws-reference-architecture.svg?v=20260506-1" alt="Diagrama de arquitetura AWS do Received Bank com Route 53, CloudFront, WAF, API Gateway, SQS, EKS, microsserviços, RDS, ElastiCache, MSK, CloudWatch e Secrets Manager.">
+        </div>
+        <table style="margin-top:22px">
           <thead>
-            <tr><th>Camada</th><th>Tecnologias</th></tr>
+            <tr><th>Camada</th><th>Local</th><th>AWS</th></tr>
           </thead>
           <tbody>
-            <tr><td>Linguagem e runtime</td><td>Java 21, Spring Boot 3.2, Spring Cloud</td></tr>
-            <tr><td>Mensageria</td><td>Apache Kafka via Redpanda em ambiente local e Amazon MSK no desenho cloud</td></tr>
-            <tr><td>Dados</td><td>PostgreSQL 16 para escrita, Outbox e read model; Redis 7 para idempotência</td></tr>
-            <tr><td>Cloud</td><td>AWS EKS, API Gateway, SQS, SNS, S3, CloudFront, WAF, RDS, ElastiCache e MSK</td></tr>
-            <tr><td>Infraestrutura como código</td><td>Terraform para provisionamento AWS e manifests Kubernetes para EKS</td></tr>
-            <tr><td>Observabilidade e CI</td><td>Spring Actuator, health checks por serviço, Maven multi-module e GitHub Actions</td></tr>
+            <tr><td>Borda e segurança</td><td>REST local direto</td><td>Route 53, CloudFront, AWS WAF e API Gateway</td></tr>
+            <tr><td>Entrada assíncrona</td><td>Chamadas REST para os serviços</td><td>SQS <code>boleto-generation</code> com DLQ</td></tr>
+            <tr><td>Compute</td><td>Docker Compose</td><td>Amazon EKS com quatro microsserviços e outbox worker</td></tr>
+            <tr><td>Dados</td><td>PostgreSQL e Redis em containers</td><td>RDS PostgreSQL e ElastiCache Redis</td></tr>
+            <tr><td>Eventos</td><td>Redpanda compatível com Kafka</td><td>Amazon MSK</td></tr>
+            <tr><td>Segredos e observabilidade</td><td>Variáveis de ambiente e Actuator</td><td>Secrets Manager, IAM/IRSA, CloudWatch, SNS e OpenTelemetry</td></tr>
           </tbody>
         </table>
       </section>
 
-      <section id="padroes" class="band">
+      <section id="padroes" class="soft-band">
         <div class="section-head">
           <h2>Padrões Aplicados</h2>
           <p>As escolhas arquiteturais foram usadas para reduzir acoplamento, preservar consistência, facilitar testes e manter cada bounded context com responsabilidades claras.</p>
@@ -649,30 +671,33 @@
         </div>
       </section>
 
-      <section id="arquitetura" class="soft-band">
+      <section id="adr" class="band">
         <div class="section-head">
-          <h2>Arquitetura AWS</h2>
-          <p>O desenho organiza borda, entrada assíncrona, compute, dados, eventos, segurança e observabilidade em uma topologia pronta para evoluir de ambiente local para cloud.</p>
+          <h2>Decisões Arquiteturais</h2>
+          <p>As ADRs registram contexto, alternativas consideradas e consequências das decisões centrais do projeto.</p>
         </div>
-        <div class="diagram-frame">
-          <img src="../assets/aws-reference-architecture.svg?v=20260505-5" alt="Diagrama de arquitetura AWS do Received Bank com Route 53, CloudFront, WAF, API Gateway, SQS, EKS, microsserviços, RDS, ElastiCache, MSK, CloudWatch e Secrets Manager.">
+        <div class="two-grid">
+          <div class="card accent-teal">
+            <strong>ADR-001 · Transactional Outbox vs Saga</strong>
+            <p>Outbox foi escolhido para garantir uma transação ACID cobrindo boleto e evento, sem coordenação distribuída.</p>
+          </div>
+          <div class="card accent-blue">
+            <strong>ADR-002 · CQRS com banco compartilhado</strong>
+            <p>Separação lógica em desenvolvimento, com caminho claro para separar fisicamente em alto volume.</p>
+          </div>
+          <div class="card accent-gold">
+            <strong>ADR-003 · API Gateway para SQS</strong>
+            <p>Entrada assíncrona absorve picos e permite resposta <code>202 Accepted</code> com processamento posterior.</p>
+          </div>
+          <div class="card accent-green">
+            <strong>ADR-004 · Arquitetura Hexagonal</strong>
+            <p>Casos de uso testáveis sem Spring, banco ou Kafka, com adapters substituíveis.</p>
+          </div>
         </div>
-        <table style="margin-top:22px">
-          <thead>
-            <tr><th>Camada</th><th>Local</th><th>AWS</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Borda e segurança</td><td>REST local direto</td><td>Route 53, CloudFront, AWS WAF e API Gateway</td></tr>
-            <tr><td>Entrada assíncrona</td><td>Chamadas REST para os serviços</td><td>SQS <code>boleto-generation</code> com DLQ</td></tr>
-            <tr><td>Compute</td><td>Docker Compose</td><td>Amazon EKS com quatro microsserviços e outbox worker</td></tr>
-            <tr><td>Dados</td><td>PostgreSQL e Redis em containers</td><td>RDS PostgreSQL e ElastiCache Redis</td></tr>
-            <tr><td>Eventos</td><td>Redpanda compatível com Kafka</td><td>Amazon MSK</td></tr>
-            <tr><td>Segredos e observabilidade</td><td>Variáveis de ambiente e Actuator</td><td>Secrets Manager, IAM/IRSA, CloudWatch, SNS e OpenTelemetry</td></tr>
-          </tbody>
-        </table>
+        <p class="muted" style="margin-top:18px">Arquivo completo: <code>received-bank-services/docs/architecture/ARCHITECTURE_DECISION_RECORD.md</code></p>
       </section>
 
-      <section id="servicos" class="band">
+      <section id="servicos" class="soft-band">
         <div class="section-head">
           <h2>Serviços</h2>
           <p>O módulo <code>received-bank-services</code> agrupa os microsserviços Maven e os commons compartilhados do domínio e infraestrutura.</p>
@@ -710,25 +735,6 @@
         </table>
       </section>
 
-      <section id="fluxos" class="soft-band">
-        <div class="section-head">
-          <h2>Fluxo Operacional</h2>
-          <p>A jornada separa a criação do boleto, o registro externo simulado, a chegada do pagamento, a validação, a atualização do read model e a notificação final.</p>
-        </div>
-        <div class="diagram-frame">
-          <img src="../assets/journey-flows.svg?v=20260505-5" alt="Fluxos das jornadas de emissão de boleto, registro externo, pagamento aprovado, pagamento rejeitado, consulta e notificação.">
-        </div>
-        <div class="flow" style="margin-top:22px">
-          <div class="step"><strong>1. Criação</strong><span>Cliente PJ envia <code>POST /boletos</code> e o <code>boleto-service</code> cria o agregado.</span></div>
-          <div class="step"><strong>2. Outbox</strong><span>Boleto e evento <code>boleto.gerado</code> são persistidos na mesma transação.</span></div>
-          <div class="step"><strong>3. Registro</strong><span>A registradora bancária é simulada via <code>/simulacoes/registradora/boletos</code>.</span></div>
-          <div class="step"><strong>4. Pagamento</strong><span>O pagamento chega por <code>/simulacoes/pagamentos</code>, como retorno externo.</span></div>
-          <div class="step"><strong>5. Validação</strong><span>Valor pago e vencimento determinam aprovação ou rejeição.</span></div>
-          <div class="step"><strong>6. Consulta</strong><span><code>query-service</code> atualiza o read model a partir dos eventos.</span></div>
-          <div class="step"><strong>7. Notificação</strong><span><code>notification-service</code> publica <code>notificacao.enviada</code>.</span></div>
-        </div>
-      </section>
-
       <section id="apis" class="band">
         <div class="section-head">
           <h2>APIs Principais</h2>
@@ -758,30 +764,24 @@
         </div>
       </section>
 
-      <section id="adr" class="soft-band">
+      <section id="stack" class="soft-band">
         <div class="section-head">
-          <h2>Decisões Arquiteturais</h2>
-          <p>As ADRs registram contexto, alternativas consideradas e consequências das decisões centrais do projeto.</p>
+          <h2>Stack Técnica</h2>
+          <p>A base do projeto combina runtime moderno, mensageria, persistência relacional, cache de idempotência, infraestrutura como código e pipelines de validação.</p>
         </div>
-        <div class="two-grid">
-          <div class="card accent-teal">
-            <strong>ADR-001 · Transactional Outbox vs Saga</strong>
-            <p>Outbox foi escolhido para garantir uma transação ACID cobrindo boleto e evento, sem coordenação distribuída.</p>
-          </div>
-          <div class="card accent-blue">
-            <strong>ADR-002 · CQRS com banco compartilhado</strong>
-            <p>Separação lógica em desenvolvimento, com caminho claro para separar fisicamente em alto volume.</p>
-          </div>
-          <div class="card accent-gold">
-            <strong>ADR-003 · API Gateway para SQS</strong>
-            <p>Entrada assíncrona absorve picos e permite resposta <code>202 Accepted</code> com processamento posterior.</p>
-          </div>
-          <div class="card accent-green">
-            <strong>ADR-004 · Arquitetura Hexagonal</strong>
-            <p>Casos de uso testáveis sem Spring, banco ou Kafka, com adapters substituíveis.</p>
-          </div>
-        </div>
-        <p class="muted" style="margin-top:18px">Arquivo completo: <code>received-bank-services/docs/architecture/ARCHITECTURE_DECISION_RECORD.md</code></p>
+        <table>
+          <thead>
+            <tr><th>Camada</th><th>Tecnologias</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Linguagem e runtime</td><td>Java 21, Spring Boot 3.2, Spring Cloud</td></tr>
+            <tr><td>Mensageria</td><td>Apache Kafka via Redpanda em ambiente local e Amazon MSK no desenho cloud</td></tr>
+            <tr><td>Dados</td><td>PostgreSQL 16 para escrita, Outbox e read model; Redis 7 para idempotência</td></tr>
+            <tr><td>Cloud</td><td>AWS EKS, API Gateway, SQS, SNS, S3, CloudFront, WAF, RDS, ElastiCache e MSK</td></tr>
+            <tr><td>Infraestrutura como código</td><td>Terraform para provisionamento AWS e manifests Kubernetes para EKS</td></tr>
+            <tr><td>Observabilidade e CI</td><td>Spring Actuator, health checks por serviço, Maven multi-module e GitHub Actions</td></tr>
+          </tbody>
+        </table>
       </section>
 
       <section id="local" class="band">
