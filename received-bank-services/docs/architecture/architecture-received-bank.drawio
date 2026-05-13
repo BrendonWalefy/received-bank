@@ -536,4 +536,113 @@
             </root>
         </mxGraphModel>
     </diagram>
+    <diagram id="transactional-outbox-flow" name="Transactional Outbox">
+        <mxGraphModel dx="1422" dy="886" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1000" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+
+                <mxCell id="outbox_title" value="&lt;b style=&quot;font-size:22px;&quot;&gt;Received Bank — Transactional Outbox&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="24" width="900" height="34" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_subtitle" value="Como o boleto e o evento &lt;b&gt;boleto.gerado&lt;/b&gt; nascem na mesma transação e são publicados depois, sem dual write direto entre PostgreSQL e Kafka." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=13;fontColor=#545B64;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="60" width="1250" height="28" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="outbox_boundary_core" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;opacity=45;strokeColor=#2154FF;strokeWidth=2;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="275" y="105" width="720" height="390" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_boundary_label" value="boleto-service" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=12;fontStyle=1;fontColor=#545B64;" parent="1" vertex="1">
+                    <mxGeometry x="285" y="110" width="180" height="18" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="outbox_actor" value="&lt;b&gt;PJ Parceiro / API&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;POST /boletos&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef6ff;strokeColor=#2563a8;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="210" width="170" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_usecase" value="&lt;b&gt;CriarBoletoUseCase&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;@Transactional&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#FF9900;strokeWidth=2;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="205" width="185" height="82" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_domain" value="&lt;b&gt;Boleto&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;agregado de domínio&lt;br/&gt;gera BoletoGeradoEvent&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8ea;strokeColor=#b7791f;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="575" y="142" width="195" height="88" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_adapter" value="&lt;b&gt;BoletoOutboxEventPublisher&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;converte evento de domínio&lt;br/&gt;em evento de integração&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="575" y="275" width="230" height="90" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="outbox_tx" value="&lt;b&gt;PostgreSQL — mesma transação ACID&lt;/b&gt;" style="swimlane;html=1;rounded=1;startSize=32;fillColor=#eef2ff;strokeColor=#4f46e5;strokeWidth=1.4;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="335" y="560" width="540" height="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_boleto_table" value="&lt;b&gt;boletos&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;registro transacional&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#4f46e5;strokeWidth=1.2;align=center;verticalAlign=middle;fontSize=12;" parent="outbox_tx" vertex="1">
+                    <mxGeometry x="35" y="70" width="190" height="82" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_event_table" value="&lt;b&gt;outbox_events&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;event_type = boleto.gerado&lt;br/&gt;status = PENDING&lt;br/&gt;attempts = 0&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#4f46e5;strokeWidth=1.2;align=center;verticalAlign=middle;fontSize=12;" parent="outbox_tx" vertex="1">
+                    <mxGeometry x="300" y="54" width="205" height="112" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="outbox_worker" value="&lt;b&gt;OutboxKafkaPublisher&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;@Scheduled a cada 5s&lt;br/&gt;busca até 50 PENDING&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1.6;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="1070" y="265" width="230" height="92" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_kafka" value="&lt;b&gt;Kafka / MSK&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;tópico boleto.gerado&lt;br/&gt;key = boletoId&lt;/span&gt;" style="shape=cylinder3d;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#fff1f8;strokeColor=#db2777;strokeWidth=1.5;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="1430" y="246" width="210" height="118" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_consumers" value="&lt;b&gt;Consumidores&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;payment-service&lt;br/&gt;query-service&lt;br/&gt;notification-service&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f7fff9;strokeColor=#17865a;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="1430" y="455" width="210" height="118" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="outbox_status_published" value="&lt;b&gt;Sucesso&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;Kafka confirma em até 10s&lt;br/&gt;status = PUBLISHED&lt;br/&gt;published_at preenchido&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f7fff9;strokeColor=#17865a;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="1045" y="610" width="250" height="105" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_status_failed" value="&lt;b&gt;Falha controlada&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;attempts + 1&lt;br/&gt;last_error gravado&lt;br/&gt;após max-attempts: FAILED&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff1f2;strokeColor=#be123c;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="1335" y="610" width="250" height="105" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="outbox_note_1" value="&lt;b&gt;Por que existe?&lt;/b&gt;&lt;br/&gt;Evita dual write: banco e Kafka não compartilham transação. O evento fica durável no PostgreSQL antes da publicação assíncrona." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8ea;strokeColor=#b7791f;strokeWidth=1.2;align=left;verticalAlign=top;spacing=12;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="835" width="365" height="92" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_note_2" value="&lt;b&gt;Semântica real&lt;/b&gt;&lt;br/&gt;O fluxo entrega at-least-once. Se publicar no Kafka e cair antes de marcar PUBLISHED, o evento pode sair duplicado. Consumidores precisam ser idempotentes." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef6ff;strokeColor=#2563a8;strokeWidth=1.2;align=left;verticalAlign=top;spacing=12;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="430" y="835" width="410" height="92" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_note_3" value="&lt;b&gt;Evolução produção&lt;/b&gt;&lt;br/&gt;Adicionar PROCESSING, lock/SELECT FOR UPDATE SKIP LOCKED, backoff, reprocessamento de FAILED, métricas e limpeza periódica da tabela." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f7fff9;strokeColor=#17865a;strokeWidth=1.2;align=left;verticalAlign=top;spacing=12;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="865" y="835" width="445" height="92" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_note_4" value="&lt;b&gt;No código atual&lt;/b&gt;&lt;br/&gt;Busca apenas PENDING. Ao atingir max-attempts, o evento vira FAILED e deixa de ser republicado automaticamente." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff1f2;strokeColor=#be123c;strokeWidth=1.2;align=left;verticalAlign=top;spacing=12;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="1335" y="835" width="395" height="92" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="outbox_edge_1" value="1. cria boleto" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=10;fontColor=#445566;labelBackgroundColor=#ffffff;" parent="1" source="outbox_actor" target="outbox_usecase" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_edge_2" value="2. cria agregado" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=10;fontColor=#445566;labelBackgroundColor=#ffffff;" parent="1" source="outbox_usecase" target="outbox_domain" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_edge_3" value="3. evento de domínio" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=10;fontColor=#445566;labelBackgroundColor=#ffffff;" parent="1" source="outbox_domain" target="outbox_adapter" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_edge_4" value="4a. INSERT boleto" style="endArrow=block;endFill=1;strokeColor=#4f46e5;strokeWidth=2;fontSize=10;fontColor=#4f46e5;labelBackgroundColor=#ffffff;" parent="1" source="outbox_usecase" target="outbox_boleto_table" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_edge_5" value="4b. INSERT outbox PENDING" style="endArrow=block;endFill=1;strokeColor=#4f46e5;strokeWidth=2;fontSize=10;fontColor=#4f46e5;labelBackgroundColor=#ffffff;" parent="1" source="outbox_adapter" target="outbox_event_table" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_edge_6" value="5. COMMIT único" style="endArrow=none;strokeColor=#4f46e5;strokeWidth=2;dashed=1;fontSize=10;fontColor=#4f46e5;labelBackgroundColor=#ffffff;" parent="1" source="outbox_boleto_table" target="outbox_event_table" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_edge_7" value="6. polling PENDING" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=10;fontColor=#445566;labelBackgroundColor=#ffffff;" parent="1" source="outbox_event_table" target="outbox_worker" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_edge_8" value="7. publish boleto.gerado" style="endArrow=block;endFill=1;strokeColor=#db2777;strokeWidth=2.2;fontSize=10;fontColor=#db2777;labelBackgroundColor=#ffffff;" parent="1" source="outbox_worker" target="outbox_kafka" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_edge_9" value="8. consume" style="endArrow=block;endFill=1;strokeColor=#17865a;strokeWidth=2;fontSize=10;fontColor=#17865a;labelBackgroundColor=#ffffff;" parent="1" source="outbox_kafka" target="outbox_consumers" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_edge_10" value="confirmação Kafka" style="endArrow=block;endFill=1;strokeColor=#17865a;strokeWidth=2;fontSize=10;fontColor=#17865a;labelBackgroundColor=#ffffff;" parent="1" source="outbox_worker" target="outbox_status_published" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_edge_11" value="timeout / broker fora / payload inválido" style="endArrow=block;endFill=1;strokeColor=#be123c;strokeWidth=2;fontSize=10;fontColor=#be123c;labelBackgroundColor=#ffffff;" parent="1" source="outbox_worker" target="outbox_status_failed" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
 </mxfile>

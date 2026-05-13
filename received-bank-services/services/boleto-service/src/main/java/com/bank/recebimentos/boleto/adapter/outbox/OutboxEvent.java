@@ -43,6 +43,12 @@ public class OutboxEvent {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "next_attempt_at")
+    private LocalDateTime nextAttemptAt;
+
+    @Column(name = "processing_started_at")
+    private LocalDateTime processingStartedAt;
+
     @Column(name = "published_at")
     private LocalDateTime publishedAt;
 
@@ -64,6 +70,7 @@ public class OutboxEvent {
         this.status = OutboxEventStatus.PENDING;
         this.attempts = 0;
         this.createdAt = LocalDateTime.now();
+        this.nextAttemptAt = this.createdAt;
     }
 
     public static OutboxEvent pending(String id,
@@ -107,17 +114,65 @@ public class OutboxEvent {
         return attempts;
     }
 
-    public void marcarPublicado() {
-        this.status = OutboxEventStatus.PUBLISHED;
-        this.publishedAt = LocalDateTime.now();
+    public String getLastError() {
+        return lastError;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getNextAttemptAt() {
+        return nextAttemptAt;
+    }
+
+    public LocalDateTime getProcessingStartedAt() {
+        return processingStartedAt;
+    }
+
+    public LocalDateTime getPublishedAt() {
+        return publishedAt;
+    }
+
+    public void marcarProcessando(LocalDateTime now) {
+        this.status = OutboxEventStatus.PROCESSING;
+        this.processingStartedAt = now;
         this.lastError = null;
     }
 
-    public void registrarFalha(Exception exception, int maxAttempts) {
+    public void marcarPublicado(LocalDateTime now) {
+        this.status = OutboxEventStatus.PUBLISHED;
+        this.publishedAt = now;
+        this.processingStartedAt = null;
+        this.nextAttemptAt = null;
+        this.lastError = null;
+    }
+
+    public void registrarFalha(Exception exception, int maxAttempts, LocalDateTime nextAttemptAt) {
         this.attempts++;
         this.lastError = exception.getMessage();
+        this.processingStartedAt = null;
         if (this.attempts >= maxAttempts) {
             this.status = OutboxEventStatus.FAILED;
+            this.nextAttemptAt = null;
+            return;
         }
+
+        this.status = OutboxEventStatus.PENDING;
+        this.nextAttemptAt = nextAttemptAt;
+    }
+
+    public void registrarFalhaDefinitiva(Exception exception) {
+        this.attempts++;
+        this.lastError = exception.getMessage();
+        this.processingStartedAt = null;
+        this.nextAttemptAt = null;
+        this.status = OutboxEventStatus.FAILED;
+    }
+
+    public void liberarProcessamentoExpirado(LocalDateTime nextAttemptAt) {
+        this.status = OutboxEventStatus.PENDING;
+        this.processingStartedAt = null;
+        this.nextAttemptAt = nextAttemptAt;
     }
 }

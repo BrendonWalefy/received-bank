@@ -25,7 +25,7 @@ Ao criar um boleto, o sistema precisa persistir o estado no banco de dados **e**
 
 Adotar o **Transactional Outbox Pattern** no `boleto-service`.
 
-O boleto e o registro em `outbox_events` são gravados em uma única transação PostgreSQL. O `outbox-worker` (scheduler periódico) lê os eventos pendentes e os publica no MSK, marcando-os como publicados.
+O boleto e o registro em `outbox_events` são gravados em uma única transação PostgreSQL. O `outbox-worker` (scheduler periódico) reivindica lotes pequenos de eventos pendentes, marca como `PROCESSING`, publica no MSK fora da transação de claim e finaliza o registro como `PUBLISHED` ou `FAILED`.
 
 ```
 BEGIN
@@ -34,16 +34,28 @@ BEGIN
 COMMIT
 
 -- worker independente:
-SELECT * FROM outbox_events WHERE status = 'PENDING'
+SELECT *
+FROM outbox_events
+WHERE status = 'PENDING'
+  AND next_attempt_at <= now()
+ORDER BY created_at
+LIMIT 50
+FOR UPDATE SKIP LOCKED
+
+UPDATE outbox_events SET status = 'PROCESSING'
 → kafka.send(event)
 → UPDATE outbox_events SET status = 'PUBLISHED'
 ```
 
 **Consequências**
 
-- Garantia de "at-least-once delivery": se o worker falhar antes de marcar como publicado, ele reprocessa. Consumidores devem ser idempotentes (o `Idempotency-Key` no Redis cobre isso no `boleto-service`).
+- Garantia de "at-least-once delivery": se o worker falhar antes de marcar como publicado, ele reprocessa. Consumidores devem ser idempotentes.
+- `FOR UPDATE SKIP LOCKED` permite múltiplos workers sem disputar as mesmas linhas e sem bloquear o lote inteiro.
+- `next_attempt_at` aplica backoff entre tentativas para não pressionar Kafka/PostgreSQL durante falhas transitórias.
+- Eventos presos em `PROCESSING` podem voltar para `PENDING` após timeout, protegendo restart/deploy no meio da publicação.
+- Payload ou tipo de evento inválido vira falha definitiva, evitando retry inútil.
 - Nenhuma dependência de transações distribuídas (2PC) ou framework de Saga.
-- O `outbox_events` cresce e precisa de limpeza periódica — aceitável para o escopo atual.
+- O `outbox_events` cresce e precisa de limpeza periódica e reprocessamento operacional de `FAILED` como evolução.
 
 ---
 
