@@ -1,538 +1,569 @@
 <mxfile host="65bd71144e">
     <diagram id="received-bank-arch" name="Arquitetura AWS de Referência">
-        <mxGraphModel dx="1422" dy="886" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1000" math="0" shadow="0">
+        <mxGraphModel dx="3576" dy="817" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1120" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-
-                <!-- TITLE -->
                 <mxCell id="title" value="&lt;b style=&quot;font-size:22px;&quot;&gt;Received Bank — Arquitetura AWS&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;" parent="1" vertex="1">
                     <mxGeometry x="30" y="10" width="1200" height="32" as="geometry"/>
                 </mxCell>
                 <mxCell id="subtitle" value="Java 21 · Spring Boot · EKS · Amazon MSK · RDS PostgreSQL · DDD · CQRS · Transactional Outbox · Event-Driven Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=13;fontColor=#545B64;" parent="1" vertex="1">
                     <mxGeometry x="30" y="44" width="1500" height="18" as="geometry"/>
                 </mxCell>
-
-                <!-- AWS OUTER BOUNDARY -->
-                <mxCell id="aws_boundary" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;opacity=40;strokeColor=#1A1A1A;strokeWidth=2;fillColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="140" y="80" width="1460" height="720" as="geometry"/>
+                <mxCell id="aws_boundary" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;opacity=40;strokeColor=#1A1A1A;strokeWidth=2;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="68" y="80" width="1532" height="720" as="geometry"/>
                 </mxCell>
-                <mxCell id="aws_badge" value="&lt;b&gt;AWS&lt;/b&gt;" style="rounded=1;fillColor=#FF9900;strokeColor=none;html=1;align=center;verticalAlign=middle;fontColor=#ffffff;fontSize=9;" vertex="1" parent="1">
-                    <mxGeometry x="148" y="83" width="26" height="15" as="geometry"/>
-                </mxCell>
-                <mxCell id="aws_cloud_label" value="Cloud — us-east-1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#545B64;" vertex="1" parent="1">
-                    <mxGeometry x="178" y="83" width="160" height="15" as="geometry"/>
-                </mxCell>
-
-                <!-- VPC BOUNDARY -->
-                <mxCell id="vpc_boundary" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;opacity=40;strokeColor=#2154FF;strokeWidth=2;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="vpc_boundary" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;opacity=40;strokeColor=#2154FF;strokeWidth=2;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="365" y="95" width="1220" height="695" as="geometry"/>
                 </mxCell>
-                <mxCell id="vpc_label" value="VPC — Private Subnets" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#545B64;" vertex="1" parent="1">
+                <mxCell id="vpc_label" value="VPC — Private Subnets" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#545B64;" parent="1" vertex="1">
                     <mxGeometry x="369" y="97" width="190" height="14" as="geometry"/>
                 </mxCell>
-
-                <!-- ===================== ACTORS ===================== -->
-
-                <!-- PJ Parceiro (top-left, outside AWS) -->
-                <mxCell id="pj_icon" value="" style="shape=mxgraph.aws4.user;fillColor=#232F3E;strokeColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="42" y="128" width="36" height="36" as="geometry"/>
+                <mxCell id="sns" value="&lt;b style=&quot;font-size:12px;&quot;&gt;SNS / SES&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;webhook · e-mail · SMS&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" parent="1" vertex="1">
+                    <mxGeometry x="385" y="651" width="185" height="65" as="geometry"/>
                 </mxCell>
-                <mxCell id="pj_label" value="&lt;b&gt;PJ Parceiro&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#545B64;&quot;&gt;emite boleto&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;fontSize=12;" vertex="1" parent="1">
-                    <mxGeometry x="14" y="168" width="90" height="36" as="geometry"/>
+                <mxCell id="sns_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sns;fillColor=#E7157B;fontColor=#ffffff;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="392" y="665.5" width="36" height="36" as="geometry"/>
                 </mxCell>
-
-                <!-- Cliente Pagador (bottom-left, outside AWS) -->
-                <mxCell id="cp_icon" value="" style="shape=mxgraph.aws4.user;fillColor=#232F3E;strokeColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="42" y="590" width="36" height="36" as="geometry"/>
-                </mxCell>
-                <mxCell id="cp_label" value="&lt;b&gt;Cliente Pagador&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#545B64;&quot;&gt;paga o boleto&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;fontSize=12;" vertex="1" parent="1">
-                    <mxGeometry x="14" y="630" width="90" height="36" as="geometry"/>
-                </mxCell>
-
-                <!-- ===================== EDGE ZONE ===================== -->
-                <mxCell id="zone_edge" value="" style="rounded=1;fillColor=#EDE4FF;strokeColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="150" y="100" width="205" height="380" as="geometry"/>
-                </mxCell>
-                <mxCell id="lbl_edge" value="BORDA SEGURA" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=1;fontColor=#7B8EA0;" vertex="1" parent="1">
-                    <mxGeometry x="162" y="92" width="150" height="14" as="geometry"/>
-                </mxCell>
-
-                <mxCell id="waf" value="&lt;b style=&quot;font-size:13px;&quot;&gt;AWS WAF&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;proteção · rate limit&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" vertex="1" parent="1">
-                    <mxGeometry x="160" y="118" width="185" height="65" as="geometry"/>
-                </mxCell>
-                <mxCell id="waf_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.waf;fillColor=#DD344C;fontColor=#ffffff;strokeColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="169" y="132" width="36" height="36" as="geometry"/>
-                </mxCell>
-
-                <mxCell id="apigw" value="&lt;b style=&quot;font-size:13px;&quot;&gt;API Gateway&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;auth · throttling · routing&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" vertex="1" parent="1">
-                    <mxGeometry x="160" y="218" width="185" height="65" as="geometry"/>
-                </mxCell>
-                <mxCell id="apigw_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.api_gateway;fillColor=#A166FF;fontColor=#ffffff;strokeColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="169" y="232" width="36" height="36" as="geometry"/>
-                </mxCell>
-
-                <!-- ===================== PSP / BANCO (EXTERNAL) ===================== -->
-                <mxCell id="psp_ext_label" value="externo" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontColor=#999999;fontStyle=2;" vertex="1" parent="1">
-                    <mxGeometry x="150" y="498" width="70" height="14" as="geometry"/>
-                </mxCell>
-                <mxCell id="psp" value="&lt;b style=&quot;font-size:12px;&quot;&gt;PSP / Banco&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;processa pagamento&lt;/span&gt;" style="rounded=1;fillColor=#F5F5F5;strokeColor=#AAAAAA;strokeWidth=1.5;html=1;align=left;verticalAlign=middle;spacingLeft=48;dashed=1;" vertex="1" parent="1">
-                    <mxGeometry x="150" y="513" width="185" height="65" as="geometry"/>
-                </mxCell>
-                <mxCell id="psp_ico" value="$" style="rounded=1;fillColor=#569A31;strokeColor=none;fontColor=#ffffff;fontSize=18;fontStyle=1;html=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-                    <mxGeometry x="159" y="529" width="36" height="36" as="geometry"/>
-                </mxCell>
-
-                <!-- ===================== ASYNC ZONE (SQS) ===================== -->
-                <mxCell id="zone_async" value="" style="rounded=1;fillColor=#FFD9EE;strokeColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="385" y="130" width="205" height="215" as="geometry"/>
-                </mxCell>
-                <mxCell id="lbl_async" value="ENTRADA ASSÍNCRONA" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=1;fontColor=#7B8EA0;" vertex="1" parent="1">
-                    <mxGeometry x="390" y="122" width="200" height="14" as="geometry"/>
-                </mxCell>
-
-                <mxCell id="sqs" value="&lt;b style=&quot;font-size:13px;&quot;&gt;Amazon SQS&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;boleto-generation&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" vertex="1" parent="1">
-                    <mxGeometry x="395" y="148" width="185" height="65" as="geometry"/>
-                </mxCell>
-                <mxCell id="sqs_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sqs;fillColor=#E7157B;fontColor=#ffffff;strokeColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="404" y="162" width="36" height="36" as="geometry"/>
-                </mxCell>
-
-                <mxCell id="dlq" value="&lt;b style=&quot;font-size:12px;color:#DD344C;&quot;&gt;SQS DLQ&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;falhas isoladas&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#DD344C;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" vertex="1" parent="1">
-                    <mxGeometry x="395" y="250" width="185" height="55" as="geometry"/>
-                </mxCell>
-                <mxCell id="dlq_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sqs;fillColor=#DD344C;fontColor=#ffffff;strokeColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="404" y="258" width="36" height="36" as="geometry"/>
-                </mxCell>
-
-                <!-- ===================== EKS CLUSTER ===================== -->
-                <mxCell id="eks_cluster" value="Amazon EKS Cluster" style="rounded=1;fillColor=#FFF8EE;strokeColor=#FF9900;strokeWidth=1.5;dashed=1;dashPattern=6 4;html=1;align=left;verticalAlign=top;spacingTop=5;spacingLeft=25;fontSize=11;fontStyle=1;fontColor=#CC7A00;" vertex="1" parent="1">
-                    <mxGeometry x="630" y="95" width="265" height="690" as="geometry"/>
-                </mxCell>
-
-                <mxCell id="boleto" value="&lt;b style=&quot;font-size:12px;&quot;&gt;boleto-service&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;gera boleto + outbox&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#FF9900;strokeWidth=2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" vertex="1" parent="1">
-                    <mxGeometry x="640" y="135" width="240" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="boleto_ico" value="" style="rounded=1;fillColor=#FF9900;strokeColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="649" y="151" width="36" height="36" as="geometry"/>
-                </mxCell>
-
-                <mxCell id="outbox" value="&lt;b style=&quot;font-size:12px;&quot;&gt;outbox-worker&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;polls outbox → publica MSK&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" vertex="1" parent="1">
-                    <mxGeometry x="640" y="242" width="240" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="outbox_ico" value="" style="rounded=1;fillColor=#FF9900;strokeColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="649" y="258" width="36" height="36" as="geometry"/>
-                </mxCell>
-
-                <mxCell id="payment" value="&lt;b style=&quot;font-size:12px;&quot;&gt;payment-service&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;valida · efetivar pagamento&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" vertex="1" parent="1">
-                    <mxGeometry x="640" y="490" width="240" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="payment_ico" value="" style="rounded=1;fillColor=#FF9900;strokeColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="649" y="506" width="36" height="36" as="geometry"/>
-                </mxCell>
-
-                <mxCell id="notif" value="&lt;b style=&quot;font-size:12px;&quot;&gt;notification-service&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;consume eventos · envia via SNS&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" vertex="1" parent="1">
-                    <mxGeometry x="640" y="635" width="240" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="notif_ico" value="" style="rounded=1;fillColor=#FF9900;strokeColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="649" y="651" width="36" height="36" as="geometry"/>
-                </mxCell>
-
-                <!-- ===================== MSK (EVENT BUS) ===================== -->
-                <mxCell id="lbl_msk" value="EVENT BUS" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=1;fontColor=#7B8EA0;" vertex="1" parent="1">
-                    <mxGeometry x="955" y="138" width="120" height="14" as="geometry"/>
-                </mxCell>
-                <mxCell id="msk" value="&lt;b style=&quot;font-size:13px;&quot;&gt;Amazon MSK&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;Apache Kafka&lt;/span&gt;&lt;hr style=&quot;border-color:rgb(240,216,232);margin:6px 0px;&quot;&gt;&lt;b style=&quot;font-size:11px;color:rgb(231,21,123);&quot;&gt;Tópicos&lt;/b&gt;&lt;br&gt;● boleto.gerado&lt;br&gt;● pagamento.efetivado&lt;br&gt;&lt;span style=&quot;color:rgb(221,52,76);&quot;&gt;● pagamento.rejeitado&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;color:rgb(86,154,49);&quot;&gt;● notificacao.enviada&lt;/span&gt;&lt;hr style=&quot;border-color:rgb(240,216,232);margin:6px 0px;&quot;&gt;&lt;span style=&quot;font-size:10px;color:rgb(123,142,160);&quot;&gt;Dead Letter Topics por consumer&lt;br&gt;retry + backoff via Spring Kafka&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#E7157B;strokeWidth=1.5;html=1;align=left;verticalAlign=top;spacingLeft=16;spacingTop=40;spacingRight=8;" vertex="1" parent="1">
-                    <mxGeometry x="950" y="148" width="180" height="430" as="geometry"/>
-                </mxCell>
-
-                <!-- ===================== DATA ZONE ===================== -->
-                <mxCell id="zone_data" value="" style="rounded=1;fillColor=#B8D4F5;strokeColor=#5B8DEF;strokeWidth=1;dashed=1;dashPattern=5 4;" vertex="1" parent="1">
-                    <mxGeometry x="1192" y="125" width="215" height="590" as="geometry"/>
-                </mxCell>
-                <mxCell id="lbl_data" value="DADOS" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=1;fontColor=#7B8EA0;" vertex="1" parent="1">
-                    <mxGeometry x="1198" y="117" width="80" height="14" as="geometry"/>
-                </mxCell>
-
-                <mxCell id="s3" value="&lt;b style=&quot;font-size:12px;&quot;&gt;Amazon S3&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;PDFs de boleto&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" vertex="1" parent="1">
-                    <mxGeometry x="1202" y="148" width="185" height="65" as="geometry"/>
-                </mxCell>
-                <mxCell id="s3_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;fillColor=#569A31;fontColor=#ffffff;strokeColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="1211" y="163" width="36" height="36" as="geometry"/>
-                </mxCell>
-
-                <mxCell id="rds_w" value="&lt;b style=&quot;font-size:12px;&quot;&gt;RDS PostgreSQL&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;write model + outbox&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" vertex="1" parent="1">
-                    <mxGeometry x="1202" y="250" width="185" height="65" as="geometry"/>
-                </mxCell>
-                <mxCell id="rds_w_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.rds;fillColor=#4D27AA;fontColor=#ffffff;strokeColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="1211" y="266" width="36" height="36" as="geometry"/>
-                </mxCell>
-
-                <mxCell id="ec" value="&lt;b style=&quot;font-size:12px;&quot;&gt;ElastiCache Redis&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;idempotência&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" vertex="1" parent="1">
-                    <mxGeometry x="1202" y="368" width="185" height="65" as="geometry"/>
-                </mxCell>
-                <mxCell id="ec_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.elasticache;fillColor=#4D27AA;fontColor=#ffffff;strokeColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="1211" y="384" width="36" height="36" as="geometry"/>
-                </mxCell>
-
-                <mxCell id="rds_r" value="&lt;b style=&quot;font-size:12px;&quot;&gt;RDS PostgreSQL&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;read model (CQRS)&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" vertex="1" parent="1">
-                    <mxGeometry x="1202" y="480" width="185" height="65" as="geometry"/>
-                </mxCell>
-                <mxCell id="rds_r_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.rds;fillColor=#4D27AA;fontColor=#ffffff;strokeColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="1211" y="496" width="36" height="36" as="geometry"/>
-                </mxCell>
-
-                <!-- ===================== SNS / SES ===================== -->
-                <mxCell id="sns" value="&lt;b style=&quot;font-size:12px;&quot;&gt;SNS / SES&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;webhook · e-mail · SMS&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" vertex="1" parent="1">
-                    <mxGeometry x="385" y="635" width="185" height="65" as="geometry"/>
-                </mxCell>
-                <mxCell id="sns_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sns;fillColor=#E7157B;fontColor=#ffffff;strokeColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="394" y="651" width="36" height="36" as="geometry"/>
-                </mxCell>
-
-                <!-- ===================== FLOW A — EMISSÃO DE BOLETO ===================== -->
-
-                <!-- ① PJ Parceiro → WAF -->
-                <mxCell id="a_pj_waf" value="POST /boletos" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=9;fontColor=#445566;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;" edge="1" parent="1">
+                <mxCell id="a_bol_rds" value="persistência por domínio" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2.2;fontSize=9;fontColor=#445566;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;" parent="1" edge="1">
                     <mxGeometry y="-10" relative="1" as="geometry">
-                        <mxPoint x="78" y="146" as="sourcePoint"/>
-                        <mxPoint x="160" y="150" as="targetPoint"/>
+                        <mxPoint x="895" y="315" as="sourcePoint"/>
+                        <mxPoint x="1202" y="315" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="b1" value="1" style="ellipse;fillColor=#16191F;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-                    <mxGeometry x="105" y="128" width="17" height="17" as="geometry"/>
-                </mxCell>
-
-                <!-- WAF → API GW (vertical) -->
-                <mxCell id="a_waf_apigw" value="" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=1.8;" edge="1" parent="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="252" y="183" as="sourcePoint"/>
-                        <mxPoint x="252" y="218" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-
-                <!-- ② API GW → SQS -->
-                <mxCell id="a_apigw_sqs" value="202 Accepted" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2.2;fontSize=9;fontColor=#445566;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;" edge="1" parent="1">
-                    <mxGeometry y="-10" relative="1" as="geometry">
-                        <mxPoint x="345" y="248" as="sourcePoint"/>
-                        <mxPoint x="395" y="181" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="370" y="248"/>
-                            <mxPoint x="370" y="181"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="b2" value="2" style="ellipse;fillColor=#16191F;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-                    <mxGeometry x="356" y="204" width="17" height="17" as="geometry"/>
-                </mxCell>
-
-                <!-- SQS → DLQ (error path) -->
-                <mxCell id="a_sqs_dlq" value="falha" style="endArrow=block;endFill=1;strokeColor=#DD344C;strokeWidth=1.5;dashed=1;dashPattern=5 4;fontSize=9;fontColor=#DD344C;labelBackgroundColor=#ffffff;align=left;labelPosition=right;verticalLabelPosition=middle;" edge="1" parent="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="487" y="213" as="sourcePoint"/>
-                        <mxPoint x="487" y="250" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-
-                <!-- ③ SQS → boleto-service -->
-                <mxCell id="a_sqs_bol" value="long polling" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2.2;fontSize=9;fontColor=#445566;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;" edge="1" parent="1">
-                    <mxGeometry y="-10" relative="1" as="geometry">
-                        <mxPoint x="580" y="181" as="sourcePoint"/>
-                        <mxPoint x="640" y="170" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="b3" value="3" style="ellipse;fillColor=#16191F;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-                    <mxGeometry x="600" y="162" width="17" height="17" as="geometry"/>
-                </mxCell>
-
-                <!-- ④ boleto-service → S3 (PDF) -->
-                <mxCell id="a_bol_s3" value="PDF" style="endArrow=block;endFill=1;strokeColor=#569A31;strokeWidth=1.5;dashed=1;dashPattern=4 4;fontSize=9;fontColor=#569A31;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;" edge="1" parent="1">
-                    <mxGeometry y="-10" relative="1" as="geometry">
-                        <mxPoint x="880" y="155" as="sourcePoint"/>
-                        <mxPoint x="1202" y="178" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="1148" y="155"/>
-                            <mxPoint x="1148" y="178"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-
-                <!-- ④ boleto-service → RDS write (ACID + outbox) -->
-                <mxCell id="a_bol_rds" value="ACID + outbox" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2.2;fontSize=9;fontColor=#445566;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;" edge="1" parent="1">
-                    <mxGeometry y="-10" relative="1" as="geometry">
-                        <mxPoint x="880" y="175" as="sourcePoint"/>
-                        <mxPoint x="1202" y="272" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="1158" y="175"/>
-                            <mxPoint x="1158" y="272"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="b4" value="4" style="ellipse;fillColor=#16191F;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-                    <mxGeometry x="1042" y="160" width="17" height="17" as="geometry"/>
-                </mxCell>
-
-                <!-- ⑤ outbox-worker → MSK (boleto.gerado) -->
-                <mxCell id="a_out_msk" value="boleto.gerado" style="endArrow=block;endFill=1;strokeColor=#E7157B;strokeWidth=2;dashed=1;dashPattern=6 4;fontSize=9;fontColor=#E7157B;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;" edge="1" parent="1">
+                <mxCell id="a_out_msk" value="boleto.gerado" style="endArrow=block;endFill=1;strokeColor=#E7157B;strokeWidth=2;dashed=1;dashPattern=6 4;fontSize=9;fontColor=#E7157B;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;" parent="1" edge="1">
                     <mxGeometry y="-10" relative="1" as="geometry">
                         <mxPoint x="880" y="277" as="sourcePoint"/>
                         <mxPoint x="950" y="262" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="b5" value="5" style="ellipse;fillColor=#E7157B;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-                    <mxGeometry x="903" y="255" width="17" height="17" as="geometry"/>
-                </mxCell>
-
-                <!-- ⑥ MSK → notification-service (consume boleto.gerado + pagamento.efetivado) -->
-                <mxCell id="a_msk_notif" value="consume" style="endArrow=block;endFill=1;strokeColor=#E7157B;strokeWidth=1.8;dashed=1;dashPattern=6 4;fontSize=9;fontColor=#E7157B;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;" edge="1" parent="1">
-                    <mxGeometry y="-10" relative="1" as="geometry">
-                        <mxPoint x="950" y="556" as="sourcePoint"/>
-                        <mxPoint x="880" y="670" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="920" y="556"/>
-                            <mxPoint x="920" y="670"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="b6" value="6" style="ellipse;fillColor=#E7157B;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-                    <mxGeometry x="905" y="610" width="17" height="17" as="geometry"/>
-                </mxCell>
-
-                <!-- notification-service → SNS/SES -->
-                <mxCell id="a_notif_sns" value="" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=1.8;" edge="1" parent="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="640" y="670" as="sourcePoint"/>
-                        <mxPoint x="570" y="668" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-
-                <!-- ⑦ SNS/SES → PJ Parceiro (notificação de retorno — borda esquerda) -->
-                <mxCell id="a_sns_pj" value="boleto emitido /&lt;br/&gt;pagamento confirmado" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=1.8;dashed=1;dashPattern=4 3;fontSize=9;fontColor=#445566;labelBackgroundColor=#ffffff;align=right;labelPosition=left;verticalLabelPosition=middle;" edge="1" parent="1">
-                    <mxGeometry relative="1" as="geometry">
+                <mxCell id="a_sns_pj" value="boleto emitido /&lt;br/&gt;pagamento confirmado" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=1.8;dashed=1;dashPattern=4 3;fontSize=9;fontColor=#445566;labelBackgroundColor=#ffffff;align=right;labelPosition=left;verticalLabelPosition=middle;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" edge="1" target="pj_label" source="sns">
+                    <mxGeometry x="0.0012" relative="1" as="geometry">
                         <mxPoint x="385" y="665" as="sourcePoint"/>
                         <mxPoint x="78" y="165" as="targetPoint"/>
                         <Array as="points">
-                            <mxPoint x="108" y="665"/>
-                            <mxPoint x="108" y="165"/>
+                            <mxPoint x="246" y="684"/>
+                            <mxPoint x="108" y="684"/>
+                            <mxPoint x="-286" y="684"/>
                         </Array>
+                        <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="b7" value="7" style="ellipse;fillColor=#16191F;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-                    <mxGeometry x="100" y="390" width="17" height="17" as="geometry"/>
-                </mxCell>
-
-                <!-- MSK → RDS read (projeção CQRS) -->
-                <mxCell id="a_msk_rdsr" value="projeção CQRS" style="endArrow=block;endFill=1;strokeColor=#E7157B;strokeWidth=1.3;dashed=1;dashPattern=4 4;fontSize=9;fontColor=#E7157B;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;" edge="1" parent="1">
+                <mxCell id="a_apigw_pay" value="payment-return" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=1.8;fontSize=9;fontColor=#445566;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="apigw" edge="1">
                     <mxGeometry y="-10" relative="1" as="geometry">
-                        <mxPoint x="1130" y="390" as="sourcePoint"/>
-                        <mxPoint x="1202" y="512" as="targetPoint"/>
+                        <mxPoint x="345" y="367" as="sourcePoint"/>
+                        <mxPoint x="395" y="374" as="targetPoint"/>
                         <Array as="points">
-                            <mxPoint x="1175" y="390"/>
-                            <mxPoint x="1175" y="512"/>
+                            <mxPoint x="370" y="367"/>
+                            <mxPoint x="370" y="374"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
-
-                <!-- ===================== FLOW B — PAGAMENTO DO BOLETO ===================== -->
-
-                <!-- ⑧ Cliente Pagador → PSP/Banco -->
-                <mxCell id="a_cp_psp" value="paga boleto" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=9;fontColor=#445566;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;" edge="1" parent="1">
+                <mxCell id="a_payment_sqs_pay" value="long polling" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=9;fontColor=#445566;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;" parent="1" edge="1">
                     <mxGeometry y="-10" relative="1" as="geometry">
-                        <mxPoint x="78" y="608" as="sourcePoint"/>
-                        <mxPoint x="150" y="546" as="targetPoint"/>
+                        <mxPoint x="580" y="374" as="sourcePoint"/>
+                        <mxPoint x="640" y="367" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="b8" value="8" style="ellipse;fillColor=#16191F;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-                    <mxGeometry x="100" y="560" width="17" height="17" as="geometry"/>
-                </mxCell>
-
-                <!-- ⑨ PSP/Banco → API GW (webhook) — rota pela borda esquerda externa -->
-                <mxCell id="a_psp_apigw" value="webhook pagamento" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=9;fontColor=#445566;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;" edge="1" parent="1">
+                <mxCell id="a_pay_msk" value="pagamento.efetivado" style="endArrow=block;endFill=1;strokeColor=#E7157B;strokeWidth=1.8;dashed=1;dashPattern=4 4;fontSize=9;fontColor=#E7157B;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;" parent="1" edge="1">
                     <mxGeometry y="-10" relative="1" as="geometry">
-                        <mxPoint x="150" y="546" as="sourcePoint"/>
-                        <mxPoint x="160" y="250" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="130" y="546"/>
-                            <mxPoint x="130" y="250"/>
-                        </Array>
+                        <mxPoint x="880" y="367" as="sourcePoint"/>
+                        <mxPoint x="950" y="455" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="b9" value="9" style="ellipse;fillColor=#16191F;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-                    <mxGeometry x="122" y="400" width="17" height="17" as="geometry"/>
+                <mxCell id="2" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="34" y="841" width="1570" height="120" as="geometry"/>
                 </mxCell>
-
-                <!-- API GW → payment-service (rota webhook — pelo corredor entre edge e async) -->
-                <mxCell id="a_apigw_pay" value="routes /webhook" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=1.8;fontSize=9;fontColor=#445566;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;" edge="1" parent="1">
-                    <mxGeometry y="-10" relative="1" as="geometry">
-                        <mxPoint x="345" y="260" as="sourcePoint"/>
-                        <mxPoint x="640" y="525" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="378" y="260"/>
-                            <mxPoint x="378" y="525"/>
-                            <mxPoint x="640" y="525"/>
-                        </Array>
-                    </mxGeometry>
+                <mxCell id="zone_ops" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.3;" parent="2" vertex="1">
+                    <mxGeometry width="1570" height="120" as="geometry"/>
                 </mxCell>
-
-                <!-- ⑩ payment-service → ElastiCache (idempotency) -->
-                <mxCell id="a_pay_ec" value="Idempotency-Key" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=1.3;dashed=1;dashPattern=4 4;fontSize=9;fontColor=#445566;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;" edge="1" parent="1">
-                    <mxGeometry y="-10" relative="1" as="geometry">
-                        <mxPoint x="880" y="510" as="sourcePoint"/>
-                        <mxPoint x="1202" y="400" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="1162" y="510"/>
-                            <mxPoint x="1162" y="400"/>
-                        </Array>
-                    </mxGeometry>
+                <mxCell id="lbl_ops" value="PLATAFORMA OPERACIONAL AWS" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=1;fontColor=#7B8EA0;" parent="2" vertex="1">
+                    <mxGeometry x="8" width="270" height="14" as="geometry"/>
                 </mxCell>
-
-                <!-- ⑩ payment-service → RDS write (atualiza status) -->
-                <mxCell id="a_pay_rds" value="atualiza status" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=1.8;fontSize=9;fontColor=#445566;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;" edge="1" parent="1">
-                    <mxGeometry y="-10" relative="1" as="geometry">
-                        <mxPoint x="880" y="527" as="sourcePoint"/>
-                        <mxPoint x="1202" y="292" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="1170" y="527"/>
-                            <mxPoint x="1170" y="292"/>
-                        </Array>
-                    </mxGeometry>
+                <mxCell id="cw" value="&lt;b style=&quot;font-size:12px;&quot;&gt;CloudWatch&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;logs · métricas · alarmes&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" parent="2" vertex="1">
+                    <mxGeometry x="23" y="31" width="235" height="65" as="geometry"/>
                 </mxCell>
-                <mxCell id="b10" value="10" style="ellipse;fillColor=#16191F;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-                    <mxGeometry x="1060" y="408" width="17" height="17" as="geometry"/>
+                <mxCell id="cw_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudwatch;fillColor=#E7157B;fontColor=#ffffff;strokeColor=none;" parent="2" vertex="1">
+                    <mxGeometry x="32" y="47" width="36" height="36" as="geometry"/>
                 </mxCell>
-
-                <!-- ⑪ payment-service → MSK (pagamento.efetivado) -->
-                <mxCell id="a_pay_msk" value="pagamento.efetivado" style="endArrow=block;endFill=1;strokeColor=#E7157B;strokeWidth=1.8;dashed=1;dashPattern=4 4;fontSize=9;fontColor=#E7157B;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;" edge="1" parent="1">
-                    <mxGeometry y="-10" relative="1" as="geometry">
-                        <mxPoint x="880" y="505" as="sourcePoint"/>
-                        <mxPoint x="950" y="492" as="targetPoint"/>
-                    </mxGeometry>
+                <mxCell id="secrets" value="&lt;b style=&quot;font-size:12px;&quot;&gt;Secrets Manager&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;credenciais · segredos&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" parent="2" vertex="1">
+                    <mxGeometry x="293" y="31" width="235" height="65" as="geometry"/>
                 </mxCell>
-                <mxCell id="b11" value="11" style="ellipse;fillColor=#E7157B;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-                    <mxGeometry x="903" y="480" width="17" height="17" as="geometry"/>
+                <mxCell id="secrets_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.secrets_manager;fillColor=#DD344C;fontColor=#ffffff;strokeColor=none;" parent="2" vertex="1">
+                    <mxGeometry x="301" y="45.5" width="36" height="36" as="geometry"/>
                 </mxCell>
-
-                <!-- ===================== MANAGED SERVICES (top-right) ===================== -->
-                <mxCell id="zone_ops" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.3;" vertex="1" parent="1">
-                    <mxGeometry x="1465" y="95" width="370" height="260" as="geometry"/>
+                <mxCell id="iam" value="&lt;b style=&quot;font-size:12px;&quot;&gt;IAM + IRSA&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;least privilege · RBAC&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" parent="2" vertex="1">
+                    <mxGeometry x="556" y="31" width="235" height="65" as="geometry"/>
                 </mxCell>
-                <mxCell id="lbl_ops" value="SERVIÇOS GERENCIADOS AWS" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=1;fontColor=#7B8EA0;" vertex="1" parent="1">
-                    <mxGeometry x="1475" y="98" width="270" height="14" as="geometry"/>
+                <mxCell id="iam_ico" value="IAM" style="rounded=1;fillColor=#DD344C;strokeColor=none;fontColor=#ffffff;fontSize=11;fontStyle=1;html=1;" parent="2" vertex="1">
+                    <mxGeometry x="565" y="49" width="36" height="36" as="geometry"/>
                 </mxCell>
-
-                <mxCell id="cw" value="&lt;b style=&quot;font-size:12px;&quot;&gt;CloudWatch&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;logs · métricas · alarmes&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" vertex="1" parent="1">
-                    <mxGeometry x="1475" y="115" width="175" height="65" as="geometry"/>
+                <mxCell id="ecr" value="&lt;b style=&quot;font-size:12px;&quot;&gt;Amazon ECR&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;imagens Docker&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" parent="2" vertex="1">
+                    <mxGeometry x="830" y="31" width="235" height="65" as="geometry"/>
                 </mxCell>
-                <mxCell id="cw_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudwatch;fillColor=#E7157B;fontColor=#ffffff;strokeColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="1484" y="131" width="36" height="36" as="geometry"/>
+                <mxCell id="ecr_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.ecr;fillColor=#FF9900;fontColor=#ffffff;strokeColor=none;" parent="2" vertex="1">
+                    <mxGeometry x="839" y="47" width="36" height="36" as="geometry"/>
                 </mxCell>
-
-                <mxCell id="secrets" value="&lt;b style=&quot;font-size:12px;&quot;&gt;Secrets Manager&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;credenciais · segredos&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" vertex="1" parent="1">
-                    <mxGeometry x="1660" y="115" width="175" height="65" as="geometry"/>
+                <mxCell id="3" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="1640" y="455" width="470" height="170" as="geometry"/>
                 </mxCell>
-                <mxCell id="secrets_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.secrets_manager;fillColor=#DD344C;fontColor=#ffffff;strokeColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="1669" y="131" width="36" height="36" as="geometry"/>
+                <mxCell id="legend_bg" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.3;" parent="3" vertex="1">
+                    <mxGeometry width="470" height="170" as="geometry"/>
                 </mxCell>
-
-                <mxCell id="iam" value="&lt;b style=&quot;font-size:12px;&quot;&gt;IAM + IRSA&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;least privilege · RBAC&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" vertex="1" parent="1">
-                    <mxGeometry x="1475" y="213" width="175" height="65" as="geometry"/>
+                <mxCell id="leg_ttl" value="&lt;b&gt;Legenda de Fluxo&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=12;fontColor=#16191F;" parent="3" vertex="1">
+                    <mxGeometry x="16" y="9" width="200" height="18" as="geometry"/>
                 </mxCell>
-                <mxCell id="iam_ico" value="IAM" style="rounded=1;fillColor=#DD344C;strokeColor=none;fontColor=#ffffff;fontSize=11;fontStyle=1;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="1484" y="231" width="36" height="36" as="geometry"/>
-                </mxCell>
-
-                <mxCell id="ecr" value="&lt;b style=&quot;font-size:12px;&quot;&gt;Amazon ECR&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;imagens Docker&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" vertex="1" parent="1">
-                    <mxGeometry x="1660" y="213" width="175" height="65" as="geometry"/>
-                </mxCell>
-                <mxCell id="ecr_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.ecr;fillColor=#FF9900;fontColor=#ffffff;strokeColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="1669" y="231" width="36" height="36" as="geometry"/>
-                </mxCell>
-
-                <!-- ===================== LEGEND ===================== -->
-                <mxCell id="legend_bg" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.3;" vertex="1" parent="1">
-                    <mxGeometry x="1465" y="390" width="370" height="185" as="geometry"/>
-                </mxCell>
-                <mxCell id="leg_ttl" value="&lt;b&gt;Legenda de Fluxo&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=12;fontColor=#16191F;" vertex="1" parent="1">
-                    <mxGeometry x="1481" y="399" width="200" height="18" as="geometry"/>
-                </mxCell>
-                <mxCell id="leg_s1" value="Chamada síncrona (REST/HTTP)" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2.2;fontSize=11;fontColor=#16191F;labelBackgroundColor=none;align=left;labelPosition=right;verticalLabelPosition=middle;" edge="1" parent="1">
+                <mxCell id="leg_s1" value="Chamada síncrona (REST/HTTP)" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2.2;fontSize=11;fontColor=#16191F;labelBackgroundColor=none;align=left;labelPosition=right;verticalLabelPosition=middle;" parent="3" edge="1">
                     <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="1481" y="428" as="sourcePoint"/>
-                        <mxPoint x="1529" y="428" as="targetPoint"/>
-                        <mxPoint x="26" y="0" as="offset"/>
+                        <mxPoint x="16" y="40" as="sourcePoint"/>
+                        <mxPoint x="64" y="40" as="targetPoint"/>
+                        <mxPoint x="26" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="leg_s2" value="Evento assíncrono (Kafka / SQS)" style="endArrow=block;endFill=1;strokeColor=#E7157B;strokeWidth=1.8;dashed=1;dashPattern=6 4;fontSize=11;fontColor=#16191F;labelBackgroundColor=none;align=left;labelPosition=right;verticalLabelPosition=middle;" edge="1" parent="1">
+                <mxCell id="leg_s2" value="Evento assíncrono (Kafka / SQS)" style="endArrow=block;endFill=1;strokeColor=#E7157B;strokeWidth=1.8;dashed=1;dashPattern=6 4;fontSize=11;fontColor=#16191F;labelBackgroundColor=none;align=left;labelPosition=right;verticalLabelPosition=middle;" parent="3" edge="1">
                     <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="1481" y="452" as="sourcePoint"/>
-                        <mxPoint x="1529" y="452" as="targetPoint"/>
-                        <mxPoint x="26" y="0" as="offset"/>
+                        <mxPoint x="16" y="65" as="sourcePoint"/>
+                        <mxPoint x="64" y="65" as="targetPoint"/>
+                        <mxPoint x="26" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="leg_s3" value="Caminho de erro (DLQ / DLT)" style="endArrow=block;endFill=1;strokeColor=#DD344C;strokeWidth=1.5;dashed=1;dashPattern=5 4;fontSize=11;fontColor=#16191F;labelBackgroundColor=none;align=left;labelPosition=right;verticalLabelPosition=middle;" edge="1" parent="1">
+                <mxCell id="leg_s3" value="Caminho de erro (DLQ / DLT)" style="endArrow=block;endFill=1;strokeColor=#DD344C;strokeWidth=1.5;dashed=1;dashPattern=5 4;fontSize=11;fontColor=#16191F;labelBackgroundColor=none;align=left;labelPosition=right;verticalLabelPosition=middle;" parent="3" edge="1">
                     <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="1481" y="476" as="sourcePoint"/>
-                        <mxPoint x="1529" y="476" as="targetPoint"/>
-                        <mxPoint x="29" y="0" as="offset"/>
+                        <mxPoint x="16" y="90" as="sourcePoint"/>
+                        <mxPoint x="64" y="90" as="targetPoint"/>
+                        <mxPoint x="29" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="leg_s4" value="PDF · armazenamento" style="endArrow=block;endFill=1;strokeColor=#569A31;strokeWidth=1.5;dashed=1;dashPattern=4 4;fontSize=11;fontColor=#16191F;labelBackgroundColor=none;align=left;labelPosition=right;verticalLabelPosition=middle;" edge="1" parent="1">
+                <mxCell id="leg_s4" value="PDF · armazenamento" style="endArrow=block;endFill=1;strokeColor=#569A31;strokeWidth=1.5;dashed=1;dashPattern=4 4;fontSize=11;fontColor=#16191F;labelBackgroundColor=none;align=left;labelPosition=right;verticalLabelPosition=middle;" parent="3" edge="1">
                     <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="1481" y="500" as="sourcePoint"/>
-                        <mxPoint x="1529" y="500" as="targetPoint"/>
-                        <mxPoint x="28" y="0" as="offset"/>
+                        <mxPoint x="16" y="115" as="sourcePoint"/>
+                        <mxPoint x="64" y="115" as="targetPoint"/>
+                        <mxPoint x="28" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="leg_bn" value="N" style="ellipse;fillColor=#16191F;strokeColor=none;fontColor=#ffffff;fontSize=9;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-                    <mxGeometry x="1482" y="528" width="17" height="17" as="geometry"/>
+                <mxCell id="leg_bn" value="" style="rounded=1;fillColor=#F8FAFC;strokeColor=#D5DBE5;strokeWidth=1;" parent="3" vertex="1">
+                    <mxGeometry x="16" y="140" width="18" height="12" as="geometry"/>
                 </mxCell>
-                <mxCell id="leg_bt" value="Ordem do fluxo principal" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;fontColor=#16191F;" vertex="1" parent="1">
-                    <mxGeometry x="1507" y="528" width="230" height="17" as="geometry"/>
+                <mxCell id="leg_bt" value="Fluxos numerados ficam na aba Jornadas do Domínio" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;fontColor=#16191F;" parent="3" vertex="1">
+                    <mxGeometry x="44" y="137" width="370" height="18" as="geometry"/>
                 </mxCell>
-
-                <!-- FLOW LABELS -->
-                <mxCell id="fluxo_a_bg" value="" style="rounded=1;fillColor=#EEF2FF;strokeColor=#445566;strokeWidth=1;dashed=1;" vertex="1" parent="1">
-                    <mxGeometry x="150" y="800" width="300" height="20" as="geometry"/>
+                <mxCell id="4" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="1640" y="95" width="470" height="330" as="geometry"/>
                 </mxCell>
-                <mxCell id="fluxo_a_label" value="FLUXO A — PJ Parceiro emite boleto  (passos 1 → 7)" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;fontStyle=1;fontColor=#445566;" vertex="1" parent="1">
-                    <mxGeometry x="156" y="802" width="380" height="16" as="geometry"/>
+                <mxCell id="meth_bg" value="" style="rounded=1;fillColor=#F8FAFC;strokeColor=#D5DBE5;strokeWidth=1.2;" parent="4" vertex="1">
+                    <mxGeometry width="470" height="330" as="geometry"/>
                 </mxCell>
-                <mxCell id="fluxo_b_bg" value="" style="rounded=1;fillColor=#FFF5E0;strokeColor=#CC7A00;strokeWidth=1;dashed=1;" vertex="1" parent="1">
-                    <mxGeometry x="150" y="828" width="300" height="20" as="geometry"/>
+                <mxCell id="meth_ttl" value="&lt;b&gt;Decisões Aplicadas&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=12;fontColor=#16191F;" parent="4" vertex="1">
+                    <mxGeometry x="16" y="13" width="300" height="18" as="geometry"/>
                 </mxCell>
-                <mxCell id="fluxo_b_label" value="FLUXO B — Cliente Pagador paga boleto  (passos 8 → 11)" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;fontStyle=1;fontColor=#CC7A00;" vertex="1" parent="1">
-                    <mxGeometry x="156" y="830" width="400" height="16" as="geometry"/>
+                <mxCell id="m1" value="&lt;b style=&quot;font-size:11px;&quot;&gt;DDD · Bounded Contexts&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#545B64;&quot;&gt;serviços separados por capacidade&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1;html=1;align=left;verticalAlign=middle;spacingLeft=8;" parent="4" vertex="1">
+                    <mxGeometry x="16" y="43" width="205" height="42" as="geometry"/>
                 </mxCell>
-
-                <!-- ===================== PATTERNS BAR ===================== -->
-                <mxCell id="meth_bg" value="" style="rounded=1;fillColor=#F8FAFC;strokeColor=#D5DBE5;strokeWidth=1.2;" vertex="1" parent="1">
-                    <mxGeometry x="30" y="860" width="1800" height="80" as="geometry"/>
+                <mxCell id="m2" value="&lt;b style=&quot;font-size:11px;&quot;&gt;CQRS&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#545B64;&quot;&gt;write model ≠ read model&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1;html=1;align=left;verticalAlign=middle;spacingLeft=8;" parent="4" vertex="1">
+                    <mxGeometry x="246" y="43" width="205" height="42" as="geometry"/>
                 </mxCell>
-                <mxCell id="meth_ttl" value="&lt;b&gt;Padrões e Boas Práticas Aplicados&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=12;fontColor=#16191F;" vertex="1" parent="1">
-                    <mxGeometry x="46" y="871" width="300" height="18" as="geometry"/>
+                <mxCell id="m3" value="&lt;b style=&quot;font-size:11px;&quot;&gt;Transactional Outbox&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#545B64;&quot;&gt;banco e evento na mesma tx ACID&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1;html=1;align=left;verticalAlign=middle;spacingLeft=8;" parent="4" vertex="1">
+                    <mxGeometry x="16" y="99" width="205" height="42" as="geometry"/>
                 </mxCell>
-                <mxCell id="m1" value="&lt;b style=&quot;font-size:11px;&quot;&gt;DDD · Bounded Contexts&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#545B64;&quot;&gt;serviços separados por capacidade&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1;html=1;align=left;verticalAlign=middle;spacingLeft=8;" vertex="1" parent="1">
-                    <mxGeometry x="46" y="894" width="220" height="36" as="geometry"/>
+                <mxCell id="m4" value="&lt;b style=&quot;font-size:11px;&quot;&gt;Event-Driven Architecture&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#545B64;&quot;&gt;MSK desacopla todos os domínios&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1;html=1;align=left;verticalAlign=middle;spacingLeft=8;" parent="4" vertex="1">
+                    <mxGeometry x="246" y="99" width="205" height="42" as="geometry"/>
                 </mxCell>
-                <mxCell id="m2" value="&lt;b style=&quot;font-size:11px;&quot;&gt;CQRS&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#545B64;&quot;&gt;write model ≠ read model&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1;html=1;align=left;verticalAlign=middle;spacingLeft=8;" vertex="1" parent="1">
-                    <mxGeometry x="296" y="894" width="220" height="36" as="geometry"/>
+                <mxCell id="m5" value="&lt;b style=&quot;font-size:11px;&quot;&gt;Resiliência AWS&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#545B64;&quot;&gt;SQS absorve picos · DLQ · DLT&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1;html=1;align=left;verticalAlign=middle;spacingLeft=8;" parent="4" vertex="1">
+                    <mxGeometry x="16" y="155" width="205" height="42" as="geometry"/>
                 </mxCell>
-                <mxCell id="m3" value="&lt;b style=&quot;font-size:11px;&quot;&gt;Transactional Outbox&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#545B64;&quot;&gt;banco e evento na mesma tx ACID&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1;html=1;align=left;verticalAlign=middle;spacingLeft=8;" vertex="1" parent="1">
-                    <mxGeometry x="546" y="894" width="240" height="36" as="geometry"/>
+                <mxCell id="m6" value="&lt;b style=&quot;font-size:11px;&quot;&gt;Segurança em Camadas&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#545B64;&quot;&gt;WAF · IAM/IRSA · Secrets Mgr&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1;html=1;align=left;verticalAlign=middle;spacingLeft=8;" parent="4" vertex="1">
+                    <mxGeometry x="246" y="155" width="205" height="42" as="geometry"/>
                 </mxCell>
-                <mxCell id="m4" value="&lt;b style=&quot;font-size:11px;&quot;&gt;Event-Driven Architecture&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#545B64;&quot;&gt;MSK desacopla todos os domínios&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1;html=1;align=left;verticalAlign=middle;spacingLeft=8;" vertex="1" parent="1">
-                    <mxGeometry x="816" y="894" width="230" height="36" as="geometry"/>
+                <mxCell id="m7" value="&lt;b style=&quot;font-size:11px;&quot;&gt;Idempotência&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#545B64;&quot;&gt;Redis entrada + processed_events&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1;html=1;align=left;verticalAlign=middle;spacingLeft=8;" parent="4" vertex="1">
+                    <mxGeometry x="16" y="211" width="435" height="42" as="geometry"/>
                 </mxCell>
-                <mxCell id="m5" value="&lt;b style=&quot;font-size:11px;&quot;&gt;Resiliência AWS&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#545B64;&quot;&gt;SQS absorve picos · DLQ · DLT&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1;html=1;align=left;verticalAlign=middle;spacingLeft=8;" vertex="1" parent="1">
-                    <mxGeometry x="1076" y="894" width="220" height="36" as="geometry"/>
+                <mxCell id="5" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="1192" y="117" width="255" height="508" as="geometry"/>
                 </mxCell>
-                <mxCell id="m6" value="&lt;b style=&quot;font-size:11px;&quot;&gt;Segurança em Camadas&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#545B64;&quot;&gt;WAF · IAM/IRSA · Secrets Mgr&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1;html=1;align=left;verticalAlign=middle;spacingLeft=8;" vertex="1" parent="1">
-                    <mxGeometry x="1326" y="894" width="220" height="36" as="geometry"/>
+                <mxCell id="zone_data" value="" style="rounded=1;fillColor=#B8D4F5;strokeColor=#5B8DEF;strokeWidth=1;dashed=1;dashPattern=5 4;" parent="5" vertex="1">
+                    <mxGeometry y="8" width="255" height="500" as="geometry"/>
                 </mxCell>
-                <mxCell id="m7" value="&lt;b style=&quot;font-size:11px;&quot;&gt;Idempotência&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#545B64;&quot;&gt;Idempotency-Key via Redis&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1;html=1;align=left;verticalAlign=middle;spacingLeft=8;" vertex="1" parent="1">
-                    <mxGeometry x="1576" y="894" width="220" height="36" as="geometry"/>
+                <mxCell id="16" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="5" source="lbl_data" target="zone_data">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-
+                <mxCell id="lbl_data" value="DADOS" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=1;fontColor=#7B8EA0;" parent="5" vertex="1">
+                    <mxGeometry x="20" y="8" width="80" height="14" as="geometry"/>
+                </mxCell>
+                <mxCell id="s3" value="&lt;b style=&quot;font-size:12px;&quot;&gt;Amazon S3&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;PDFs de boleto (evolução)&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" parent="5" vertex="1">
+                    <mxGeometry x="20" y="37" width="205" height="56" as="geometry"/>
+                </mxCell>
+                <mxCell id="s3_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;fillColor=#569A31;fontColor=#ffffff;strokeColor=none;" parent="5" vertex="1">
+                    <mxGeometry x="26" y="47" width="36" height="36" as="geometry"/>
+                </mxCell>
+                <mxCell id="rds_w" value="&lt;b style=&quot;font-size:12px;&quot;&gt;RDS PostgreSQL&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;boleto: write model + outbox&lt;br/&gt;payment: processed_events&lt;br/&gt;query: read model + processed_events&lt;br/&gt;notification: processed_events&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" parent="5" vertex="1">
+                    <mxGeometry x="10" y="125" width="225" height="145" as="geometry"/>
+                </mxCell>
+                <mxCell id="rds_w_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.rds;fillColor=#4D27AA;fontColor=#ffffff;strokeColor=none;" parent="5" vertex="1">
+                    <mxGeometry x="19" y="179" width="36" height="36" as="geometry"/>
+                </mxCell>
+                <mxCell id="ec" value="&lt;b style=&quot;font-size:12px;&quot;&gt;ElastiCache Redis&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;cache / idempotência entrada&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" parent="5" vertex="1">
+                    <mxGeometry x="10" y="318" width="225" height="58" as="geometry"/>
+                </mxCell>
+                <mxCell id="ec_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.elasticache;fillColor=#4D27AA;fontColor=#ffffff;strokeColor=none;" parent="5" vertex="1">
+                    <mxGeometry x="19" y="329" width="36" height="36" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="950" y="159" width="168" height="340" as="geometry"/>
+                </mxCell>
+                <mxCell id="msk" value="&lt;b style=&quot;font-size:13px;&quot;&gt;Amazon MSK&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;Kafka event bus&lt;/span&gt;&lt;hr style=&quot;border-color:rgb(240,216,232);margin:6px 0px;&quot;&gt;&lt;b style=&quot;font-size:11px;color:rgb(231,21,123);&quot;&gt;Tópicos&lt;/b&gt;&lt;br&gt;● boleto.gerado&lt;br&gt;● pagamento.*&lt;br&gt;● notificacao.enviada&lt;hr style=&quot;border-color:rgb(240,216,232);margin:6px 0px;&quot;&gt;&lt;span style=&quot;font-size:10px;color:rgb(123,142,160);&quot;&gt;DLT por consumer&lt;br&gt;retry + backoff&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#E7157B;strokeWidth=1.5;html=1;align=left;verticalAlign=top;spacingLeft=16;spacingTop=34;spacingRight=8;" parent="6" vertex="1">
+                    <mxGeometry x="2" y="16" width="166" height="319" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_msk" value="EVENT BUS" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=1;fontColor=#7B8EA0;" parent="6" vertex="1">
+                    <mxGeometry x="16" y="12" width="120" height="14" as="geometry"/>
+                </mxCell>
+                <mxCell id="aws_badge" value="&lt;b&gt;AWS&lt;/b&gt;" style="rounded=1;fillColor=#FF9900;strokeColor=none;html=1;align=center;verticalAlign=middle;fontColor=#ffffff;fontSize=9;" parent="1" vertex="1">
+                    <mxGeometry x="148" y="83" width="26" height="15" as="geometry"/>
+                </mxCell>
+                <mxCell id="aws_cloud_label" value="Cloud — us-east-1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#545B64;" parent="1" vertex="1">
+                    <mxGeometry x="178" y="83" width="160" height="15" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="webhook pagamento" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=9;fontColor=#445566;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;entryX=0;entryY=0.25;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="psp" target="apigw" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="notif" target="sns">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="762" y="685"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="a_bol_s3" value="PDF" style="endArrow=block;endFill=1;strokeColor=#569A31;strokeWidth=1.5;dashed=1;dashPattern=4 4;fontSize=9;fontColor=#569A31;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;entryX=0.076;entryY=0.027;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" target="s3">
+                    <mxGeometry y="-10" relative="1" as="geometry">
+                        <mxPoint x="884" y="145" as="sourcePoint"/>
+                        <mxPoint x="1201" y="185" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1167" y="145"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="psp" value="&lt;b style=&quot;font-size:12px;&quot;&gt;PSP / Banco&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#545B64;&quot;&gt;retorno de&lt;br/&gt;liquidação&lt;/span&gt;" style="rounded=1;fillColor=#F5F5F5;strokeColor=#AAAAAA;strokeWidth=1.5;html=1;align=center;verticalAlign=middle;dashed=1;container=0;" parent="1" vertex="1">
+                    <mxGeometry x="-192" y="316" width="127" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="psp_ico" value="$" style="rounded=1;fillColor=#569A31;strokeColor=none;fontColor=#ffffff;fontSize=18;fontStyle=1;html=1;align=center;verticalAlign=middle;container=0;" parent="1" vertex="1">
+                    <mxGeometry x="-186" y="358" width="22" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="" style="group" vertex="1" connectable="0" parent="1">
+                    <mxGeometry x="-333" y="316" width="93" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp_icon" value="" style="shape=mxgraph.aws4.user;fillColor=#232F3E;strokeColor=none;container=0;" parent="19" vertex="1">
+                    <mxGeometry x="27.900000000000002" width="37.2" height="34.61538461538461" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp_label" value="&lt;b&gt;Cliente Pagador&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#545B64;&quot;&gt;paga o boleto&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;fontSize=12;container=0;" parent="19" vertex="1">
+                    <mxGeometry y="40.38461538461539" width="93.00000000000001" height="34.61538461538461" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" target="psp">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-261" y="352" as="sourcePoint"/>
+                        <mxPoint x="-199" y="367" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="22" value="" style="group" vertex="1" connectable="0" parent="1">
+                    <mxGeometry x="-331" y="432" width="90" height="76" as="geometry"/>
+                </mxCell>
+                <mxCell id="pj_icon" value="" style="shape=mxgraph.aws4.user;fillColor=#232F3E;strokeColor=none;" parent="22" vertex="1">
+                    <mxGeometry x="28" width="36" height="36" as="geometry"/>
+                </mxCell>
+                <mxCell id="pj_label" value="&lt;b&gt;PJ Parceiro&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#545B64;&quot;&gt;emite boleto&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;fontSize=12;" parent="22" vertex="1">
+                    <mxGeometry y="40" width="90" height="36" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_pj_waf" value="POST /boletos" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=9;fontColor=#445566;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" parent="1" edge="1" target="apigw" source="pj_label">
+                    <mxGeometry y="-10" relative="1" as="geometry">
+                        <mxPoint x="78" y="146" as="sourcePoint"/>
+                        <mxPoint x="160" y="367" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint y="490"/>
+                            <mxPoint y="384"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="23" value="" style="group" vertex="1" connectable="0" parent="1">
+                    <mxGeometry x="83" y="307" width="217" height="122" as="geometry"/>
+                </mxCell>
+                <mxCell id="zone_edge" value="" style="rounded=1;fillColor=#FEE2E2;strokeColor=#DD344C;strokeWidth=2;dashed=1;dashPattern=6 4;opacity=55;" parent="23" vertex="1">
+                    <mxGeometry y="2" width="215" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_edge" value="AWS WAF — camada de proteção" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=1;fontColor=#DD344C;" parent="23" vertex="1">
+                    <mxGeometry x="7" width="210" height="14" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="" style="group" parent="23" vertex="1" connectable="0">
+                    <mxGeometry x="17" y="30" width="182" height="64.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="apigw" value="&lt;b style=&quot;font-size:13px;&quot;&gt;API Gateway&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;auth · throttling · routing&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" parent="13" vertex="1">
+                    <mxGeometry width="182" height="64.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="apigw_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.api_gateway;fillColor=#A166FF;fontColor=#ffffff;strokeColor=none;" parent="13" vertex="1">
+                    <mxGeometry x="8.854054054054053" y="13.892307692307694" width="35.41621621621621" height="35.723076923076924" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_sqs_bol" value="long polling" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2.2;fontSize=9;fontColor=#445566;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" edge="1" source="sqs">
+                    <mxGeometry x="0.0134" y="-10" relative="1" as="geometry">
+                        <mxPoint x="580" y="181" as="sourcePoint"/>
+                        <mxPoint x="640" y="170" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="568" y="168"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="zone_async" value="" style="rounded=1;fillColor=#FFD9EE;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="377" y="221.36" width="205" height="257.64" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_async" value="ENTRADA ASSÍNCRONA" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=7;fontStyle=1;fontColor=#7B8EA0;" parent="1" vertex="1">
+                    <mxGeometry x="396" y="218.31015299026427" width="194" height="7.973922114047287" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" value="" style="edgeStyle=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;fillColor=#e51400;strokeColor=#B20000;" edge="1" parent="1" source="sqs" target="27">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="payment_sqs" value="&lt;b style=&quot;font-size:13px;&quot;&gt;Amazon SQS&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;payment-return&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" parent="1" vertex="1">
+                    <mxGeometry x="388" y="345.5491176470588" width="183" height="46.81823529411764" as="geometry"/>
+                </mxCell>
+                <mxCell id="payment_sqs_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sqs;fillColor=#E7157B;fontColor=#ffffff;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="396" y="354.87308823529406" width="34.5" height="28.170294117647057" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" value="" style="group;align=center;spacingLeft=8;spacingTop=5;" vertex="1" connectable="0" parent="1">
+                    <mxGeometry x="422" y="420.14088235294116" width="126" height="25.392941176470586" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" value="&lt;div style=&quot;&quot;&gt;&lt;b style=&quot;color: rgb(221, 52, 76); background-color: transparent;&quot;&gt;SQS DLQ&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#DD344C;strokeWidth=1.2;html=1;align=center;verticalAlign=middle;spacingLeft=22;spacing=-5;spacingTop=12;" vertex="1" parent="29">
+                    <mxGeometry x="6" width="98" height="25.392941176470586" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sqs;fillColor=#DD344C;fontColor=#ffffff;strokeColor=none;" vertex="1" parent="29">
+                    <mxGeometry x="7.999729729729729" y="4.3838893048128345" width="24.518918918918917" height="16.62083422459893" as="geometry"/>
+                </mxCell>
+                <mxCell id="36" value="" style="group" vertex="1" connectable="0" parent="1">
+                    <mxGeometry x="387" y="285.2408823529412" width="185" height="46.02470588235293" as="geometry"/>
+                </mxCell>
+                <mxCell id="sqs" value="&lt;b style=&quot;font-size:13px;&quot;&gt;Amazon SQS&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;boleto-generation&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" parent="36" vertex="1">
+                    <mxGeometry width="185" height="46.02470588235293" as="geometry"/>
+                </mxCell>
+                <mxCell id="sqs_ico" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sqs;fillColor=#E7157B;fontColor=#ffffff;strokeColor=none;" parent="36" vertex="1">
+                    <mxGeometry x="9" y="8.728823529411764" width="36" height="28.567058823529408" as="geometry"/>
+                </mxCell>
+                <mxCell id="38" value="" style="group" vertex="1" connectable="0" parent="1">
+                    <mxGeometry x="430.5" y="239.0014705882353" width="98" height="26.18647058823529" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="&lt;div style=&quot;&quot;&gt;&lt;b style=&quot;color: rgb(221, 52, 76); background-color: transparent;&quot;&gt;SQS DLQ&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#DD344C;strokeWidth=1.2;html=1;align=center;verticalAlign=middle;spacingLeft=22;spacing=-5;spacingTop=12;" vertex="1" parent="38">
+                    <mxGeometry width="98" height="26.18647058823529" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sqs;fillColor=#DD344C;fontColor=#ffffff;strokeColor=none;" vertex="1" parent="38">
+                    <mxGeometry x="7.999729729729729" y="4.520885845588234" width="24.518918918918917" height="17.140235294117645" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" value="" style="edgeStyle=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;fillColor=#e51400;strokeColor=#B20000;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="479.13" y="394.7479411764706" as="sourcePoint"/>
+                        <mxPoint x="479.13" y="420.14088235294116" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="eks_cluster" value="Amazon EKS Cluster" style="rounded=1;fillColor=#FFF8EE;strokeColor=#FF9900;strokeWidth=1.5;dashed=1;dashPattern=6 4;html=1;align=left;verticalAlign=top;spacingTop=5;spacingLeft=25;fontSize=11;fontStyle=1;fontColor=#CC7A00;" parent="1" vertex="1">
+                    <mxGeometry x="630" y="95" width="265" height="560" as="geometry"/>
+                </mxCell>
+                <mxCell id="boleto" value="&lt;b style=&quot;font-size:12px;&quot;&gt;boleto-service&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;gera boleto + outbox&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#FF9900;strokeWidth=2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="135" width="240" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="boleto_ico" value="" style="rounded=1;fillColor=#FF9900;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="649" y="149" width="36" height="36" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox" value="&lt;b style=&quot;font-size:12px;&quot;&gt;outbox-worker&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;polls outbox → publica MSK&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="226" width="240" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="outbox_ico" value="" style="rounded=1;fillColor=#FF9900;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="649" y="240" width="36" height="36" as="geometry"/>
+                </mxCell>
+                <mxCell id="payment" value="&lt;b style=&quot;font-size:12px;&quot;&gt;payment-service&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;valida retorno · publica pagamento&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="335" width="240" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="payment_ico" value="" style="rounded=1;fillColor=#FF9900;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="649" y="349" width="36" height="36" as="geometry"/>
+                </mxCell>
+                <mxCell id="query" value="&lt;b style=&quot;font-size:12px;&quot;&gt;query-service&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;consume eventos · read model CQRS&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="452" width="240" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="query_ico" value="" style="rounded=1;fillColor=#FF9900;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="649" y="466" width="36" height="36" as="geometry"/>
+                </mxCell>
+                <mxCell id="notif" value="&lt;b style=&quot;font-size:12px;&quot;&gt;notification-service&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;consume eventos · envia via SNS&lt;/span&gt;" style="rounded=1;fillColor=#ffffff;strokeColor=#D5DBE5;strokeWidth=1.2;html=1;align=left;verticalAlign=middle;spacingLeft=48;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="545" width="240" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="notif_ico" value="" style="rounded=1;fillColor=#FF9900;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="649" y="559" width="36" height="36" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=-0.01;entryY=0.889;entryDx=0;entryDy=0;pointerEvents=0;align=center;verticalAlign=top;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=none;gradientColor=none;strokeWidth=2;entryPerimeter=0;" parent="1" source="apigw" target="query" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="194" y="511"/>
+                            <mxPoint x="419" y="511"/>
+                            <mxPoint x="503" y="511"/>
+                            <mxPoint x="579" y="511"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="a_msk_consumers" value="eventos para consumidores" style="endArrow=block;endFill=1;strokeColor=#E7157B;strokeWidth=1.8;dashed=1;dashPattern=6 4;fontSize=9;fontColor=#E7157B;labelBackgroundColor=#ffffff;align=center;verticalAlign=bottom;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" edge="1" target="query">
+                    <mxGeometry y="-10" relative="1" as="geometry">
+                        <mxPoint x="950" y="390" as="sourcePoint"/>
+                        <mxPoint x="880" y="470" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="925" y="390"/>
+                            <mxPoint x="927" y="486"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="domain-journeys-flow" name="Jornadas do Domínio">
+        <mxGraphModel dx="1800" dy="1100" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1900" pageHeight="1200" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="journey_title" value="&lt;b style=&quot;font-size:22px;&quot;&gt;Received Bank — Jornadas do Domínio&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="24" width="850" height="34" as="geometry"/>
+                </mxCell>
+                <mxCell id="journey_subtitle" value="Visão de negócio do fluxo principal: emissão do boleto, retorno de pagamento, atualização CQRS e notificação. A infraestrutura detalhada fica na aba de Cloud Architecture." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=13;fontColor=#545B64;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="60" width="1300" height="28" as="geometry"/>
+                </mxCell>
+                <mxCell id="journey_lane_1" value="1. Emissão do boleto" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EEF2FF;strokeColor=#445566;strokeWidth=1.2;fontSize=13;fontStyle=1;align=left;verticalAlign=top;spacing=12;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="115" width="1760" height="210" as="geometry"/>
+                </mxCell>
+                <mxCell id="journey_lane_2" value="2. Retorno de pagamento" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF5E0;strokeColor=#CC7A00;strokeWidth=1.2;fontSize=13;fontStyle=1;align=left;verticalAlign=top;spacing=12;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="365" width="1760" height="210" as="geometry"/>
+                </mxCell>
+                <mxCell id="journey_lane_3" value="3. Projeções e notificações" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F7FFF9;strokeColor=#17865A;strokeWidth=1.2;fontSize=13;fontStyle=1;align=left;verticalAlign=top;spacing=12;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="625" width="1760" height="260" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_pj" value="&lt;b&gt;PJ Parceiro&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;solicita emissão&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef6ff;strokeColor=#2563a8;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="85" y="185" width="150" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_gateway_1" value="&lt;b&gt;API Gateway&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;auth · throttling&lt;br/&gt;POST /boletos&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8ea;strokeColor=#b7791f;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="185" width="165" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_sqs" value="&lt;b&gt;SQS&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;boleto-generation&lt;br/&gt;absorve picos&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff1f8;strokeColor=#db2777;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="550" y="185" width="165" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_boleto" value="&lt;b&gt;boleto-service&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;cria Boleto&lt;br/&gt;regra de domínio&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="790" y="185" width="165" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_write" value="&lt;b&gt;PostgreSQL&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;boleto + outbox&lt;br/&gt;mesma transação&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef2ff;strokeColor=#4f46e5;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="1030" y="185" width="170" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_outbox" value="&lt;b&gt;outbox-worker&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;publica eventos&lt;br/&gt;com retry/backoff&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="1275" y="185" width="165" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_topic_boleto" value="&lt;b&gt;boleto.gerado&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;Kafka / MSK&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff1f8;strokeColor=#db2777;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="1515" y="185" width="165" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_pagador" value="&lt;b&gt;Cliente Pagador&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;paga boleto&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef6ff;strokeColor=#2563a8;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="85" y="440" width="150" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_psp" value="&lt;b&gt;PSP / Banco&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;liquidação externa&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;strokeWidth=1.4;dashed=1;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="440" width="165" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_gateway_2" value="&lt;b&gt;API Gateway&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;webhook / API&lt;br/&gt;retorno seguro&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8ea;strokeColor=#b7791f;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="550" y="440" width="165" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_payment_sqs" value="&lt;b&gt;SQS&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;payment-return&lt;br/&gt;absorve volume&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff1f8;strokeColor=#db2777;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="790" y="440" width="165" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_payment" value="&lt;b&gt;payment-service&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;valida retorno&lt;br/&gt;idempotência local&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="1030" y="440" width="165" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_payment_db" value="&lt;b&gt;PostgreSQL&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;payment&lt;br/&gt;processed_events&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef2ff;strokeColor=#4f46e5;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="1275" y="440" width="170" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_topic_pagamento" value="&lt;b&gt;pagamento.*&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;efetivado / rejeitado&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff1f8;strokeColor=#db2777;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="1515" y="440" width="165" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_query" value="&lt;b&gt;query-service&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;consome eventos&lt;br/&gt;atualiza read model&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="550" y="710" width="170" height="76" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_query_db" value="&lt;b&gt;PostgreSQL&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;read model CQRS&lt;br/&gt;processed_events&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef2ff;strokeColor=#4f46e5;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="790" y="710" width="170" height="76" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_notification" value="&lt;b&gt;notification-service&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;consome eventos&lt;br/&gt;envia confirmação&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="1030" y="710" width="170" height="76" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_notification_db" value="&lt;b&gt;PostgreSQL&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;notification&lt;br/&gt;processed_events&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef2ff;strokeColor=#4f46e5;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="1275" y="710" width="170" height="76" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_sns" value="&lt;b&gt;SNS / SES&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;webhook · e-mail · SMS&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff1f8;strokeColor=#db2777;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="1515" y="710" width="165" height="76" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_consulta" value="&lt;b&gt;Consulta&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;GET /consultas/boletos&lt;br/&gt;não consulta write model&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8ea;strokeColor=#b7791f;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="710" width="170" height="76" as="geometry"/>
+                </mxCell>
+                <mxCell id="j_note" value="&lt;b&gt;Leitura do desenho&lt;/b&gt;&lt;br/&gt;A aba mostra comportamento, não topologia. Por isso SQS, Kafka, bancos e serviços aparecem apenas onde ajudam a explicar os porquês: resiliência de entrada, outbox transacional, eventos at-least-once, idempotência por consumidor e leitura CQRS." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#D5DBE5;strokeWidth=1.2;align=left;verticalAlign=top;spacing=14;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="930" width="1760" height="95" as="geometry"/>
+                </mxCell>
+                <mxCell id="je1" value="1 POST /boletos" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=10;fontColor=#445566;labelBackgroundColor=#ffffff;" parent="1" source="j_pj" target="j_gateway_1" edge="1">
+                    <mxGeometry y="-8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="je2" value="2 202 + fila" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=10;fontColor=#445566;labelBackgroundColor=#ffffff;" parent="1" source="j_gateway_1" target="j_sqs" edge="1">
+                    <mxGeometry y="-8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="je3" value="3 long polling" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=10;fontColor=#445566;labelBackgroundColor=#ffffff;" parent="1" source="j_sqs" target="j_boleto" edge="1">
+                    <mxGeometry y="-8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="je4" value="4 ACID" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=10;fontColor=#445566;labelBackgroundColor=#ffffff;" parent="1" source="j_boleto" target="j_write" edge="1">
+                    <mxGeometry y="-8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="je5" value="5 polls pendentes" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=10;fontColor=#445566;labelBackgroundColor=#ffffff;" parent="1" source="j_write" target="j_outbox" edge="1">
+                    <mxGeometry y="-8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="je6" value="6 publica" style="endArrow=block;endFill=1;strokeColor=#E7157B;strokeWidth=2;dashed=1;dashPattern=6 4;fontSize=10;fontColor=#E7157B;labelBackgroundColor=#ffffff;" parent="1" source="j_outbox" target="j_topic_boleto" edge="1">
+                    <mxGeometry y="-8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="je7" value="7 paga" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=10;fontColor=#445566;labelBackgroundColor=#ffffff;" parent="1" source="j_pagador" target="j_psp" edge="1">
+                    <mxGeometry y="-8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="je8" value="8 retorno externo" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=10;fontColor=#445566;labelBackgroundColor=#ffffff;" parent="1" source="j_psp" target="j_gateway_2" edge="1">
+                    <mxGeometry y="-8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="je9" value="9 enfileira" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=10;fontColor=#445566;labelBackgroundColor=#ffffff;" parent="1" source="j_gateway_2" target="j_payment_sqs" edge="1">
+                    <mxGeometry y="-8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="je9b" value="10 long polling" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=10;fontColor=#445566;labelBackgroundColor=#ffffff;" parent="1" source="j_payment_sqs" target="j_payment" edge="1">
+                    <mxGeometry y="-8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="je10" value="11 registra event_id" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=10;fontColor=#445566;labelBackgroundColor=#ffffff;" parent="1" source="j_payment" target="j_payment_db" edge="1">
+                    <mxGeometry y="-8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="je11" value="12 publica" style="endArrow=block;endFill=1;strokeColor=#E7157B;strokeWidth=2;dashed=1;dashPattern=6 4;fontSize=10;fontColor=#E7157B;labelBackgroundColor=#ffffff;" parent="1" source="j_payment_db" target="j_topic_pagamento" edge="1">
+                    <mxGeometry y="-8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="je12" value="consome eventos" style="endArrow=block;endFill=1;strokeColor=#E7157B;strokeWidth=2;dashed=1;dashPattern=6 4;fontSize=10;fontColor=#E7157B;labelBackgroundColor=#ffffff;" parent="1" edge="1">
+                    <mxGeometry y="-8" relative="1" as="geometry">
+                        <mxPoint x="1598" y="255" as="sourcePoint"/>
+                        <mxPoint x="635" y="710" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1598" y="600"/>
+                            <mxPoint x="635" y="600"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="je13" value="consome eventos" style="endArrow=block;endFill=1;strokeColor=#E7157B;strokeWidth=2;dashed=1;dashPattern=6 4;fontSize=10;fontColor=#E7157B;labelBackgroundColor=#ffffff;" parent="1" edge="1">
+                    <mxGeometry y="-8" relative="1" as="geometry">
+                        <mxPoint x="1598" y="510" as="sourcePoint"/>
+                        <mxPoint x="1115" y="710" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1598" y="600"/>
+                            <mxPoint x="1115" y="600"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="je14" value="projeta consulta" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=10;fontColor=#445566;labelBackgroundColor=#ffffff;" parent="1" source="j_query" target="j_query_db" edge="1">
+                    <mxGeometry y="-8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="je15" value="consulta read model" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=10;fontColor=#445566;labelBackgroundColor=#ffffff;" parent="1" source="j_consulta" target="j_query" edge="1">
+                    <mxGeometry y="-8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="je16" value="registra event_id" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=10;fontColor=#445566;labelBackgroundColor=#ffffff;" parent="1" source="j_notification" target="j_notification_db" edge="1">
+                    <mxGeometry y="-8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="je17" value="envia" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=10;fontColor=#445566;labelBackgroundColor=#ffffff;" parent="1" source="j_notification_db" target="j_sns" edge="1">
+                    <mxGeometry y="-8" relative="1" as="geometry"/>
+                </mxCell>
             </root>
         </mxGraphModel>
     </diagram>
@@ -541,21 +572,18 @@
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-
                 <mxCell id="outbox_title" value="&lt;b style=&quot;font-size:22px;&quot;&gt;Received Bank — Transactional Outbox&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;" parent="1" vertex="1">
                     <mxGeometry x="40" y="24" width="900" height="34" as="geometry"/>
                 </mxCell>
                 <mxCell id="outbox_subtitle" value="Como o boleto e o evento &lt;b&gt;boleto.gerado&lt;/b&gt; nascem na mesma transação e são publicados depois, sem dual write direto entre PostgreSQL e Kafka." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=13;fontColor=#545B64;" parent="1" vertex="1">
                     <mxGeometry x="40" y="60" width="1250" height="28" as="geometry"/>
                 </mxCell>
-
                 <mxCell id="outbox_boundary_core" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;opacity=45;strokeColor=#2154FF;strokeWidth=2;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="275" y="105" width="720" height="390" as="geometry"/>
                 </mxCell>
                 <mxCell id="outbox_boundary_label" value="boleto-service" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=12;fontStyle=1;fontColor=#545B64;" parent="1" vertex="1">
                     <mxGeometry x="285" y="110" width="180" height="18" as="geometry"/>
                 </mxCell>
-
                 <mxCell id="outbox_actor" value="&lt;b&gt;PJ Parceiro / API&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;POST /boletos&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef6ff;strokeColor=#2563a8;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
                     <mxGeometry x="40" y="210" width="170" height="72" as="geometry"/>
                 </mxCell>
@@ -568,7 +596,6 @@
                 <mxCell id="outbox_adapter" value="&lt;b&gt;BoletoOutboxEventPublisher&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;converte evento de domínio&lt;br/&gt;em evento de integração&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
                     <mxGeometry x="575" y="275" width="230" height="90" as="geometry"/>
                 </mxCell>
-
                 <mxCell id="outbox_tx" value="&lt;b&gt;PostgreSQL — mesma transação ACID&lt;/b&gt;" style="swimlane;html=1;rounded=1;startSize=32;fillColor=#eef2ff;strokeColor=#4f46e5;strokeWidth=1.4;fontSize=12;fontStyle=1;" parent="1" vertex="1">
                     <mxGeometry x="335" y="560" width="540" height="230" as="geometry"/>
                 </mxCell>
@@ -578,7 +605,6 @@
                 <mxCell id="outbox_event_table" value="&lt;b&gt;outbox_events&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;event_type = boleto.gerado&lt;br/&gt;status = PENDING&lt;br/&gt;attempts = 0&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#4f46e5;strokeWidth=1.2;align=center;verticalAlign=middle;fontSize=12;" parent="outbox_tx" vertex="1">
                     <mxGeometry x="300" y="54" width="205" height="112" as="geometry"/>
                 </mxCell>
-
                 <mxCell id="outbox_worker" value="&lt;b&gt;OutboxKafkaPublisher&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;@Scheduled a cada 5s&lt;br/&gt;busca até 50 PENDING&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1.6;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
                     <mxGeometry x="1070" y="265" width="230" height="92" as="geometry"/>
                 </mxCell>
@@ -588,14 +614,12 @@
                 <mxCell id="outbox_consumers" value="&lt;b&gt;Consumidores&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;payment-service&lt;br/&gt;query-service&lt;br/&gt;notification-service&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f7fff9;strokeColor=#17865a;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
                     <mxGeometry x="1430" y="455" width="210" height="118" as="geometry"/>
                 </mxCell>
-
                 <mxCell id="outbox_status_published" value="&lt;b&gt;Sucesso&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;Kafka confirma em até 10s&lt;br/&gt;status = PUBLISHED&lt;br/&gt;published_at preenchido&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f7fff9;strokeColor=#17865a;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
                     <mxGeometry x="1045" y="610" width="250" height="105" as="geometry"/>
                 </mxCell>
                 <mxCell id="outbox_status_failed" value="&lt;b&gt;Falha controlada&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;attempts + 1&lt;br/&gt;last_error gravado&lt;br/&gt;após max-attempts: FAILED&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff1f2;strokeColor=#be123c;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
                     <mxGeometry x="1335" y="610" width="250" height="105" as="geometry"/>
                 </mxCell>
-
                 <mxCell id="outbox_note_1" value="&lt;b&gt;Por que existe?&lt;/b&gt;&lt;br/&gt;Evita dual write: banco e Kafka não compartilham transação. O evento fica durável no PostgreSQL antes da publicação assíncrona." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8ea;strokeColor=#b7791f;strokeWidth=1.2;align=left;verticalAlign=top;spacing=12;fontSize=12;" parent="1" vertex="1">
                     <mxGeometry x="40" y="835" width="365" height="92" as="geometry"/>
                 </mxCell>
@@ -608,7 +632,6 @@
                 <mxCell id="outbox_note_4" value="&lt;b&gt;No código atual&lt;/b&gt;&lt;br/&gt;Busca apenas PENDING. Ao atingir max-attempts, o evento vira FAILED e deixa de ser republicado automaticamente." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff1f2;strokeColor=#be123c;strokeWidth=1.2;align=left;verticalAlign=top;spacing=12;fontSize=12;" parent="1" vertex="1">
                     <mxGeometry x="1335" y="835" width="395" height="92" as="geometry"/>
                 </mxCell>
-
                 <mxCell id="outbox_edge_1" value="1. cria boleto" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;fontSize=10;fontColor=#445566;labelBackgroundColor=#ffffff;" parent="1" source="outbox_actor" target="outbox_usecase" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
@@ -640,6 +663,104 @@
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="outbox_edge_11" value="timeout / broker fora / payload inválido" style="endArrow=block;endFill=1;strokeColor=#be123c;strokeWidth=2;fontSize=10;fontColor=#be123c;labelBackgroundColor=#ffffff;" parent="1" source="outbox_worker" target="outbox_status_failed" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="persistent-idempotency-flow" name="Idempotência Persistente">
+        <mxGraphModel dx="509" dy="827" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1000" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="idem_title" value="&lt;b style=&quot;font-size:22px;&quot;&gt;Received Bank — Idempotência Persistente nos Consumers&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="24" width="1100" height="34" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_subtitle" value="Como cada bounded context evita processar o mesmo evento mais de uma vez sem depender da outbox do boleto-service." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=13;fontColor=#545B64;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="60" width="1200" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_why" value="&lt;b&gt;Por que isso existe?&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Kafka e Transactional Outbox entregam eventos com semântica &lt;b&gt;at-least-once&lt;/b&gt;. Isso protege contra perda, mas permite duplicidade em crash, retry, rebalance ou reprocessamento operacional.&lt;br/&gt;&lt;br/&gt;A solução é tornar cada consumidor idempotente usando o &lt;b&gt;eventId&lt;/b&gt; como chave de controle local." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8ea;strokeColor=#b7791f;strokeWidth=1.5;align=left;verticalAlign=top;spacing=14;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="120" width="335" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_event_bus" value="&lt;b&gt;Kafka / MSK&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;boleto.gerado&lt;br/&gt;pagamento.efetivado&lt;br/&gt;pagamento.rejeitado&lt;br/&gt;notificacao.enviada&lt;/span&gt;" style="shape=cylinder3d;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#fff1f8;strokeColor=#db2777;strokeWidth=1.6;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="455" y="170" width="210" height="138" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_consumer_payment" value="&lt;b&gt;payment-service&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;consumer: boleto.gerado&lt;br/&gt;efeito: registra boleto aguardando pagamento&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="780" y="120" width="260" height="88" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_consumer_query" value="&lt;b&gt;query-service&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;consumers: boleto / pagamento / notificação&lt;br/&gt;efeito: atualiza read model CQRS&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="780" y="250" width="260" height="88" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_consumer_notification" value="&lt;b&gt;notification-service&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;consumers: boleto / pagamento&lt;br/&gt;efeito: envia notificação e publica notificacao.enviada&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1.4;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="780" y="380" width="260" height="92" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_registry" value="&lt;b&gt;ProcessedEventRegistry&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;componente compartilhado em commons-infra&lt;br/&gt;controla consumer_name + event_id&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef6ff;strokeColor=#2563a8;strokeWidth=1.5;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="1125" y="244" width="260" height="94" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_db_boundary" value="&lt;b&gt;Storage local por bounded context&lt;/b&gt;" style="swimlane;html=1;rounded=1;startSize=34;fillColor=#eef2ff;strokeColor=#4f46e5;strokeWidth=1.5;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1450" y="120" width="300" height="352" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_table_payment" value="&lt;b&gt;recebimentos_payment&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;processed_events&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#4f46e5;strokeWidth=1.2;align=center;verticalAlign=middle;fontSize=12;" parent="idem_db_boundary" vertex="1">
+                    <mxGeometry x="35" y="60" width="230" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_table_query" value="&lt;b&gt;recebimentos_query&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;processed_events&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#4f46e5;strokeWidth=1.2;align=center;verticalAlign=middle;fontSize=12;" parent="idem_db_boundary" vertex="1">
+                    <mxGeometry x="35" y="150" width="230" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_table_notification" value="&lt;b&gt;recebimentos_notification&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;processed_events&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#4f46e5;strokeWidth=1.2;align=center;verticalAlign=middle;fontSize=12;" parent="idem_db_boundary" vertex="1">
+                    <mxGeometry x="35" y="240" width="230" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_flow_title" value="&lt;b&gt;Ciclo de decisão por evento&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=16;fontColor=#172033;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="545" width="420" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_step_1" value="&lt;b&gt;1. Evento chega&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;consumer recebe payload com eventId&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1.2;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="590" width="210" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_step_2" value="&lt;b&gt;2. Tenta registrar&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;INSERT processed_events&lt;br/&gt;status = PROCESSING&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef6ff;strokeColor=#2563a8;strokeWidth=1.2;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="305" y="590" width="230" height="86" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_step_3" value="&lt;b&gt;3a. Novo evento&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;executa efeito local&lt;br/&gt;marca PROCESSED&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f7fff9;strokeColor=#17865a;strokeWidth=1.2;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="610" y="548" width="220" height="92" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_step_4" value="&lt;b&gt;3b. Já PROCESSED&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;ignora duplicata&lt;br/&gt;não repete efeito&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8ea;strokeColor=#b7791f;strokeWidth=1.2;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="610" y="682" width="220" height="92" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_step_5" value="&lt;b&gt;3c. PROCESSING recente&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;falha para Kafka tentar depois&lt;br/&gt;evita efeito concorrente&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff1f2;strokeColor=#be123c;strokeWidth=1.2;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="890" y="548" width="240" height="92" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_step_6" value="&lt;b&gt;3d. PROCESSING expirado&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#545B64;&quot;&gt;reivindica novamente&lt;br/&gt;protege crash/restart&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef2ff;strokeColor=#4f46e5;strokeWidth=1.2;align=center;verticalAlign=middle;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="890" y="682" width="240" height="92" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_ai_box" value="&lt;b&gt;Boa prática com Agents de IA&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Este projeto usa IA como par de engenharia para evoluir arquitetura incrementalmente: entender o domínio, desenhar a solução, implementar padrões, validar com testes e documentar os porquês.&lt;br/&gt;&lt;br/&gt;O objetivo não é só gerar código; é aprender tecnologias modernas e deixar decisões rastreáveis, revisáveis e explicáveis em entrevista ou operação." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f7fff9;strokeColor=#17865a;strokeWidth=1.5;align=left;verticalAlign=top;spacing=14;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="1235" y="560" width="515" height="214" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_edge_1" value="entrega at-least-once" style="endArrow=block;endFill=1;strokeColor=#db2777;strokeWidth=2;fontSize=10;fontColor=#db2777;labelBackgroundColor=#ffffff;" parent="1" source="idem_event_bus" target="idem_consumer_payment" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_edge_2" value="entrega at-least-once" style="endArrow=block;endFill=1;strokeColor=#db2777;strokeWidth=2;fontSize=10;fontColor=#db2777;labelBackgroundColor=#ffffff;" parent="1" source="idem_event_bus" target="idem_consumer_query" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_edge_3" value="entrega at-least-once" style="endArrow=block;endFill=1;strokeColor=#db2777;strokeWidth=2;fontSize=10;fontColor=#db2777;labelBackgroundColor=#ffffff;" parent="1" source="idem_event_bus" target="idem_consumer_notification" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_edge_4" value="verifica eventId" style="endArrow=block;endFill=1;strokeColor=#2563a8;strokeWidth=2;fontSize=10;fontColor=#2563a8;labelBackgroundColor=#ffffff;" parent="1" source="idem_consumer_query" target="idem_registry" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_edge_5" value="persistência local" style="endArrow=block;endFill=1;strokeColor=#4f46e5;strokeWidth=2;fontSize=10;fontColor=#4f46e5;labelBackgroundColor=#ffffff;" parent="1" source="idem_registry" target="idem_db_boundary" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_edge_6" value="" style="endArrow=block;endFill=1;strokeColor=#445566;strokeWidth=2;" parent="1" source="idem_step_1" target="idem_step_2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_edge_7" value="insert ok" style="endArrow=block;endFill=1;strokeColor=#17865a;strokeWidth=2;fontSize=10;fontColor=#17865a;labelBackgroundColor=#ffffff;" parent="1" source="idem_step_2" target="idem_step_3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_edge_8" value="duplicata" style="endArrow=block;endFill=1;strokeColor=#b7791f;strokeWidth=2;fontSize=10;fontColor=#b7791f;labelBackgroundColor=#ffffff;" parent="1" source="idem_step_2" target="idem_step_4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_edge_9" value="ainda em andamento" style="endArrow=block;endFill=1;strokeColor=#be123c;strokeWidth=2;fontSize=10;fontColor=#be123c;labelBackgroundColor=#ffffff;" parent="1" source="idem_step_2" target="idem_step_5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="idem_edge_10" value="timeout" style="endArrow=block;endFill=1;strokeColor=#4f46e5;strokeWidth=2;fontSize=10;fontColor=#4f46e5;labelBackgroundColor=#ffffff;" parent="1" source="idem_step_2" target="idem_step_6" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
             </root>
